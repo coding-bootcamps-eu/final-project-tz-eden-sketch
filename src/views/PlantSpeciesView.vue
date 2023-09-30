@@ -3,18 +3,17 @@
 </script>
 <template>
   <main>
-    <!-- <q-breadcrumbs color="primary">
+    <q-breadcrumbs color="primary" class="breadcrum">
       <template v-slot:separator>
         <q-icon size="1.5em" name="chevron_right" color="primary" />
       </template>
 
-      <q-breadcrumbs-el label="Übersicht" icon="bi-house" />
-      <q-breadcrumbs-el label="Pflanzenübersicht" icon="@/src/assets/icons/icon_plants.svg" />
-      <q-breadcrumbs-el label="Components" icon="widgets" />
-      <q-breadcrumbs-el label="Breadcrumbs" icon="navigation" />
-    </q-breadcrumbs> -->
+      <q-breadcrumbs-el label="Übersicht" to="/" icon="bi-house" />
+      <q-breadcrumbs-el label="Pflanzenarten" to="/plantspecies/view/" icon="svguse:icons.svg" />
+      <!-- todo: verlinkten Path anpassen:Übersicht Pflanzenarten, icon fixen: bei Pflanzenarten soll icon-plants.svg genutzt werden-->
+      <q-breadcrumbs-el label="Spinat" />
+    </q-breadcrumbs>
 
-    <!--toDo: schmaler header mit   <zurück Arteninfo  Sorten   /  Breadcrum -->
     <div class="separator"></div>
     <header class="header">
       <div class="image-container">
@@ -124,6 +123,9 @@ h3 {
   background-color: var(--clr-secondary);
 }
 
+.breadcrum {
+  padding-block: 1rem;
+}
 .list {
   list-style: disc;
 }
