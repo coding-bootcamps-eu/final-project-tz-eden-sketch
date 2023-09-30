@@ -1,9 +1,7 @@
-<script setup>
-// import TheWelcome from '../components/TheWelcome.vue'
-</script>
+<script setup></script>
 
 <template>
   <main>
-    <TheWelcome />
+    <q-icon name="fa-brands fa-rebel" />
   </main>
 </template>
