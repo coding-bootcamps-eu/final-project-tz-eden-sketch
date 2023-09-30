@@ -1,9 +1,7 @@
-<script setup>
-import UserRegistration from '../components/UserRegistration.vue'
-</script>
+<script setup></script>
 
 <template>
   <main>
-    <UserRegistration />
+    <q-icon name="fa-brands fa-rebel" />
   </main>
 </template>
