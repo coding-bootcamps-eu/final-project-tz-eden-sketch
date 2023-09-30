@@ -1,13 +1,14 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+// import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
-  <header>
+  <!-- <header>
     <nav>
       <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/plantspecies/view/spinach">Bsp Pflanzenart View: Spinat</RouterLink>
     </nav>
-  </header>
+  </header> -->
 
   <RouterView />
 </template>
