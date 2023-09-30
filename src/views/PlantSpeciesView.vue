@@ -1,9 +1,19 @@
 <script setup>
-import { ref } from 'vue'
+// import { ref } from 'vue'
 </script>
 <template>
-  <!-- <img class="card__image" src="../assets/icons-plants/icon-bellpepper.webp" alt="paprika" /> -->
   <main>
+    <!-- <q-breadcrumbs color="primary">
+      <template v-slot:separator>
+        <q-icon size="1.5em" name="chevron_right" color="primary" />
+      </template>
+
+      <q-breadcrumbs-el label="Übersicht" icon="bi-house" />
+      <q-breadcrumbs-el label="Pflanzenübersicht" icon="@/src/assets/icons/icon_plants.svg" />
+      <q-breadcrumbs-el label="Components" icon="widgets" />
+      <q-breadcrumbs-el label="Breadcrumbs" icon="navigation" />
+    </q-breadcrumbs> -->
+
     <!--toDo: schmaler header mit   <zurück Arteninfo  Sorten   /  Breadcrum -->
     <div class="separator"></div>
     <header class="header">
@@ -12,8 +22,8 @@ import { ref } from 'vue'
       </div>
       <div class="wrapper-headline">
         <p class="headline-label">Art</p>
-        <h1 class="headline-plantname">Spinat</h1>
-        <p class="botanical-name">Spinacia oleracea</p>
+        <h1 class="headline-main headline-plantname">Spinat</h1>
+        <p class="headline-sub botanical-name">Spinacia oleracea</p>
       </div>
     </header>
     <div class="separator"></div>
@@ -28,14 +38,20 @@ import { ref } from 'vue'
     </p>
     <div class="separator"></div>
     <h2>Mischkultur</h2>
-    <h3 class="good-neighbors">Gute Nachbarn</h3>
+    <h3>
+      <q-icon name="bi-suit-heart-fill"></q-icon>
+      Gute Nachbarn
+    </h3>
     <ol class="list">
       <li>Radieschen</li>
       <li>Erbse</li>
       <li>Steckrübe</li>
     </ol>
 
-    <h3 class="bad-neighbors">Schlechte Nachbarn</h3>
+    <h3>
+      <q-icon name="bi-lightning-fill" color="warning"></q-icon>
+      Schlechte Nachbarn
+    </h3>
     <ol class="list">
       <li>Mangold</li>
       <li>Rote Beete</li>
@@ -53,15 +69,9 @@ import { ref } from 'vue'
 <style scoped>
 main {
   height: 100vh;
+  max-width: 1100px;
+  margin-inline: auto;
   padding-inline: 1.5rem;
-  font-family: 'Ubuntu';
-  /*
-  font-family steht auch in der main.css aber kommt hier nicht an
-  liegt an quasar default Einstellungen (-->Roboto)
-  Möglichkeit 1: in jeder Komponente Font-Family angeben
-  Möglichkeit 2: !important in der main css nutzen...
-  für abweichende schriftarten muss dann auch ein impirtant genutzt werden.
-  */
 }
 h2 {
   font-size: large;
@@ -101,25 +111,19 @@ h3 {
 
 .headline-plantname {
   margin: 0;
-  font-family: 'Vollkorn';
   margin-bottom: 0.5rem;
 }
 
 .botanical-name {
-  font-family: 'Caveat';
   font-size: x-large;
 }
 
 .separator {
+  /* als eigene Komponente definieren? */
   height: 1px;
   background-color: var(--clr-secondary);
 }
 
-/* .bad-neighbors::before {
-  content: U+F59D;
-}
-.bad-neighbors::before {
-} */
 .list {
   list-style: disc;
 }

@@ -5,6 +5,7 @@
 *::after {
   box-sizing: border-box;
   margin: 0;
+  font-family: 'Ubuntu';
   font-weight: normal;
 }
 
@@ -219,7 +220,11 @@
     src: url('/fonts/caveat-v18-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
   }
 }
-body {
-  font-family: inherit;
-  /* font-family: 'Ubuntu' !important; */
+
+.headline-main {
+  font-family: 'Vollkorn';
+}
+
+.headline-sub {
+  font-family: 'Caveat';
 }
