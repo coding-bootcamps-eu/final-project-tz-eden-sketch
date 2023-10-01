@@ -201,6 +201,12 @@
   src: url('/fonts/caveat-v18-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
+/* Homemade Apple (handwriting) */
+@font-face {
+  font-family: 'HomemadeApple';
+  src: url('/fonts/HomemadeApple-Regular.ttf');
+}
+
 :root {
   --clr-primary: #48704f;
   --clr-secondary: #99b563;
