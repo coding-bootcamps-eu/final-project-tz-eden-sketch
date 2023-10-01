@@ -1,16 +1,31 @@
-<script setup></script>
+<script setup>
+// import { ref } from 'vue'
+
+const props = defineProps({
+  cardImage: String,
+  cardTitle: String,
+  cardDescription: String,
+  cardLink: String,
+  cardElement: Object
+  /* wie definiert man hier default werte?? */
+})
+
+// const emit = defineEmits(['cardClick'])
+</script>
 
 <template>
   <div class="card">
     <div class="content-wrapper">
-      <img class="card-image" src="src/assets/images/bellpepper.webp" />
+      <img class="card-image" :src="cardImage" />
+      <!-- todo: geht nicht-->
 
       <div class="card-infos">
-        <h2 class="card-title">Titel hier</h2>
-        <p class="card-description">Kurze Beschreibung</p>
+        <h2 class="card-title">{{ cardTitle }}</h2>
+        <p class="card-description">{{ cardDescription }}</p>
       </div>
     </div>
-    <a href="/plantspecies/view/:plantspecies*" class="card-link"></a>
+    <a :href="cardLink" class="card-link"></a>
+    <!-- <a :href="cardLink" class="card-link" @click="$emit('cardClick', cardElement)"></a> -->
   </div>
 </template>
 
@@ -52,7 +67,7 @@
 }
 
 .card-link {
-  /* To stretch the link on top of the card div */
+  /* To stretch the link on top of the card */
   position: absolute;
   top: 0;
   bottom: 0;
