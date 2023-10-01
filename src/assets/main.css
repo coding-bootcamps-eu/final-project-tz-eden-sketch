@@ -231,3 +231,10 @@
 .headline-sub {
   font-family: 'Caveat';
 }
+
+.view__nav {
+  overflow: hidden;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+}
