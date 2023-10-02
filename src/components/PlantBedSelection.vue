@@ -16,9 +16,10 @@
       </q-card-section>
 
       <q-card-actions align="around">
-        <q-btn no-caps class="bg-warning text-white" @click="confirm = true" flat
-          >Lösche das Beet</q-btn
+        <q-btn no-caps class="bg-warning text-white button__card" @click="confirm = true" flat
+          >Lösche den Plan</q-btn
         >
+        <q-btn no-caps class="bg-primary text-white button__card" flat>Gehe zum Plan</q-btn>
         <q-dialog v-model="confirm" persistent>
           <q-card>
             <q-card-section class="row items-center">
@@ -27,7 +28,7 @@
                 color="warning"
                 text-color="white"
               />
-              <span class="q-ml-sm">Willst du den Beetplan wirklich löschen?</span>
+              <span class="q-ml-sm">Willst du {{ bed.name }} wirklich löschen?</span>
             </q-card-section>
 
             <q-card-actions align="right">
@@ -36,7 +37,6 @@
             </q-card-actions>
           </q-card>
         </q-dialog>
-        <q-btn no-caps class="bg-primary text-white" flat>Gehe zum Beet</q-btn>
       </q-card-actions>
     </q-card>
   </div>
@@ -84,5 +84,9 @@ const plantBeds = ref([
 }
 .plantbed-description {
   margin-top: 1rem;
+  min-height: 2rem;
+}
+.button__card {
+  margin-bottom: 1rem;
 }
 </style>
