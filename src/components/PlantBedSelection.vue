@@ -40,8 +40,8 @@
       </q-card-actions>
     </q-card>
 
-    <q-card class="plantbed-card my-card bg-positive text-white">
-      <q-card-section horizontal class="bg-positive text-white">
+    <q-card class="plantbed-card my-card bg-secondary text-white">
+      <q-card-section horizontal>
         <q-item>
           <q-item-section avatar>
             <q-avatar>
