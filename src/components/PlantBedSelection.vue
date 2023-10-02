@@ -39,6 +39,29 @@
         </q-dialog>
       </q-card-actions>
     </q-card>
+
+    <q-card class="plantbed-card my-card bg-positive text-white">
+      <q-card-section horizontal class="bg-positive text-white">
+        <q-item>
+          <q-item-section avatar>
+            <q-avatar>
+              <q-icon class="icon__plantbed" name="svguse:/icons.svg#soil-and-shovel" />
+            </q-avatar>
+          </q-item-section>
+        </q-item>
+        <div class="text-h6 plantbed-name">Erstelle einen neuen Plan</div>
+      </q-card-section>
+
+      <q-card-actions align="around">
+        <q-btn
+          no-caps
+          icon="bi-plus-circle"
+          label="Erstelle neuen Plan"
+          class="bg-primary text-white button__card"
+          flat
+        ></q-btn>
+      </q-card-actions>
+    </q-card>
   </div>
 </template>
 
@@ -65,6 +88,10 @@ const plantBeds = ref([
 </script>
 
 <style scoped>
+.text-h6 {
+  font-size: 1.1rem;
+}
+
 .plantbed-cards__wrapper {
   width: 90%;
   margin: 1rem auto;
