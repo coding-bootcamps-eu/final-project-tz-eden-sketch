@@ -3,13 +3,14 @@
 </script>
 <template>
   <main>
+    <q-icon name="fa-leaf"></q-icon>
     <q-breadcrumbs color="primary" class="breadcrum">
       <template v-slot:separator>
         <q-icon size="1.5em" name="chevron_right" color="primary" />
       </template>
 
       <q-breadcrumbs-el label="Übersicht" to="/" icon="bi-house" />
-      <q-breadcrumbs-el label="Pflanzenarten" to="/plantspecies/view/" icon="svguse:icons.svg" />
+      <q-breadcrumbs-el label="Pflanzenarten" to="/plantspecies/view/" icon="la-leaf" />
       <!-- todo: verlinkten Path anpassen:Übersicht Pflanzenarten, icon fixen: bei Pflanzenarten soll icon-plants.svg genutzt werden-->
       <q-breadcrumbs-el label="Spinat" />
     </q-breadcrumbs>
@@ -59,7 +60,9 @@
     <div class="separator"></div>
     <h2>Sorten</h2>
     <ol class="list">
-      <li>Sorte 1</li>
+      <li>
+        <a href="/plantvariety/view/:plantvariety*"> Sorte 1 </a>
+      </li>
       <li>Sorte 2</li>
       <li>Sorte 3</li>
     </ol>
