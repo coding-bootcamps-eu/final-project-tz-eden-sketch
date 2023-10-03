@@ -18,7 +18,11 @@ import CardComponent from '@/components/CardComponent.vue'
         card-title="Beetplanung"
         card-image="../src/assets/images/raised-bed-vegetables.svg"
       />
-      <CardComponent card-title="Aufgaben" card-image="../src/assets/images/gloves.svg" />
+      <CardComponent
+        card-title="Aufgaben"
+        card-link="/todos"
+        card-image="../src/assets/images/gloves.svg"
+      />
       <CardComponent
         card-title="Wissen"
         card-link="/blog"

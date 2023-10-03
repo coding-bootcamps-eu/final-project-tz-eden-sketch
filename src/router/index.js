@@ -4,6 +4,7 @@ import PlantspeciesView from '../views/PlantspeciesView.vue'
 import UserRegistrationView from '@/views/UserRegistrationView.vue'
 import PlantSpeciesListView from '@/views/PlantSpeciesListView.vue'
 import BlogView from '@/views/BlogView.vue'
+import TodoView from '@/views/TodoView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,9 +33,13 @@ const router = createRouter({
     },
     {
       path: '/blog',
-      /*  später * entfernen sobald richtige Daten von Api kommen. Mit * ist Parameter optional */
       name: 'blog',
       component: BlogView
+    },
+    {
+      path: '/todos',
+      name: 'todos',
+      component: TodoView
     }
   ]
 })
