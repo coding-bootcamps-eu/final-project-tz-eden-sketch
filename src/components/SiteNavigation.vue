@@ -17,6 +17,7 @@
       />
       <q-route-tab name="plan" label="Plan" icon="bi-pencil-square" to="/plantbed-selection" />
       <q-route-tab name="knowledge" label="Wissen" icon="bi-book" to="/blog" />
+      <q-route-tab name="todos" label="ToDos" icon="svguse:/icons.svg#gloves" to="/todos" />
     </q-tabs>
   </nav>
 </template>
