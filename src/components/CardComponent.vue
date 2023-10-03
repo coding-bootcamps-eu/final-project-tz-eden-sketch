@@ -42,6 +42,7 @@ const props = defineProps({
 .card-image {
   width: 100%;
   object-fit: contain;
+  border: 1px solid red;
 }
 
 .card-title {
@@ -59,6 +60,7 @@ const props = defineProps({
   grid-template-rows: auto min-content;
   padding: 1rem;
   position: relative;
+  border: 1px solid black;
 }
 
 .card-infos {

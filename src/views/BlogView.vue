@@ -2,7 +2,6 @@
   <main>
     <h1 class="headline-main">Garten-Wissen</h1>
     <h2 class="headline-sub">Hier ist noch Baustelle...</h2>
-    <img class="image" src="@/assets/images/books.jpg" alt="Bücher mit Pflanzen" />
   </main>
 </template>
 
@@ -14,7 +13,10 @@ main {
   gap: 2rem;
   position: relative;
   height: 100vh; /* gibt es eine bessere Lösung? */
-  background-color: white;
+  background-image: url('../src/assets/images/book.svg');
+  background-position: left bottom;
+  background-size: 50%;
+  background-repeat: no-repeat;
 }
 h1 {
   color: var(--clr-primary);
@@ -23,7 +25,7 @@ h1 {
 }
 .image {
   position: absolute;
-  max-width: 600px;
+  max-width: 500px;
   bottom: 0;
   left: 0;
   transform-origin: bottom left;

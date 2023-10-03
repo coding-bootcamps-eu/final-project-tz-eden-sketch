@@ -6,16 +6,23 @@ import CardComponent from '@/components/CardComponent.vue'
   <div class="overview">
     <!-- <q-icon name="fa-brands fa-rebel" /> -->
     <header>
-      <h1>Eden Sketch</h1>
+      <h1 class="headline-main headline">Eden Sketch</h1>
     </header>
     <main class="card-wrapper">
-      <CardComponent card-title="Pflanzen" card-link="/plantspecies/list" />
-      <CardComponent card-title="Beetplanung" />
-      <CardComponent card-title="Aufgaben" card-image="@/src/assets/images/gloves.jpg" />
+      <CardComponent
+        card-title="Pflanzen"
+        card-link="/plantspecies/list"
+        card-image="../src/assets/images/root-vegetable_1000px.svg"
+      />
+      <CardComponent
+        card-title="Beetplanung"
+        card-image="../src/assets/images/raised-bed-vegetables.svg"
+      />
+      <CardComponent card-title="Aufgaben" card-image="../src/assets/images/gloves.svg" />
       <CardComponent
         card-title="Wissen"
         card-link="/blog"
-        card-image="@/src/assets/images/books.jpg"
+        card-image="../src/assets/images/book.svg"
       />
     </main>
   </div>
@@ -26,6 +33,11 @@ import CardComponent from '@/components/CardComponent.vue'
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-inline: 2rem;
+}
+
+.headline {
+  color: var(--clr-primary);
 }
 
 .card-wrapper {
@@ -44,7 +56,7 @@ import CardComponent from '@/components/CardComponent.vue'
   }
 }
 
-@media screen and (min-width: 2000px) {
+@media screen and (min-width: 1000px) {
   .card-wrapper {
     display: grid;
     gap: 1rem;
