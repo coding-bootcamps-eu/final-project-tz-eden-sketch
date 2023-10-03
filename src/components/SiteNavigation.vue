@@ -24,7 +24,7 @@
 
 <script setup>
 import { ref } from 'vue'
-const tab = ref('home')
+const tab = ref('')
 </script>
 
 <style scoped>

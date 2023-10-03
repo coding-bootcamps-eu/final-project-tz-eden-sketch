@@ -244,3 +244,7 @@
   bottom: 0px;
   width: 100%;
 }
+
+main {
+  padding-bottom: 5rem;
+}

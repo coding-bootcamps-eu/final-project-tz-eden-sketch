@@ -1,42 +1,40 @@
 <template>
-  <body>
-    <header>
-      <h1><span>Willkommen bei</span><span>EdenSketch</span></h1>
-    </header>
-    <main>
-      <section class="user-registration__wrapper">
-        <section class="intro-text">
-          <p>Gib hier deinen gewünschten Usernamen an und starte durch mit der Beetplanung:</p>
-        </section>
-        <q-input class="input__username" outlined v-model.trim="username" label="Username">
-          <template v-slot:append>
-            <q-icon name="las la-user" color="accent" />
-          </template>
-        </q-input>
-        <q-btn
-          class="button__user-registration"
-          color="secondary"
-          label="Bestätige Namen"
-          @click="userRegistration"
-        />
-        <q-dialog v-model="alert">
-          <q-card>
-            <q-card-section>
-              <div class="text-h6">Username zu kurz</div>
-            </q-card-section>
-
-            <q-card-section class="q-pt-none">
-              Dein Username muss mindestens 2 Zeichen lang sein.
-            </q-card-section>
-
-            <q-card-actions align="right">
-              <q-btn flat label="OK" color="primary" v-close-popup />
-            </q-card-actions>
-          </q-card>
-        </q-dialog>
+  <header>
+    <h1><span>Willkommen bei</span><span>EdenSketch</span></h1>
+  </header>
+  <main>
+    <section class="user-registration__wrapper">
+      <section class="intro-text">
+        <p>Gib hier deinen gewünschten Usernamen an und starte durch mit der Beetplanung:</p>
       </section>
-    </main>
-  </body>
+      <q-input class="input__username" outlined v-model.trim="username" label="Username">
+        <template v-slot:append>
+          <q-icon name="las la-user" color="accent" />
+        </template>
+      </q-input>
+      <q-btn
+        class="button__user-registration"
+        color="secondary"
+        label="Bestätige Namen"
+        @click="userRegistration"
+      />
+      <q-dialog v-model="alert">
+        <q-card>
+          <q-card-section>
+            <div class="text-h6">Username zu kurz</div>
+          </q-card-section>
+
+          <q-card-section class="q-pt-none">
+            Dein Username muss mindestens 2 Zeichen lang sein.
+          </q-card-section>
+
+          <q-card-actions align="right">
+            <q-btn flat label="OK" color="primary" v-close-popup />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
+    </section>
+  </main>
 </template>
 
 <script setup>

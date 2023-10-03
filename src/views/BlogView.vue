@@ -3,6 +3,9 @@
     <h1 class="headline-main">Garten-Wissen</h1>
     <h2 class="headline-sub">Hier ist noch Baustelle...</h2>
   </main>
+  <nav class="view__nav">
+    <SiteNavigation></SiteNavigation>
+  </nav>
 </template>
 
 <style scoped>
@@ -31,3 +34,7 @@ h1 {
   transform-origin: bottom left;
 }
 </style>
+
+<script setup>
+import SiteNavigation from '../components/SiteNavigation.vue'
+</script>
