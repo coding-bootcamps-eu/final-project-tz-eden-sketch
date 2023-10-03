@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import PlantSpeciesView from '../views/PlantSpeciesView.vue'
 import UserRegistrationView from '@/views/UserRegistrationView.vue'
 import PlantvarietyView from '../views/PlantVarietyView.vue'
+import PlantBedSelectionView from '../views/PlantBedSelectionView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +29,11 @@ const router = createRouter({
       /*  später * entfernen sobald richtige Daten von Api kommen. Mit * ist Parameter optional */
       name: 'plantvarietyview',
       component: PlantvarietyView
+    },
+    {
+      path: '/plantbed-selection',
+      name: 'plantbeds',
+      component: PlantBedSelectionView
     }
   ]
 })
