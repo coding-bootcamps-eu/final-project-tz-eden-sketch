@@ -13,10 +13,10 @@
         name="plants"
         label="Pflanzen"
         icon="svguse:/icons.svg#sprout"
-        to="/plantspecies/view"
+        to="/plantspecies/list"
       />
-      <q-route-tab name="plan" label="Plan" icon="bi-pencil-square" to="/" />
-      <q-route-tab name="knowledge" label="Wissen" icon="bi-book" to="/" />
+      <q-route-tab name="plan" label="Plan" icon="bi-pencil-square" to="/plantbed-selection" />
+      <q-route-tab name="knowledge" label="Wissen" icon="bi-book" to="/blog" />
     </q-tabs>
   </nav>
 </template>
