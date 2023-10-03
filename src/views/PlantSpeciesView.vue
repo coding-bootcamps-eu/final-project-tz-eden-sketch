@@ -1,5 +1,5 @@
 <script setup>
-// import { ref } from 'vue'
+import SiteNavigation from '../components/SiteNavigation.vue'
 </script>
 <template>
   <main>
@@ -67,7 +67,11 @@
       <li>Sorte 3</li>
     </ol>
   </main>
+  <nav class="view__nav">
+    <SiteNavigation></SiteNavigation>
+  </nav>
 </template>
+
 <style scoped>
 main {
   height: 100vh;
