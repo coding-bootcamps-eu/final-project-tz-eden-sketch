@@ -1,10 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import PlantspeciesView from '../views/PlantspeciesView.vue'
+import PlantSpeciesView from '../views/PlantSpeciesView.vue'
 import UserRegistrationView from '@/views/UserRegistrationView.vue'
 import PlantSpeciesListView from '@/views/PlantSpeciesListView.vue'
 import BlogView from '@/views/BlogView.vue'
 import TodoView from '@/views/TodoView.vue'
+import PlantvarietyView from '../views/PlantVarietyView.vue'
+import PlantBedSelectionView from '../views/PlantBedSelectionView.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,7 +21,7 @@ const router = createRouter({
       path: '/plantspecies/view/:plantspecies*',
       /*  später * entfernen sobald richtige Daten von Api kommen. Mit * ist Parameter optional */
       name: 'plantspeciesview',
-      component: PlantspeciesView
+      component: PlantSpeciesView
     },
     {
       path: '/new-user',
@@ -40,6 +43,17 @@ const router = createRouter({
       path: '/todos',
       name: 'todos',
       component: TodoView
+     },
+    {
+      path: '/plantvariety/view/:plantvariety*',
+      /*  später * entfernen sobald richtige Daten von Api kommen. Mit * ist Parameter optional */
+      name: 'plantvarietyview',
+      component: PlantvarietyView
+    },
+    {
+      path: '/plantbed-selection',
+      name: 'plantbeds',
+      component: PlantBedSelectionView
     }
   ]
 })

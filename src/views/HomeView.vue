@@ -1,13 +1,18 @@
 <script setup>
 import CardComponent from '@/components/CardComponent.vue'
+import SiteNavigation from '../components/SiteNavigation.vue'
 </script>
 
 <template>
   <div class="overview">
     <!-- <q-icon name="fa-brands fa-rebel" /> -->
+    <!--q-icon name="svguse:/icons.svg#seedling" /-->
+    <!--q-icon name="svguse:/icons.svg#sprout" /-->
+    
     <header>
       <h1 class="headline-main headline">Eden Sketch</h1>
     </header>
+    
     <main class="card-wrapper">
       <CardComponent
         card-title="Pflanzen"
@@ -30,7 +35,12 @@ import CardComponent from '@/components/CardComponent.vue'
       />
     </main>
   </div>
+    
+   <nav class="view__nav">
+     <SiteNavigation></SiteNavigation>
+   </nav>
 </template>
+
 
 <style scoped>
 .overview {
