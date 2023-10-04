@@ -13,17 +13,18 @@
         name="plants"
         label="Pflanzen"
         icon="svguse:/icons.svg#sprout"
-        to="/plantspecies/view"
+        to="/plantspecies/list"
       />
-      <q-route-tab name="plan" label="Plan" icon="bi-pencil-square" to="/" />
-      <q-route-tab name="knowledge" label="Wissen" icon="bi-book" to="/" />
+      <q-route-tab name="plan" label="Plan" icon="bi-pencil-square" to="/plantbed-selection" />
+      <q-route-tab name="knowledge" label="Wissen" icon="bi-book" to="/blog" />
+      <q-route-tab name="todos" label="ToDos" icon="svguse:/icons.svg#gloves" to="/todos" />
     </q-tabs>
   </nav>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-const tab = ref('home')
+const tab = ref('')
 </script>
 
 <style scoped>

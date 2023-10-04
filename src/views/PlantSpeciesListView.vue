@@ -1,4 +1,5 @@
 <script setup>
+import SiteNavigation from '../components/SiteNavigation.vue'
 import CardComponent from '@/components/CardComponent.vue'
 </script>
 
@@ -10,4 +11,7 @@ import CardComponent from '@/components/CardComponent.vue'
       card-link="/plantspecies/view/Spinat"
     />
   </main>
+  <nav class="view__nav">
+    <SiteNavigation></SiteNavigation>
+  </nav>
 </template>
