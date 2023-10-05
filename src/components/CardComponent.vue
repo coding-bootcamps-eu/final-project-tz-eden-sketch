@@ -1,7 +1,8 @@
 <script setup>
 // import { ref } from 'vue'
 
-const props = defineProps({
+// const props =
+defineProps({
   cardImage: String,
   cardTitle: String,
   cardDescription: String,
@@ -16,8 +17,9 @@ const props = defineProps({
 <template>
   <div class="card">
     <div class="content-wrapper">
-      <img class="card-image" :src="cardImage" />
-      <!-- todo: geht nicht-->
+      <div class="image-wrapper">
+        <img class="card-image" :src="cardImage" />
+      </div>
 
       <div class="card-infos">
         <h2 class="card-title">{{ cardTitle }}</h2>
@@ -39,10 +41,14 @@ const props = defineProps({
   max-width: 50ch;
 }
 
+.image-wrapper {
+  aspect-ratio: 1;
+  width: 100%;
+}
 .card-image {
   width: 100%;
+  height: 100%;
   object-fit: contain;
-  border: 1px solid red;
 }
 
 .card-title {
@@ -56,11 +62,9 @@ const props = defineProps({
 }
 
 .content-wrapper {
-  display: grid;
-  grid-template-rows: auto min-content;
+  text-align: center;
   padding: 1rem;
   position: relative;
-  border: 1px solid black;
 }
 
 .card-infos {

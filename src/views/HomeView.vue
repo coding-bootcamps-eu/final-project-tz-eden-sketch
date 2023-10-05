@@ -5,9 +5,9 @@ import SiteNavigation from '@/components/SiteNavigation.vue'
 
 <template>
   <div class="overview">
-    <!-- <q-icon name="fa-brands fa-rebel" /> -->
-    <!--q-icon name="svguse:/icons.svg#seedling" /-->
-    <!--q-icon name="svguse:/icons.svg#sprout" /-->
+    <!-- <q-icon name="fa-brands fa-rebel" />
+    <q-icon name="svguse:/icons.svg#seedling" />
+    <q-icon name="svguse:/icons.svg#sprout" /> -->
 
     <header>
       <h1 class="headline-main headline">Eden Sketch</h1>
