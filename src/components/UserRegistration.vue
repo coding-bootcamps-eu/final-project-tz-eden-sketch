@@ -58,7 +58,7 @@ function userRegistration() {
 </script>
 
 <style scoped>
-body {
+header {
   text-align: center;
 }
 
@@ -94,7 +94,6 @@ main {
   text-align: center;
   padding: 1.5rem;
   margin-bottom: 2rem;
-  font-family: 'Homemade';
 }
 
 .intro-text > p {
@@ -113,6 +112,7 @@ main {
   width: 20rem;
 }
 .button__user-registration {
+  margin-top: 0.75rem;
   width: 20rem;
   height: 2.5rem;
 }
