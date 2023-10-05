@@ -3,5 +3,5 @@
 </template>
 
 <script setup>
-import UserRegistration from '../components/UserRegistration.vue'
+import UserRegistration from '@/components/UserRegistration.vue'
 </script>

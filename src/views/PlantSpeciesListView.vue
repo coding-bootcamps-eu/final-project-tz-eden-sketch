@@ -1,5 +1,5 @@
 <script setup>
-import SiteNavigation from '../components/SiteNavigation.vue'
+import SiteNavigation from '@/components/SiteNavigation.vue'
 import CardComponent from '@/components/CardComponent.vue'
 import { usePlantsStore } from '@/stores/usePlantsStore'
 const plantsStore = usePlantsStore()

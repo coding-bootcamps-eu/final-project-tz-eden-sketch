@@ -1,5 +1,5 @@
 <script setup>
-import SiteNavigation from '../components/SiteNavigation.vue'
+import SiteNavigation from '@/components/SiteNavigation.vue'
 import PlantBedSelection from '../components/PlantBedSelection.vue'
 </script>
 
