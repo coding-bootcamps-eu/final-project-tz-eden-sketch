@@ -34,6 +34,10 @@ import SiteNavigation from '@/components/SiteNavigation.vue'
         card-image="../src/assets/images/book.svg"
       />
     </main>
+    <SeparatorElement />
+    <footer>
+      <a href="/impressum">Impressum</a>
+    </footer>
   </div>
 
   <nav class="view__nav">
@@ -47,6 +51,7 @@ import SiteNavigation from '@/components/SiteNavigation.vue'
   flex-direction: column;
   align-items: center;
   padding-inline: 2rem;
+  padding-bottom: 5rem;
 }
 
 .headline {
