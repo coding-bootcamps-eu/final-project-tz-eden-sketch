@@ -36,5 +36,5 @@ h1 {
 </style>
 
 <script setup>
-import SiteNavigation from '../components/SiteNavigation.vue'
+import SiteNavigation from '@/components/SiteNavigation.vue'
 </script>
