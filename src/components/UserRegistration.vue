@@ -49,7 +49,7 @@ function userRegistration() {
     console.log('ToDo: send username to api')
     // call api function from pinia store
     // example router push (add overview site path when available)
-    router.push({ path: '/plantspecies/view/' })
+    router.push({ path: '/' })
   }
   if (username.value.length < 2) {
     alert.value = true
