@@ -10,6 +10,7 @@
     <p>{{ plantBedsStore.state.currentPeriod }}</p>
 
     <h2>Beet 1</h2>
+    <p>{{ userVarieties }}</p>
     <q-btn class="btn-add" color="primary" icon="add" @click="openAddPlant = true" />
 
     <q-dialog maximized class="popup-plant add-plants__card" v-model="openAddPlant">
@@ -96,7 +97,8 @@ const plantBedsStore = usePlantBedsStore()
 
 const openAddPlant = ref(false)
 
-// const userSpecies
+//alle Arten
+const userVarieties = plantsStore.getAllVarieties() //wird später noch nach userwünschen gefiltert
 
 // function addPlant() {}
 // console.log(plantsStore.getAllSpecies())
@@ -111,16 +113,40 @@ const columns = ref([
   { name: 'badNeighbors', label: 'schlechte Nachbarn', field: 'badNeighbors' }
 ])
 
-const rows = ref([
-  {
-    name: 'MeineSorte',
-    plantspecies: 'Apfel',
-    plantvariety: 'Oxhella',
-    nutrition: 'mittel',
-    goodNeighbors: 'Spinat, Brokoli, Tomate',
-    badNeighbors: ['Spinat', 'Brokoli', 'Tomate']
+const rows = mapTableContent(userVarieties)
+
+// const rows = ref([
+//   {
+//     name: 'MeineSorte',
+//     plantfamily: 'Baum',
+//     plantspecies: 'Apfel',
+//     plantvariety: 'Oxhella',
+//     nutrition: 'mittel',
+//     goodNeighbors: ['Spinat', 'Brokoli', 'Tomate'],
+//     goodNeighbors: ['Spinat', 'Brokoli', 'Tomate']
+//   }
+// ])
+
+function mapTableContent(userVarieties) {
+  console.log(userVarieties)
+  console.log(userVarieties[0])
+  console.log(userVarieties[0].speciesId)
+  const rows = []
+  for (let i = 0; i <= userVarieties.length; i++) {
+    const species = plantsStore.getSpecies(userVarieties[i].speciesId)
+    const row = {}
+    row.name = userVarieties[i].name
+    row.plantfamily = species.plantfamily
+    row.plantspecies = species.name
+    row.plantvariety = userVarieties[i].name
+    row.nutrition = species.nutrition
+    row.goodNeighbors = species.goodNeighbors
+    row.badNeighbors = species.badNeighbors
+
+    rows.push(row)
   }
-])
+  return rows
+}
 </script>
 
 <style scoped>

@@ -1,25 +1,76 @@
-import { ref, computed, reactive } from 'vue'
+import { reactive } from 'vue'
 import { defineStore } from 'pinia'
 
 export const usePlantsStore = defineStore('plants', () => {
   const state = reactive({
-    plantSpecies: [{ id: '1', name: 'Spinat', imagename: 'bellpepper.webp' }], //Pflanzenart z.B. Möhre
-    plantVariety: [] //Pflanzensorte z.B. Oxhella
+    plantSpecies: [
+      {
+        id: '1',
+        name: 'Spinat',
+        imagename: 'bellpepper.webp',
+        botanicname: 'lorem ipsum',
+        plantfamily: 'Erbsengewächse',
+        nutrition: 'mittel',
+        descr: 'super tolle Salatbeschreibung',
+        goodNeighbors: ['Tomate', 'Birne', 'Aubergine'],
+        badNeighbors: ['Zucchini', 'Paprika']
+      },
+      {
+        id: '2',
+        name: 'Tomate',
+        imagename: 'bellpepper.webp',
+        botanicname: 'lorem ipsum',
+        plantfamily: 'Nachschattengewächse',
+        nutrition: 'stark',
+        descr: 'super tolle Tomatenbeschreibung',
+        goodNeighbors: ['Chilli', 'Salat', 'Aubergine'],
+        badNeighbors: ['Möhre', 'Paprika']
+      }
+    ], //Pflanzenart z.B. Möhre
+    plantVariety: [
+      {
+        id: '1',
+        name: 'Oxhella',
+        descr: 'tolle descr',
+        speciesId: 2,
+        weeks: 4,
+        light: 'Sonne bis Halbschatten'
+      },
+      {
+        id: '2',
+        name: 'Oxhella 2 ',
+        descr: 'tolle descr',
+        speciesId: 1,
+        weeks: 8,
+        light: 'Sonne'
+      },
+      {
+        id: '3',
+        name: 'Oxhella 3 ',
+        descr: 'tolle descr',
+        speciesId: 2,
+        weeks: 3,
+        light: 'Sonne bis Halbschatten'
+      }
+    ] //Pflanzensorte z.B. Oxhella
   })
 
-  function loadFromBackend() {
-    //lade beim starten der App die Daten
-    //fetch()
-  }
+  // function loadFromBackend() {
+  //   //lade beim starten der App die Daten
+  //   //fetch()
+  // }
 
-  function saveToBackend() {
-    //speicher Daten im Backend
-    //fetch()
-  }
+  // function saveToBackend() {
+  //   //speicher Daten im Backend
+  //   //fetch()
+  // }
 
   //get all species
   function getAllSpecies() {
     return state.plantSpecies
+  }
+  function getAllVarieties() {
+    return state.plantVariety
   }
 
   //get single species / variety
@@ -90,6 +141,7 @@ export const usePlantsStore = defineStore('plants', () => {
     setSpecies,
     setVariety,
     getAllSpecies,
+    getAllVarieties,
     getSpecies,
     getVariety,
     varietiesBySpecies,
