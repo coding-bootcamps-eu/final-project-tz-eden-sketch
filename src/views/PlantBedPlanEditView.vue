@@ -132,7 +132,7 @@ function mapTableContent(userVarieties) {
   console.log(userVarieties[0])
   console.log(userVarieties[0].speciesId)
   const rows = []
-  for (let i = 0; i <= userVarieties.length; i++) {
+  for (let i = 0; i < userVarieties.length; i++) {
     const species = plantsStore.getSpecies(userVarieties[i].speciesId)
     const row = {}
     row.name = userVarieties[i].name
