@@ -25,7 +25,7 @@ import SeparatorElement from '@/components/SeparatorElement.vue'
     <main>
       <header class="header">
         <div class="image-container">
-          <img class="image" src="../assets/images/bellpepper.webp" alt="paprika" />
+          <img class="image" src="@/assets/images/bellpepper.webp" alt="paprika" />
         </div>
         <div class="wrapper-headline">
           <p class="headline-label">Sorte</p>

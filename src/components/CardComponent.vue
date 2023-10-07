@@ -1,14 +1,18 @@
 <script setup>
-// import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { RouterLink } from 'vue-router'
 
-// const props =
-defineProps({
+const props = defineProps({
   cardImage: String,
   cardTitle: String,
   cardDescription: String,
   cardLink: String,
   cardElement: Object
   /* wie definiert man hier default werte?? */
+})
+
+const imageUrl = computed(() => {
+  return new URL(`/src/assets/images/${props.cardImage}`, import.meta.url).href
 })
 
 // const emit = defineEmits(['cardClick'])
@@ -18,7 +22,7 @@ defineProps({
   <div class="card">
     <div class="content-wrapper">
       <div class="image-wrapper">
-        <img class="card-image" :src="cardImage" />
+        <img class="card-image" :src="imageUrl" />
       </div>
 
       <div class="card-infos">
@@ -26,8 +30,8 @@ defineProps({
         <p class="card-description">{{ cardDescription }}</p>
       </div>
     </div>
-    <a :href="cardLink" class="card-link"></a>
-    <!-- <a :href="cardLink" class="card-link" @click="$emit('cardClick', cardElement)"></a> -->
+    <router-link :to="cardLink ?? '/'" class="card-link"></router-link>
+    <!--?? gibt wert nach Fragezeichen zurück wenn Wert davor nullish-->
   </div>
 </template>
 
