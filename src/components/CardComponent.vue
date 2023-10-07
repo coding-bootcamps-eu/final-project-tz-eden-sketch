@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue'
+import { RouterLink } from 'vue-router'
 
 const props = defineProps({
   cardImage: String,
@@ -29,8 +30,8 @@ const imageUrl = computed(() => {
         <p class="card-description">{{ cardDescription }}</p>
       </div>
     </div>
-    <a :href="cardLink" class="card-link"></a>
-    <!-- <a :href="cardLink" class="card-link" @click="$emit('cardClick', cardElement)"></a> -->
+    <router-link :to="cardLink ?? '/'" class="card-link"></router-link>
+    <!--?? gibt wert nach Fragezeichen zurück wenn Wert davor nullish-->
   </div>
 </template>
 
