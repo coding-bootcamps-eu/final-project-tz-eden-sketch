@@ -17,22 +17,11 @@ import SiteNavigation from '@/components/SiteNavigation.vue'
       <CardComponent
         card-title="Pflanzen"
         card-link="/plantspecies/list"
-        card-image="../src/assets/images/root-vegetable_1000px.svg"
+        card-image="root-vegetable_1000px.svg"
       />
-      <CardComponent
-        card-title="Beetplanung"
-        card-image="../src/assets/images/raised-bed-vegetables.svg"
-      />
-      <CardComponent
-        card-title="Aufgaben"
-        card-link="/todos"
-        card-image="../src/assets/images/gloves.svg"
-      />
-      <CardComponent
-        card-title="Wissen"
-        card-link="/blog"
-        card-image="../src/assets/images/book.svg"
-      />
+      <CardComponent card-title="Beetplanung" card-image="raised-bed-vegetables.svg" />
+      <CardComponent card-title="Aufgaben" card-link="/todos" card-image="gloves.svg" />
+      <CardComponent card-title="Wissen" card-link="/blog" card-image="book.svg" />
     </main>
     <SeparatorElement />
     <footer>

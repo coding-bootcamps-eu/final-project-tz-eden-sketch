@@ -18,7 +18,7 @@ import SiteNavigation from '@/components/SiteNavigation.vue'
     <div class="separator"></div>
     <header class="header">
       <div class="image-container">
-        <img class="image" src="../assets/images/bellpepper.webp" alt="paprika" />
+        <img class="image" src="@/assets/images/bellpepper.webp" alt="paprika" />
       </div>
       <div class="wrapper-headline">
         <p class="headline-label">Art</p>

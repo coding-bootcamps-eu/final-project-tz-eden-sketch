@@ -36,7 +36,7 @@ console.log(plantsStore.getAllSpecies())
       <CardComponent
         v-for="species of plantsStore.getAllSpecies()"
         :key="species.id"
-        :card-image="`/src/assets/images/${species.imagename}`"
+        :card-image="species.imagename"
         :card-title="species.name"
         :card-link="`/plantspecies/view/${species.name}`"
       />

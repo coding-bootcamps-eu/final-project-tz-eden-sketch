@@ -1,14 +1,17 @@
 <script setup>
-// import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
-// const props =
-defineProps({
+const props = defineProps({
   cardImage: String,
   cardTitle: String,
   cardDescription: String,
   cardLink: String,
   cardElement: Object
   /* wie definiert man hier default werte?? */
+})
+
+const imageUrl = computed(() => {
+  return new URL(`/src/assets/images/${props.cardImage}`, import.meta.url).href
 })
 
 // const emit = defineEmits(['cardClick'])
@@ -18,7 +21,7 @@ defineProps({
   <div class="card">
     <div class="content-wrapper">
       <div class="image-wrapper">
-        <img class="card-image" :src="cardImage" />
+        <img class="card-image" :src="imageUrl" />
       </div>
 
       <div class="card-infos">
