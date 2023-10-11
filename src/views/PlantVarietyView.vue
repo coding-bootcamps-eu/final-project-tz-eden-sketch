@@ -1,6 +1,24 @@
 <script setup>
-// import { ref } from 'vue'
 import SeparatorElement from '@/components/SeparatorElement.vue'
+import SiteNavigation from '@/components/SiteNavigation.vue'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+
+import { usePlantsStore } from '@/stores/usePlantsStore'
+const plantsStore = usePlantsStore()
+
+const variety = computed(() => {
+  return plantsStore.getVariety(route.params.plantvariety)
+})
+
+const imageUrl = computed(() => {
+  return new URL(`/src/assets/images/${variety.value[0].imagename}`, import.meta.url).href
+})
+
+// const speciesUrl = computed(() => {
+//   return new URL(`/src/assets/images/${variety.value[0].imagename}`, import.meta.url).href
+// })
 </script>
 
 <template>
@@ -14,64 +32,87 @@ import SeparatorElement from '@/components/SeparatorElement.vue'
       <q-breadcrumbs-el label="Übersicht" to="/" icon="bi-house" />
       <q-breadcrumbs-el
         label="Pflanzenarten"
-        to="/plantspecies/view/"
+        to="/plantspecies/list/"
         icon="svguse:/icons.svg#sprout"
       />
-      <q-breadcrumbs-el label="Spinat" />
-      <q-breadcrumbs-el label="Spinatsorte" />
+
+      <!-- todo: geht nicht -->
+
+      <!-- <q-breadcrumbs-el
+        style="color: red"
+        :label="variety[0].species"
+        :to="{
+          name: 'plantspeciesview',
+          params: { plantspecies: variety[0].species }
+        }"
+      /> -->
+
+      <!-- <routerLink
+        :to="{
+          name: 'plantspeciesview',
+          // params: { plantspeciesy: plantsStore.getSpecies(variety.speciesID) }
+          params: { plantspecies: variety.species }
+        }"
+      /> -->
+      <q-breadcrumbs-el :label="variety[0].name" />
     </q-breadcrumbs>
     <!-- <SeparatorElement /> -->
 
     <main>
       <header class="header">
         <div class="image-container">
-          <img class="image" src="@/assets/images/bellpepper.webp" alt="paprika" />
+          <img class="image" :src="imageUrl" :alt="variety[0].name" />
         </div>
         <div class="wrapper-headline">
           <p class="headline-label">Sorte</p>
-          <h1 class="headline-main headline-plantname">Spinatsorte</h1>
-          <p class="headline-sub botanical-name">Spinacia oleracea</p>
+          <h1 class="headline-main headline-plantname">{{ variety[0].name }}</h1>
+          <p class="headline-sub botanical-name">{{ variety[0].botanicname }}</p>
         </div>
       </header>
       <SeparatorElement />
 
       <article>
         <h2>Art</h2>
-        <p>Spinat</p>
+        <p>{{ variety[0].species }}</p>
       </article>
       <SeparatorElement />
 
       <article>
         <h2>Pflanzenfamilie</h2>
-        <p>Gänsefußgewächse (Chenopodiaceae)</p>
+        <p>{{ variety[0].plantfamily }}</p>
       </article>
       <SeparatorElement />
 
       <article>
         <h2>Saisonübersicht</h2>
         <ul>
-          <li>Vorziehen: mitte April bis mitte Juni</li>
-          <li>Pflanzung: mitte Mai bis mitte Juli</li>
-          <li>Direktaussat: mitte Mai bis mitte Juni</li>
+          <li v-if="variety[0].sowingForPlantingStart">
+            Vorziehen: {{ variety[0].sowingForPlantingStart }} bis
+            {{ variety[0].sowingForPlantingEnd }}
+          </li>
+          <li v-if="variety[0].plantingStart">
+            Pflanzung: {{ variety[0].plantingStart }} bis {{ variety[0].plantingEnd }}
+          </li>
+          <li v-if="variety[0].directSowingStart">
+            Direktaussat: {{ variety[0].directSowingStart }} bis {{ variety[0].directSowingEnd }}
+          </li>
+          <li v-if="variety[0].harvestingStart">
+            Ernte: {{ variety[0].harvestingStart }} bis {{ variety[0].harvestingEnd }}
+          </li>
           <br />
-          <li>Ernte: Ende Juli bis mitte Oktober</li>
           <br />
-          <br />
-          <li>Zeit in Beet / Kulturdauer: 120 Tage</li>
+          <li v-if="variety[0].growingSeason">
+            Zeit in Beet / Kulturdauer: {{ variety[0].growingSeason }} Tage
+          </li>
         </ul>
       </article>
       <SeparatorElement />
 
-      <article>
+      <article v-if="variety[0].description">
         <h2>Beschreibung</h2>
-        <p>
-          Hier wird die einzelne Spinatsorte beschrieben. Beschreibung Spinat gehört zur Familie der
-          Gänsefußgewächse. Er hat eine sehr kurze Kulturzeit, daher eignet er sich prima als Vor-
-          und Nachkultur. Es gibt ca. 50 Sorten des Frühjahrs- und Winterspinats mit diversen
-          Formen, Farben und unterschiedlicher Fleischigkeit.
-        </p>
+        <p>{{ variety[0].description }}</p>
       </article>
-      <SeparatorElement />
+      <SeparatorElement v-if="variety[0].description" />
 
       <article>
         <h2>Pflege</h2>
@@ -80,53 +121,45 @@ import SeparatorElement from '@/components/SeparatorElement.vue'
             <!-- <img src="" alt="Planzabstand" class="info-icon" /> -->
             <q-icon name="svguse:/icons.svg#plantdistance" />
             <p class="info-category">Pflanzabstand</p>
-            <p class="info-value">3 cm</p>
+            <p class="info-value">{{ variety[0].plantingDistance }} cm</p>
           </li>
           <li class="info-wrapper">
             <img src="" alt="Reihenabstand" class="info-icon" />
             <p class="info-category">Reihenabstand</p>
-            <p class="info-value">30 cm</p>
+            <p class="info-value">{{ variety[0].rowDistance }} cm</p>
           </li>
           <li class="info-wrapper">
             <img src="" alt="Saattiefe" class="info-icon" />
             <p class="info-category">Saattiefe</p>
-            <p class="info-value">0,5 cm</p>
+            <p class="info-value">{{ variety[0].sowingDepth }} cm</p>
           </li>
           <li class="info-wrapper">
             <!-- <img src="" alt="Lichtbedarf" class="info-icon" /> -->
             <q-icon name="bi-sun" />
             <p class="info-category">Lichtbedarf</p>
-            <p class="info-value">Sonne bis Halbschatten</p>
+            <p class="info-value">{{ variety[0].light }}</p>
           </li>
           <li class="info-wrapper">
             <img src="" alt="Nährstoffbedarf" class="info-icon" />
             <p class="info-category">Nährstoffbedarf</p>
-            <p class="info-value">mittel</p>
+            <p class="info-value">{{ variety[0].nutrition }}</p>
           </li>
           <li class="info-wrapper">
             <!-- <img src="" alt="Wasserbedarf" class="info-icon" /> -->
             <q-icon name="bi-droplet" />
             <!-- <q-icon name="la-tint" /> geht nicht -->
             <p class="info-category">Wasserbedarf</p>
-            <p class="info-value">mittel</p>
+            <p class="info-value">{{ variety[0].water }}</p>
           </li>
         </ul>
       </article>
       <SeparatorElement />
 
-      <article>
+      <article v-if="variety[0].cultivationTips">
         <h2>Anbautipps</h2>
-        <p>
-          Möhren bevorzugen tiefgründige, lockere Erde mit einem hohen Humusanteil und guter
-          Nährstoffversorgung. Die Aussaat von Früh- und Sommermöhren sollte ab Mitte Februar so
-          früh wie möglich erfolgen, da die Keimung bei 5°C bis zu 45 Tage dauert. Die Keimlinge
-          wachsen sehr langsam und benötigen zu Beginn viel Aufmerksamkeit, damit sie nicht von
-          Unkraut überwachsen werden. Es bietet sich an, neben den Möhrenreihen je eine Reihe
-          Radieschen als Markiersaat zu säen. Nach der Keimung sollten die Pflänzchen ausgedünnt
-          werden.
-        </p>
+        <p>{{ variety[0].cultivationTips }}</p>
       </article>
-      <SeparatorElement />
+      <SeparatorElement v-if="variety[0].cultivationTips" />
 
       <article>
         <h2>Meine Sätze im Beet</h2>
@@ -137,6 +170,10 @@ import SeparatorElement from '@/components/SeparatorElement.vue'
         </ul>
       </article>
     </main>
+
+    <nav class="view__nav">
+      <SiteNavigation></SiteNavigation>
+    </nav>
   </div>
 </template>
 
