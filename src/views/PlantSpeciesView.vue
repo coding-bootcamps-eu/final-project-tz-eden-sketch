@@ -1,4 +1,5 @@
 <script setup>
+import SeparatorElement from '@/components/SeparatorElement.vue'
 import SiteNavigation from '@/components/SiteNavigation.vue'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
@@ -36,7 +37,7 @@ const imageUrl = computed(() => {
       <q-breadcrumbs-el :label="species[0].name" />
     </q-breadcrumbs>
 
-    <div class="separator"></div>
+    <SeparatorElement />
     <header class="header">
       <div class="image-container">
         <img class="image" :src="imageUrl" :alt="species[0].name" />
@@ -47,13 +48,16 @@ const imageUrl = computed(() => {
         <p class="headline-sub botanical-name">{{ species[0].botanicname }}</p>
       </div>
     </header>
-    <div class="separator"></div>
+    <SeparatorElement />
+
     <h2>Pflanzenfamilie</h2>
     <p>{{ species[0].plantfamily }}</p>
-    <div class="separator"></div>
+    <SeparatorElement />
+
     <h2>Beschreibung</h2>
     <p>{{ species[0].description }}</p>
-    <div class="separator"></div>
+    <SeparatorElement />
+
     <h2>Mischkultur</h2>
     <h3>
       <q-icon name="bi-suit-heart-fill"></q-icon>
@@ -70,13 +74,10 @@ const imageUrl = computed(() => {
     <ol class="list">
       <li v-for="neighbor in species[0].badNeighbors" :key="neighbor">{{ neighbor }}</li>
     </ol>
-    <div class="separator"></div>
+    <SeparatorElement />
+
     <h2>Sorten</h2>
     <ol class="list">
-      <!-- <li>
-        <a href="/plantvariety/view/:plantvariety*"> Sorte 1 </a>
-      </li> -->
-
       <routerLink
         v-for="variety in varieties"
         :key="variety.id"
@@ -88,6 +89,7 @@ const imageUrl = computed(() => {
       </routerLink>
     </ol>
   </main>
+
   <nav class="view__nav">
     <SiteNavigation></SiteNavigation>
   </nav>
