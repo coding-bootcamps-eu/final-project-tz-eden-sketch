@@ -3,29 +3,6 @@ import SiteNavigation from '@/components/SiteNavigation.vue'
 import CardComponent from '@/components/CardComponent.vue'
 import { usePlantsStore } from '@/stores/usePlantsStore'
 const plantsStore = usePlantsStore()
-
-console.log('vorher:')
-console.log(plantsStore.getAllSpecies())
-plantsStore.setSpecies(
-  'Orange',
-  'bellpepper.webp',
-  'schlauer Name',
-  'Testfamilie',
-  'Lorem Ipsum trfzguhijouzghcf',
-  ['Kirschen', 'Tomaten', 'Salat'],
-  ['Kirschen', 'Tomaten', 'Salat']
-)
-plantsStore.setSpecies(
-  'Apfel',
-  'bellpepper.webp',
-  'schlauer Name',
-  'Testfamilie',
-  'Lorem Ipsum trfzguhijouzghcf',
-  ['Kirschen', 'Tomaten', 'Salat'],
-  ['Kirschen', 'Tomaten', 'Salat']
-)
-console.log('nachher:')
-console.log(plantsStore.getAllSpecies())
 </script>
 
 <template>

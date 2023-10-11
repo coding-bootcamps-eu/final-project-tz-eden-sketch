@@ -45,8 +45,7 @@ const router = createRouter({
       component: TodoView
     },
     {
-      path: '/plantvariety/view/:plantvariety*',
-      /*  später * entfernen sobald richtige Daten von Api kommen. Mit * ist Parameter optional */
+      path: '/plantvariety/view/:plantvariety',
       name: 'plantvarietyview',
       component: PlantvarietyView
     },

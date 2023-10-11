@@ -1,41 +1,58 @@
 <script setup>
 import SiteNavigation from '@/components/SiteNavigation.vue'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+
+import { usePlantsStore } from '@/stores/usePlantsStore'
+const plantsStore = usePlantsStore()
+
+const species = computed(() => {
+  return plantsStore.getSpecies(plantsStore.getSpeciesIdFromName(route.params.plantspecies[0]))
+})
+
+const varieties = computed(() => {
+  return plantsStore.varietiesBySpecies(species.value[0].id)
+})
+
+const imageUrl = computed(() => {
+  return new URL(`/src/assets/images/${species.value[0].imagename}`, import.meta.url).href
+})
 </script>
 <template>
   <main>
-    <q-icon name="fa-leaf"></q-icon>
     <q-breadcrumbs color="primary" class="breadcrum">
       <template v-slot:separator>
         <q-icon size="1.5em" name="chevron_right" color="primary" />
+        <!--todo: icon selbst downloaden -->
       </template>
 
       <q-breadcrumbs-el label="Übersicht" to="/" icon="bi-house" />
-      <q-breadcrumbs-el label="Pflanzenarten" to="/plantspecies/view/" icon="la-leaf" />
-      <!-- todo: verlinkten Path anpassen:Übersicht Pflanzenarten, icon fixen: bei Pflanzenarten soll icon-plants.svg genutzt werden-->
-      <q-breadcrumbs-el label="Spinat" />
+      <q-breadcrumbs-el
+        label="Pflanzenarten"
+        to="/plantspecies/list/"
+        icon="svguse:/icons.svg#sprout"
+      />
+      <q-breadcrumbs-el :label="species[0].name" />
     </q-breadcrumbs>
 
     <div class="separator"></div>
     <header class="header">
       <div class="image-container">
-        <img class="image" src="@/assets/images/bellpepper.webp" alt="paprika" />
+        <img class="image" :src="imageUrl" :alt="species[0].name" />
       </div>
       <div class="wrapper-headline">
         <p class="headline-label">Art</p>
-        <h1 class="headline-main headline-plantname">Spinat</h1>
-        <p class="headline-sub botanical-name">Spinacia oleracea</p>
+        <h1 class="headline-main headline-plantname">{{ species[0].name }}</h1>
+        <p class="headline-sub botanical-name">{{ species[0].botanicname }}</p>
       </div>
     </header>
     <div class="separator"></div>
     <h2>Pflanzenfamilie</h2>
-    <p>Gänsefußgewächse (Chenopodiaceae)</p>
+    <p>{{ species[0].plantfamily }}</p>
     <div class="separator"></div>
     <h2>Beschreibung</h2>
-    <p>
-      Beschreibung Spinat gehört zur Familie der Gänsefußgewächse. Er hat eine sehr kurze
-      Kulturzeit, daher eignet er sich prima als Vor- und Nachkultur. Es gibt ca. 50 Sorten des
-      Frühjahrs- und Winterspinats mit diversen Formen, Farben und unterschiedlicher Fleischigkeit.
-    </p>
+    <p>{{ species[0].description }}</p>
     <div class="separator"></div>
     <h2>Mischkultur</h2>
     <h3>
@@ -43,9 +60,7 @@ import SiteNavigation from '@/components/SiteNavigation.vue'
       Gute Nachbarn
     </h3>
     <ol class="list">
-      <li>Radieschen</li>
-      <li>Erbse</li>
-      <li>Steckrübe</li>
+      <li v-for="neighbor in species[0].goodNeighbors" :key="neighbor">{{ neighbor }}</li>
     </ol>
 
     <h3>
@@ -53,18 +68,24 @@ import SiteNavigation from '@/components/SiteNavigation.vue'
       Schlechte Nachbarn
     </h3>
     <ol class="list">
-      <li>Mangold</li>
-      <li>Rote Beete</li>
-      <li>Liebstöckel</li>
+      <li v-for="neighbor in species[0].badNeighbors" :key="neighbor">{{ neighbor }}</li>
     </ol>
     <div class="separator"></div>
     <h2>Sorten</h2>
     <ol class="list">
-      <li>
+      <!-- <li>
         <a href="/plantvariety/view/:plantvariety*"> Sorte 1 </a>
-      </li>
-      <li>Sorte 2</li>
-      <li>Sorte 3</li>
+      </li> -->
+
+      <routerLink
+        v-for="variety in varieties"
+        :key="variety.id"
+        :to="{ name: 'plantvarietyview', params: { plantvariety: variety.id } }"
+      >
+        <li>
+          {{ variety.name }}
+        </li>
+      </routerLink>
     </ol>
   </main>
   <nav class="view__nav">
