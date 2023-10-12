@@ -29,9 +29,6 @@ export const usePlantsStore = defineStore('plants', () => {
   function getAllSpecies() {
     return state.plantSpecies
   }
-  function getAllVarieties() {
-    return state.plantVariety
-  }
 
   function getAllVarieties() {
     return state.plantVarieties
@@ -75,65 +72,66 @@ export const usePlantsStore = defineStore('plants', () => {
       description: description
     }
 
-    const resp = await fetch('http://localhost:3000/plantspecies/', {
+    // const resp =
+    await fetch('http://localhost:3000/plantspecies/', {
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
       body: JSON.stringify(newSpecies)
     })
-    const savedSpecies = await resp.json()
+    // const savedSpecies = await resp.json()
 
     return true
   }
 
-  async function setVariety(
-      name,
-      botanicname,
-      species,
-      plantfamily,
-      description,
-      sowingForPlantingStart,
-      sowingForPlantingEnd,
-      plantingStart,
-      plantingEnd,
-      directSowingStart,
-      directSowingEnd,
-      harvestingStart,
-      growingSeason,
-      growingSeasonIntern,
-      plantingDistance,
-      rowDistance,
-      nutrition,
-      light,
-      water,
-      sowingDepth,
-      cultivationTips,
-      imagename
-    ) {
-      const newVariety = {
-        name: name,
-        botanicname,
-        speciesId: getSpeciesIdFromName(species),
-        species,
-        plantfamily,
-        description,
-        sowingForPlantingStart,
-        sowingForPlantingEnd,
-        plantingStart,
-        plantingEnd,
-        directSowingStart,
-        directSowingEnd,
-        harvestingStart,
-        growingSeason,
-        growingSeasonIntern,
-        plantingDistance,
-        rowDistance,
-        nutrition,
-        light,
-        water,
-        sowingDepth,
-        cultivationTips,
-        imagename
-  }
+  // async function setVariety(
+  //     name,
+  //     botanicname,
+  //     species,
+  //     plantfamily,
+  //     description,
+  //     sowingForPlantingStart,
+  //     sowingForPlantingEnd,
+  //     plantingStart,
+  //     plantingEnd,
+  //     directSowingStart,
+  //     directSowingEnd,
+  //     harvestingStart,
+  //     growingSeason,
+  //     growingSeasonIntern,
+  //     plantingDistance,
+  //     rowDistance,
+  //     nutrition,
+  //     light,
+  //     water,
+  //     sowingDepth,
+  //     cultivationTips,
+  //     imagename
+  //   ) {
+  //     const newVariety = {
+  //       name: name,
+  //       botanicname,
+  //       speciesId: getSpeciesIdFromName(species),
+  //       species,
+  //       plantfamily,
+  //       description,
+  //       sowingForPlantingStart,
+  //       sowingForPlantingEnd,
+  //       plantingStart,
+  //       plantingEnd,
+  //       directSowingStart,
+  //       directSowingEnd,
+  //       harvestingStart,
+  //       growingSeason,
+  //       growingSeasonIntern,
+  //       plantingDistance,
+  //       rowDistance,
+  //       nutrition,
+  //       light,
+  //       water,
+  //       sowingDepth,
+  //       cultivationTips,
+  //       imagename
+  // }
 
   function varietiesBySpecies(speciesId) {
     return state.plantVarieties.filter((varietyItem) => varietyItem['speciesId'] === speciesId)
@@ -159,7 +157,7 @@ export const usePlantsStore = defineStore('plants', () => {
   return {
     state,
     setSpecies,
-    setVariety,
+    // setVariety,
     getAllSpecies,
     getAllVarieties,
     getSpecies,
