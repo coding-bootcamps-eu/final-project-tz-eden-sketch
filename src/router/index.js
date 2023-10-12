@@ -9,6 +9,7 @@ import PlantvarietyView from '../views/PlantVarietyView.vue'
 import PlantBedSelectionView from '../views/PlantBedSelectionView.vue'
 import ImpressumView from '../views/ImpressumView.vue'
 import PlantBedPlanEditView from '@/views/PlantBedPlanEditView.vue'
+import PlantSpeciesSet from '@/views/PlantsSet.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -64,6 +65,11 @@ const router = createRouter({
       path: '/plantbed-edit',
       name: 'plantbed-edit',
       component: PlantBedPlanEditView
+    },
+    {
+      path: '/plantspecies/set',
+      name: 'plantspeciesset',
+      component: PlantSpeciesSet
     }
   ]
 })

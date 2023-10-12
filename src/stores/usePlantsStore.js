@@ -48,57 +48,109 @@ export const usePlantsStore = defineStore('plants', () => {
   //todo: delete Funktion
 
   // add new species / variety
-  function setSpecies(
+  async function setSpecies(
     name,
-    imagename,
     botanicname,
+    imagename,
     plantfamily,
-    description,
+    nutrition,
     goodNeighbors,
-    badNeighbors
+    badNeighbors,
+    description
   ) {
-    let id = state.plantSpecies.length //todo: bessere Id generieren oder kommt vom Backend?
     if (state.plantSpecies.filter((speciesItem) => speciesItem['name'] === name).length > 0) {
       //species already exits
       console.log('species already exists')
       return false
     }
 
-    state.plantSpecies.push({
-      id: id,
+    const newSpecies = {
       name: name,
-      imagename: imagename,
       botanicname: botanicname,
+      imagename: imagename,
       plantfamily: plantfamily,
-      descriptrion: description,
+      nutrition: nutrition,
       goodNeighbors: goodNeighbors,
-      badNeighbors: badNeighbors
+      badNeighbors: badNeighbors,
+      description: description
+    }
+
+    const resp = await fetch('http://localhost:3000/plantspecies/', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify(newSpecies)
     })
+    const savedSpecies = await resp.json()
 
     return true
   }
 
-  function setVariety(name, species_id, descr, weeks, light) {
-    let id = state.plantVarieties.length
-    state.plantVarity.push({
-      id: id,
-      name: name,
-      descr: descr,
-      species_id: species_id,
-      weeks: weeks,
-      light: light
-    })
+  async function setVariety(
+      name,
+      botanicname,
+      species,
+      plantfamily,
+      description,
+      sowingForPlantingStart,
+      sowingForPlantingEnd,
+      plantingStart,
+      plantingEnd,
+      directSowingStart,
+      directSowingEnd,
+      harvestingStart,
+      growingSeason,
+      growingSeasonIntern,
+      plantingDistance,
+      rowDistance,
+      nutrition,
+      light,
+      water,
+      sowingDepth,
+      cultivationTips,
+      imagename
+    ) {
+      const newVariety = {
+        name: name,
+        botanicname,
+        speciesId: getSpeciesIdFromName(species),
+        species,
+        plantfamily,
+        description,
+        sowingForPlantingStart,
+        sowingForPlantingEnd,
+        plantingStart,
+        plantingEnd,
+        directSowingStart,
+        directSowingEnd,
+        harvestingStart,
+        growingSeason,
+        growingSeasonIntern,
+        plantingDistance,
+        rowDistance,
+        nutrition,
+        light,
+        water,
+        sowingDepth,
+        cultivationTips,
+        imagename
   }
+
   function varietiesBySpecies(speciesId) {
     return state.plantVarieties.filter((varietyItem) => varietyItem['speciesId'] === speciesId)
   }
 
   function getSpeciesIdFromName(name) {
+    console.log(name)
     return state.plantSpecies.filter(
       (plantSpeciesItem) => plantSpeciesItem['name'] === name
     )?.[0]?.['id']
     //optional chaining
   }
+  onBeforeMount(async () => {
+    await loadPlantSpecies()
+    await loadPlantVarieties()
+  })
+
   onBeforeMount(async () => {
     await loadPlantSpecies()
     await loadPlantVarieties()
