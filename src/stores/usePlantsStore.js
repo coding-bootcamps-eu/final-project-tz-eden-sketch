@@ -32,7 +32,7 @@ export const usePlantsStore = defineStore('plants', () => {
         id: '1',
         name: 'Oxhella',
         descr: 'tolle descr',
-        speciesId: 2,
+        speciesId: '2',
         weeks: 4,
         light: 'Sonne bis Halbschatten'
       },
@@ -40,7 +40,7 @@ export const usePlantsStore = defineStore('plants', () => {
         id: '2',
         name: 'Oxhella 2 ',
         descr: 'tolle descr',
-        speciesId: 1,
+        speciesId: '1',
         weeks: 8,
         light: 'Sonne'
       },
@@ -48,7 +48,7 @@ export const usePlantsStore = defineStore('plants', () => {
         id: '3',
         name: 'Oxhella 3 ',
         descr: 'tolle descr',
-        speciesId: 2,
+        speciesId: '2',
         weeks: 3,
         light: 'Sonne bis Halbschatten'
       }

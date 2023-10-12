@@ -128,9 +128,11 @@ const rows = mapTableContent(userVarieties)
 // ])
 
 function mapTableContent(userVarieties) {
-  console.log(userVarieties)
-  console.log(userVarieties[0])
-  console.log(userVarieties[0].speciesId)
+  // console.log(userVarieties)
+  // console.log(userVarieties[0])
+  console.log(userVarieties[0].name, userVarieties[0].speciesId)
+  const speciesX = plantsStore.getSpecies(userVarieties[0].speciesId)
+  console.log(speciesX)
   const rows = []
   for (let i = 0; i < userVarieties.length; i++) {
     const species = plantsStore.getSpecies(userVarieties[i].speciesId)
