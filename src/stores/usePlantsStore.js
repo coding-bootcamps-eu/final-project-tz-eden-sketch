@@ -149,14 +149,16 @@ export const usePlantsStore = defineStore('plants', () => {
     await loadPlantVarieties()
   })
 
-  onBeforeMount(async () => {
-    await loadPlantSpecies()
-    await loadPlantVarieties()
-  })
+  // onBeforeMount(async () => {
+  //   await loadPlantSpecies()
+  //   await loadPlantVarieties()
+  // })
 
   return {
     state,
     setSpecies,
+    loadPlantSpecies,
+    loadPlantVarieties,
     // setVariety,
     getAllSpecies,
     getAllVarieties,
