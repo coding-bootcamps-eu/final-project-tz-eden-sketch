@@ -1,12 +1,19 @@
-import { ref, computed } from 'vue'
+import { reactive } from 'vue'
 import { defineStore } from 'pinia'
 
-export const useCounterStore = defineStore('counter', () => {
-  const count = ref(0)
-  const doubleCount = computed(() => count.value * 2)
-  function increment() {
-    count.value++
-  }
+export const usePlantBedsStore = defineStore('plants', () => {
+  const state = reactive({
+    currentMonth: '',
+    currentPeriod: '',
+    test: 'Test'
+  })
 
-  return { count, doubleCount, increment }
+  // function addPlant() {
+
+  // }
+
+  return {
+    state
+    // addPlant
+  }
 })
