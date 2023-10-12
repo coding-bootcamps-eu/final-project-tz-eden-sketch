@@ -1,71 +1,31 @@
-import { reactive } from 'vue'
+import { reactive, onBeforeMount } from 'vue'
 import { defineStore } from 'pinia'
 
 export const usePlantsStore = defineStore('plants', () => {
   const state = reactive({
-    plantSpecies: [
-      {
-        id: '1',
-        name: 'Spinat',
-        imagename: 'bellpepper.webp',
-        botanicname: 'lorem ipsum',
-        plantfamily: 'Erbsengewächse',
-        nutrition: 'mittel',
-        descr: 'super tolle Salatbeschreibung',
-        goodNeighbors: ['Tomate', 'Birne', 'Aubergine'],
-        badNeighbors: ['Zucchini', 'Paprika']
-      },
-      {
-        id: '2',
-        name: 'Tomate',
-        imagename: 'bellpepper.webp',
-        botanicname: 'lorem ipsum',
-        plantfamily: 'Nachschattengewächse',
-        nutrition: 'stark',
-        descr: 'super tolle Tomatenbeschreibung',
-        goodNeighbors: ['Chilli', 'Salat', 'Aubergine'],
-        badNeighbors: ['Möhre', 'Paprika']
-      }
-    ], //Pflanzenart z.B. Möhre
-    plantVariety: [
-      {
-        id: '1',
-        name: 'Oxhella',
-        descr: 'tolle descr',
-        speciesId: '2',
-        weeks: 4,
-        light: 'Sonne bis Halbschatten'
-      },
-      {
-        id: '2',
-        name: 'Oxhella 2 ',
-        descr: 'tolle descr',
-        speciesId: '1',
-        weeks: 8,
-        light: 'Sonne'
-      },
-      {
-        id: '3',
-        name: 'Oxhella 3 ',
-        descr: 'tolle descr',
-        speciesId: '2',
-        weeks: 3,
-        light: 'Sonne bis Halbschatten'
-      }
-    ] //Pflanzensorte z.B. Oxhella
+    plantSpecies: [], //Pflanzenart z.B. Möhre
+    plantVarieties: [] //Pflanzensorte z.B. Oxhella
   })
 
-  // function loadFromBackend() {
-  //   //lade beim starten der App die Daten
-  //   //fetch()
-  // }
+  async function loadPlantSpecies() {
+    const resp = await fetch('http://localhost:3000/plantspecies')
+    const data = await resp.json()
+    state.plantSpecies = data
+  }
 
+  async function loadPlantVarieties() {
+    const resp = await fetch('http://localhost:3000/plantvarieties')
+    const data = await resp.json()
+    state.plantVarieties = data
+  }
+
+  //vorerst keine Funktion zum erfassen von Pflanzen im Frontend vorgesehen
   // function saveToBackend() {
-  //   //speicher Daten im Backend
-  //   //fetch()
+  //speicher Daten im Backend
+  //fetch()
   // }
 
-  //get all species
+  //get all species / varieties
   function getAllSpecies() {
     return state.plantSpecies
   }
@@ -73,12 +33,16 @@ export const usePlantsStore = defineStore('plants', () => {
     return state.plantVariety
   }
 
+  function getAllVarieties() {
+    return state.plantVarieties
+  }
+
   //get single species / variety
   function getSpecies(id) {
     return state.plantSpecies.filter((speciesItem) => speciesItem['id'] === id)
   }
   function getVariety(id) {
-    return state.plantVariety.filter((varietyItem) => varietyItem['id'] === id)
+    return state.plantVarieties.filter((varietyItem) => varietyItem['id'] === id)
   }
 
   //todo: delete Funktion
@@ -89,7 +53,7 @@ export const usePlantsStore = defineStore('plants', () => {
     imagename,
     botanicname,
     plantfamily,
-    descr,
+    description,
     goodNeighbors,
     badNeighbors
   ) {
@@ -106,7 +70,7 @@ export const usePlantsStore = defineStore('plants', () => {
       imagename: imagename,
       botanicname: botanicname,
       plantfamily: plantfamily,
-      descr: descr,
+      descriptrion: description,
       goodNeighbors: goodNeighbors,
       badNeighbors: badNeighbors
     })
@@ -115,7 +79,7 @@ export const usePlantsStore = defineStore('plants', () => {
   }
 
   function setVariety(name, species_id, descr, weeks, light) {
-    let id = state.plantVariety.length
+    let id = state.plantVarieties.length
     state.plantVarity.push({
       id: id,
       name: name,
@@ -125,8 +89,8 @@ export const usePlantsStore = defineStore('plants', () => {
       light: light
     })
   }
-  function varietiesBySpecies(id) {
-    return state.plantVariety.filter((varietyItem) => varietyItem['species_id'] === id)
+  function varietiesBySpecies(speciesId) {
+    return state.plantVarieties.filter((varietyItem) => varietyItem['speciesId'] === speciesId)
   }
 
   function getSpeciesIdFromName(name) {
@@ -135,6 +99,10 @@ export const usePlantsStore = defineStore('plants', () => {
     )?.[0]?.['id']
     //optional chaining
   }
+  onBeforeMount(async () => {
+    await loadPlantSpecies()
+    await loadPlantVarieties()
+  })
 
   return {
     state,

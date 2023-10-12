@@ -20,6 +20,7 @@ const router = createRouter({
     },
     {
       path: '/plantspecies/view/:plantspecies*',
+      /*todo: funktioniert ohne * noch nicht. warum?? */
       /*  später * entfernen sobald richtige Daten von Api kommen. Mit * ist Parameter optional */
       name: 'plantspeciesview',
       component: PlantSpeciesView
@@ -31,7 +32,6 @@ const router = createRouter({
     },
     {
       path: '/plantspecies/list',
-      /*  später * entfernen sobald richtige Daten von Api kommen. Mit * ist Parameter optional */
       name: 'plantspecieslist',
       component: PlantSpeciesListView
     },
@@ -46,8 +46,7 @@ const router = createRouter({
       component: TodoView
     },
     {
-      path: '/plantvariety/view/:plantvariety*',
-      /*  später * entfernen sobald richtige Daten von Api kommen. Mit * ist Parameter optional */
+      path: '/plantvariety/view/:plantvariety',
       name: 'plantvarietyview',
       component: PlantvarietyView
     },
