@@ -8,6 +8,7 @@ import TodoView from '@/views/TodoView.vue'
 import PlantvarietyView from '../views/PlantVarietyView.vue'
 import PlantBedSelectionView from '../views/PlantBedSelectionView.vue'
 import ImpressumView from '../views/ImpressumView.vue'
+import PlantBedPlanEditView from '@/views/PlantBedPlanEditView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -58,6 +59,11 @@ const router = createRouter({
       path: '/impressum',
       name: 'impressum',
       component: ImpressumView
+    },
+    {
+      path: '/plantbed-edit',
+      name: 'plantbed-edit',
+      component: PlantBedPlanEditView
     }
   ]
 })

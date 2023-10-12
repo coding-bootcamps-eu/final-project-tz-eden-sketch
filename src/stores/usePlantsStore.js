@@ -29,6 +29,9 @@ export const usePlantsStore = defineStore('plants', () => {
   function getAllSpecies() {
     return state.plantSpecies
   }
+  function getAllVarieties() {
+    return state.plantVariety
+  }
 
   function getAllVarieties() {
     return state.plantVarieties
