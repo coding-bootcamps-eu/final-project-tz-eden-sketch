@@ -1,0 +1,1115 @@
+<script setup>
+// import { onBeforeMount } from 'vue'
+import { usePlantsStore } from '@/stores/usePlantsStore'
+const plantsStore = usePlantsStore()
+
+function setSpecies() {
+  for (let speciesItem of species) {
+    console.log(speciesItem)
+    plantsStore.setSpecies(
+      speciesItem.name,
+      speciesItem.botanicname,
+      speciesItem.imagename,
+      speciesItem.plantfamily,
+      speciesItem.nutrition,
+      speciesItem.goodNeighbors,
+      speciesItem.badNeighbors,
+      speciesItem.description
+    )
+  }
+}
+
+async function setVarieties() {
+  for (let varietyItem of varieties) {
+    await plantsStore.setVariety(
+      varietyItem.name,
+      varietyItem.botanicname,
+      varietyItem.species,
+      varietyItem.plantfamily,
+      varietyItem.description,
+      varietyItem.sowingForPlantingStart,
+      varietyItem.sowingForPlantingEnd,
+      varietyItem.plantingStart,
+      varietyItem.plantingEnd,
+      varietyItem.directSowingStart,
+      varietyItem.directSowingEnd,
+      varietyItem.harvestingStart,
+      varietyItem.growingSeason,
+      varietyItem.growingSeasonIntern,
+      varietyItem.plantingDistance,
+      varietyItem.rowDistance,
+      varietyItem.nutrition,
+      varietyItem.light,
+      varietyItem.water,
+      varietyItem.sowingDepth,
+      varietyItem.cultivationTips,
+      varietyItem.imagename
+    )
+  }
+}
+
+const species = [
+  {
+    name: 'Möhre',
+    botanicname: 'Daucus carota',
+    imagename: 'carrot.webp',
+    plantfamily: 'Doldenblütler',
+    nutrition: 'Mittelzehrer',
+    goodNeighbors:
+      'Zwiebel, Schalotte, Knoblauch, Lauch, Erbse, Radieschen, Rettich, Dill, Pfefferminze',
+    badNeighbors: 'Sellerie',
+    description:
+      'Möhren aus dem eigenen Garten schmecken einfach fantastisch und sind eins meiner\nLieblingsgemüse! Das war aber nicht immer so: In meinem ersten Gartenjahr habe ich nur mickrige, beinige Möhren geerntet - und mir daraufhin fest vorgenommen, herauszufinden, wie ich erfolgreich Möhren anbaue.\nNach einiger Recherche und noch mehr Experimenten hier meine Erfolgsformel: Viel\nKompost + Boden lockern + Vorkeimen + Mulchen\n= Superstar-Gartenmöhren!'
+  },
+  {
+    name: 'Zucchini',
+    botanicname: 'Cucurbita pepo',
+    imagename: 'zucchini.webp',
+    plantfamily: 'Kürbisgewächse',
+    nutrition: 'Starkzehrer',
+    goodNeighbors: 'Bohne, Mais, Zwiebel',
+    badNeighbors: 'Gurke, Kürbis',
+    description:
+      'Die Zucchinipflanzen gleichen denen des Gemüsekürbisses, jedoch sind ihre Blätter deutlich kleiner, und sie neigen weniger zur Bildung von Ranken. Die Zucchinipflanze hat männliche und weibliche Blüten. Die männlichen, die keine Früchte ausbilden, sind erkennbar am längeren Stiel und dem fehlenden Fruchtknoten direkt unterhalb der Blütenblätter. In kühlen und regnerischen Sommern können vermehrt männliche Blüten auftreten. Die Blütezeiten von männlichen und weiblichen Blüten an einem Exemplar sind unterschiedlich (verhindert Eigenbestäubung), selten gleichzeitig. Eine Bestäubung und Fruchtbildung wird somit eher nur an einem anderen Exemplar mit anderem Blührhythmus erfolgen. Einzelpflanzen bringen daher keine oder geringere Erträge als wenn zwei oder mehr Pflanzen gesetzt werden. Das manuelle Übertragen von Pollen auf die Stempel weiblicher Blüten ist einfach und sichert bei schlechtem Wetter oder Bienenmangel den Ertrag.'
+  },
+  {
+    name: 'Aubergine',
+    botanicname: '',
+    imagename: 'aubergine.webp',
+    plantfamily: 'Nachtschattengewächse',
+    nutrition: 'Starkzehrer',
+    goodNeighbors: 'Blumenkohl, Brokkoli, Salat, Kohl, Spinat',
+    badNeighbors: 'Erbse, Paprika, Rote Bete',
+    description:
+      'Auberginen im eigenen Garten zu pflanzen ist ziemlich genial, denn sie machen im Beet mit ihren hübschen Blüten richtig was her und bereichern deinen Freiluftsupermarkt hinterm Haus, um ein vielfältiges Gemüse. Ob als Mus mit viel Knoblauch oder als Ratatouille - es gibt zahlreiche Möglichkeiten, sie zu einem wahren Gaumenschmaus zu verarbeiten.\nUnd das Beste: Wenn du genau weißt, was die Aubergine aka Eierfrucht glücklich macht, kannst du dafür sorgen, dass sie sich in deinen Beeten rundum wohlfühlt und dich mit vielen leckeren Früchten belohnt.'
+  },
+  {
+    name: 'Brokkoli',
+    botanicname: '',
+    imagename: 'broccoli.webp',
+    plantfamily: 'Kreuzblütler',
+    nutrition: 'Starkzehrer',
+    goodNeighbors: 'Rote Bete, Sellerie, Aubergine, Erbse,\nKartoffel',
+    badNeighbors: 'Zwiebel, Kohl',
+    description:
+      'Zugegebenermaßen gehören Brokkoli und Blumenkohl schon eher zu den Primadonnen im Gemüsegarten. Ich habe ein paar Jahre gebraucht, bis ich verstanden habe, welche Bedürfnisse ich stillen muss, damit sie eine richtig gute Ernte abwerfen. In deinem ersten Gartenjahr solltest du dich besser an einfachere Kulturen halten.\nDie leckeren Kohlgewächse stehen nicht nur auf unserem Speiseplan, sondern auch so einige Schädlinge haben diese Kreuzblütler zum Fressen gern. Deswegen sind die Pflanzen sehr dankbar, wenn du sie mit einem Kulturschutznetz vor ihnen beschützt.'
+  },
+  {
+    name: 'Blumenkohl',
+    botanicname: '',
+    imagename: 'cauliflower.webp',
+    plantfamily: 'Kreuzblütler',
+    nutrition: 'Starkzehrer',
+    goodNeighbors: 'Rote Bete, Sellerie, Aubergine, Erbse,\nKartoffel',
+    badNeighbors: 'Zwiebel, Kohl',
+    description:
+      'Zugegebenermaßen gehören Brokkoli und Blumenkohl schon eher zu den Primadonnen im Gemüsegarten. Ich habe ein paar Jahre gebraucht, bis ich verstanden habe, welche Bedürfnisse ich stillen muss, damit sie eine richtig gute Ernte abwerfen. In deinem ersten Gartenjahr solltest du dich besser an einfachere Kulturen halten.\nDie leckeren Kohlgewächse stehen nicht nur auf unserem Speiseplan, sondern auch so einige Schädlinge haben diese Kreuzblütler zum Fressen gern. Deswegen sind die Pflanzen sehr dankbar, wenn du sie mit einem Kulturschutznetz vor ihnen beschützt.'
+  },
+  {
+    name: 'Erbse',
+    botanicname: 'Pisum sativum',
+    imagename: 'pea.webp',
+    plantfamily: 'Hülsenfrüchte',
+    nutrition: 'Schwachzehrer',
+    goodNeighbors: 'Kohl, Salat, Rhabarber, Puffbohne als Stützpflanze, Rettich, Spargel, Karotten',
+    badNeighbors: 'Zwiebel, Schalotte, Knoblauch, Lauch, Bohne, Kartoffel, Tomate, Walnuss',
+    description:
+      'Erbsen sind nicht nur super lecker, sie sind auch richtige Frühstarter im Garten. Schon ab Mai kannst du sie von deinen Beeten pflücken! Frisch geerntete Erbsen schmecken unvergleichlich süß, weil sich der Zucker noch nicht in Stärke umgewandelt hat. Und gesund sind sie auch noch!\nEs gibt drei verschiedene Erbsenarten, die du anbauen kannst: Zuckererbsen, die als junge Schoten besonders süß schmecken; Markerbsen, die sich wunderbar als Erbsengemüse vernaschen lassen und sich auch gut zum Einkochen eignen, und Palerbsen als Trockenerbsen für Erbsensuppe.'
+  },
+  {
+    name: 'Gurke',
+    botanicname: '',
+    imagename: 'cucumber.webp',
+    plantfamily: 'Kürbisgewächse',
+    nutrition: 'Starkzehrer',
+    goodNeighbors: 'Dill, Bohne, Kohl, Zwiebel, Salat,\nKnoblauch, Mais, Paprika, Sellerie, Spinat',
+    badNeighbors: 'Radieschen, Rettich, Zucchini',
+    description:
+      'Gurken aus dem Garten sind kleiner und haben eine rauere Haut als die Gewächshausware aus dem Supermarkt. Dafür schmecken sie umso besser!\nDu solltest deinen Gurken eine Kletterunterlage bauen, damit sie in die Höhe wachsen, statt über den Boden zu kriechen. So bleiben die Früchte sauber und du kannst mehr Gurken auf derselben Fläche anbauen. Ein einfaches Rankgerüst kannst du ganz leicht aufbauen, indem du drei lange Stangen am oberen Ende zusammenbindest und zu einem Tipi aufstellst.'
+  },
+  {
+    name: 'Kartoffel',
+    botanicname: '',
+    imagename: 'potatoe.webp',
+    plantfamily: 'Nachtschattengewächse',
+    nutrition: 'Starkzehrer',
+    goodNeighbors: 'Bohne, Meerrettich, Pfefferminze,\nBaldrian, Kohlrabi, Kapuzinerkresse, Mais',
+    badNeighbors: 'Aubergine, Tomate, Erbse, Sellerie',
+    description:
+      'Es gibt kaum etwas Besseres, als frische Kartoffeln auszugraben, und sie nur mit Butter und Salz gewürzt zu essen! Die erste Kartoffelernte ist bei uns immer ein kleines Fest und unser Sohn wartet jedes Jahr ungeduldig darauf, die ersten Knollen aus der Erde zu holen.\nWer glaubt, Kartoffeln schmecken alle gleich, irrt gewaltig. Es gibt enorme Geschmacksunterschiede zwischen den einzelnen Sorten! Wenn du deine eigenen Kartoffeln anbaust, solltest du unbedingt verschiedene - auch ungewöhnliche - Sorten ausprobieren.'
+  },
+  {
+    name: 'Knoblauch',
+    botanicname: 'Allium sativum',
+    imagename: 'garlic.webp',
+    plantfamily: 'Zwiebelgewächse',
+    nutrition: 'Mittelzehrer',
+    goodNeighbors: 'Möhre, Erdbeere, Salat, Pastinake, Gurke,\nObstbäume',
+    badNeighbors: 'Erbse, Bohne, Kohl, Zwiebel, Lauch',
+    description:
+      'Entweder man liebt ihn, oder man hasst ihn! Für uns jedenfalls darf Knoblauch beim Kochen nicht fehlen. Wenn du auch bekennender Knoblauch-Fan bist, solltest du ihn unbedingt selbst anbauen.\nEs gibt wenige Gemüsearten, die so unkompliziert sind wie Knoblauch!\nWir bauen Knoblauch seit unserem ersten Gartenjahr zu 100 % selbst an. Die dicksten Zehen, die wir ernten, stecken wir im Herbst in neue Beete und vermehren ihn so Jahr für Jahr weiter.'
+  },
+  {
+    name: 'Kürbis',
+    botanicname: '',
+    imagename: 'pumkin.webp',
+    plantfamily: 'Kürbisgewächse',
+    nutrition: 'Starkzehrer',
+    goodNeighbors: 'Bohne, Mais, Zwiebel',
+    badNeighbors: 'Gurke, Zucchini',
+    description:
+      'Vermutlich wurde der Kürbis bereits vor 8.000 -\n10.000 Jahren angebaut. Sogar mehr oder minder zur gleichen Zeit an verschiedenen Orten.\nSo kommt der Gartenkürbis aus dem heutigen Mexiko, der Moschus Kürbis aus Zentralamerika und der Riesenkürbis aus Südamerika.\nAm effektivsten nutzt du deine Beete, wenn du Kürbis und Zuckermais zusammen auf einem Beet anbaust. Zuckermais und Kürbis machen sich nämlich keine Konkurrenz. Der Kürbis bedeckt den Boden und unterdrückt Unkraut, während der Mais in die Höhe wächst.\nSo haben schon die Maya ihre Beete bepflanzt:\nMit Kürbis und Mais zusammen mit Stangenbohnen - ein tolles Trio, wenn es darum geht, das Beste aus deiner Beetfläche herauszuholen.'
+  },
+  {
+    name: 'Lauch',
+    botanicname: 'Allium porrum',
+    imagename: 'leek.webp',
+    plantfamily: 'Zwiebelgewächse',
+    nutrition: 'Starkzehrer',
+    goodNeighbors:
+      'Möhre, Schwarzwurzeln, Kohlrabi,\nErdbeeren, Salat, Tomate, Sellerie, Pastinake',
+    badNeighbors: 'Rote Bete, Bohne, Erbse, Zwiebel,\nKnoblauch',
+    description:
+      'Lauch ist verwandt mit Zwiebel und Knoblauch und in der Küche ein sehr vielseitiges und köstliches Gemüse mit vielen guten Inhaltsstoffen.\nDu kannst ihn sowohl im Sommer als auch im Winter anbauen, er ist nämlich super frosthart. In der kalten Jahreszeit kannst du ihn, ganz nach Bedarf, frisch aus dem Beet ernten.\nWeil Lauch so viele Schädlinge hat, solltest du ihn mit einem Kulturschutznetz abdecken. Erst nach dem ersten Frost im Herbst kannst du das Netz abnehmen. Ich baue Lauch immer zusammen mit meinen Kohlpflanzen an, die ich ja auch abdecke.\nSo sind alle empfindlichen Gemüsearten bequem auf einmal geschützt.'
+  },
+  {
+    name: 'Zucker-Mais',
+    botanicname: '',
+    imagename: 'corn.webp',
+    plantfamily: 'Süßgräser',
+    nutrition: 'Starkzehrer',
+    goodNeighbors: 'Bohne, Kürbis, Gurke, Kohl, Möhre,\nPastinake',
+    badNeighbors: 'Sellerie, Rote Bete',
+    description:
+      'Kaum ein Gemüse ist so lecker wie frisch geernteter Zuckermais. Egal ob roh, gekocht mit Butter und Kräutersalz oder zum Grillen, Zuckermais ist ein absolutes Sommer Must-Have im Gemüsegarten!'
+  },
+  {
+    name: 'Mangold',
+    botanicname: 'Beta vulgaris',
+    imagename: 'chard.webp',
+    plantfamily: 'Gänsefußgewächse',
+    nutrition: 'Mittelzehrer',
+    goodNeighbors: 'Möhre, Radieschen, Kohl, Bohne, Pastinake',
+    badNeighbors: 'Rote Bete, Spinat, Schwarzwurzel',
+    description:
+      'Mangold ist ein herrlich anspruchsloses Gemüse.\nEr verzeiht dir Fehler großzügig und wirft so gut wie jedes Jahr eine verlässliche Ernte ab. Dazu bestich er mit schicken Sortenmixen, die aus rot-, gelb-, pink-, weiß- und orange-stieligen Mangoldpflanzen bestehen - das sind richtig tolle Hingucker im Beet!\nDie zarten jungen Blätter machen sich wunderbar im Salat, die ausgewachsenen Blätter und Stiele mach sich toll in Gemüsepfannen. Die Stiele schmecken auch richtig lecker, wenn du sie kleinschneidest und fermentierst - so sind sie über ein Jahr lang haltbar.'
+  },
+  {
+    name: 'Paprika',
+    botanicname: '',
+    imagename: 'bellpepper.webp',
+    plantfamily: 'Nachtschattengewächse',
+    nutrition: 'Starkzehrer',
+    goodNeighbors: 'Tomate, Gurke, Kohl, Möhre',
+    badNeighbors: 'Walnuss, Aubergine, Fenchel, Kapuzinerkresse',
+    description:
+      'Paprika gibt es in allen Farben und Formen. Sie ist ein sehr wärme- und sonnenhungriges Exemplar im Gemüsegarten und gedeiht am besten im Gewächshaus.\nFreilandpaprika sind kleiner und dünnwandiger als die Exemplare aus dem Supermarkt. Was den Geschmack angeht, stehen sie den gekauften Paprikas aber in nichts nach! Gerade die Sorte „Rote Augsburger" liefert jede Menge fruchtig süßer Paprikaschoten. Die schaffen es oft gar nicht vom Garten ins Haus, weil sie vorher weggefuttert sind!'
+  },
+  {
+    name: 'Pastinake',
+    botanicname: '',
+    imagename: 'parsnip.webp',
+    plantfamily: 'Doldenblütler',
+    nutrition: 'Mittelzehrer',
+    goodNeighbors:
+      'Zwiebel, Schalotte, Knoblauch, Lauch, Erbse, Möhre, Spinat, Radieschen, Rettich, Salat, Dill, Pfefferminze, Mangold',
+    badNeighbors: 'Sellerie, Paprika',
+    description:
+      'Früher gehörte die Pastinake zu den Grundnahrungsmitteln, wurde dann aber von den schneller wachsenden Möhren und Kartoffeln verdrängt.\nWie gut, dass sie mittlerweile wiederentdeckt wurde! Die Pastinake ist nämlich sehr gesund und mit ihrem süßlich-nussigen Geschmack super, super lecker.\nDie Pastinake ist zudem sehr robust und völlig winterhart! Sie trotzt dem Frost und den harschen Winden ohne Mühe. Deswegen kannst du sie den ganzen Winter über einfach im Beet stehen lassen und nach Bedarf ernten.'
+  },
+  {
+    name: 'Radieschen',
+    botanicname: 'Raphanus sativus',
+    imagename: 'radish.webp',
+    plantfamily: 'Kreuzblütler',
+    nutrition: 'Mittelzehrer',
+    goodNeighbors:
+      'Salat, Spinat, Erbse, Möhre, Bohne, Kohl, Mangold, Kresse, Petersilie,\nPfefferminze, Erdbeeren',
+    badNeighbors: 'Gurke',
+    description:
+      'Dass Radieschen und Brokkoli zu der gleichen Familie gehören, mag überraschen - aber beide sind Kreuzblütler und damit Kohlgewächse. Wer mit Kindern zusammen gärtnert, sollte unbedingt Radieschen anbauen. Sie sind (je nach Sorte) schon 20 bis 30 Tage nach der Aussaat erntebereit und verschaffen den kleinen Gärtnern schnell ein Erfolgserlebnis.\nIch verwende Radieschen gerne als „Lückenfüller" um meine Beetfläche vor oder nach einer anderen Kultur noch einmal nutzen zu können.\nÜberschüssige Radieschen lege ich für den Winter ein.'
+  },
+  {
+    name: 'Rettich',
+    botanicname: '',
+    imagename: 'radish-black.webp',
+    plantfamily: '',
+    nutrition: '',
+    goodNeighbors:
+      'Salat, Spinat, Erbse, Möhre, Bohne, Kohl, Mangold, Kresse, Petersilie,\nPfefferminze, Erdbeeren',
+    badNeighbors: 'Gurke',
+    description: ''
+  },
+  {
+    name: 'Rote Bete',
+    botanicname: '',
+    imagename: 'beetroot.webp',
+    plantfamily: 'Gänsefußgewächse',
+    nutrition: 'Mittelzehrer',
+    goodNeighbors: 'Bohne, Zwiebel, Gurke, Salat, Knoblauch, Kohl, Zucchini',
+    badNeighbors: 'Spinat, Mangold, Aubergine, Kartoffel, Lauch',
+    description:
+      'Rote Bete ist vermutlich das unterschätzteste Gemüse überhaupt. Die meisten Leute kennen Rote Bete nur vorgekocht und eingeschweißt oder sauer eingelegt. Dabei hat sie geschmacklich so viel mehr zu bieten!\nWenn du die erntefrischen Beten im Ganzen kochst und einfach nur mit Butter und etwas Kräutersalz verspeist, wirst du Rote Bete ganz neu entdecken, da bin ich mir sicher! I'
+  },
+  {
+    name: 'Schwarzwurzel',
+    botanicname: '',
+    imagename: 'salsify-black.webp',
+    plantfamily: 'Korbblütler',
+    nutrition: 'Mittelzehrer',
+    goodNeighbors: 'Lauch, Ringelblume, Salat, Bohne,\nMöhre, Radieschen',
+    badNeighbors: 'Mangold',
+    description:
+      'Die Schwarzwurzel galt lange als „Spargel des kleinen Mannes", weil sie einfacher und günstiger anzubauen ist, aber ein ähnliches Aroma besitzt.\nEin weiterer Name für die Wurzel ist\n"Winterspargel". Im Winter trotzen sie nämlich selbst klirrender Kälte und du kannst sie einfach frisch aus dem Beet ernten.'
+  },
+  {
+    name: 'Sellerie',
+    botanicname: '',
+    imagename: 'celery.webp',
+    plantfamily: 'Doldenblütler',
+    nutrition: 'Mittelzehrer',
+    goodNeighbors: 'Bohne, Erbse, Dill, Ringelblume, Kohl,\nTomate, Spinat, Lauch',
+    badNeighbors: 'Möhre, Mais, Salat, Kartoffel',
+    description: ''
+  },
+  {
+    name: 'Knollensellerie',
+    botanicname: '',
+    imagename: 'celeriac.webp',
+    plantfamily: '',
+    nutrition: '',
+    goodNeighbors: '',
+    badNeighbors: '',
+    description:
+      'Auch wenn es gemein ist: Der runzelige Knollensellerie ist eher eine der hässlichsten Pflanzen im Gemüsegarten. Trotzdem hat die unansehnliche Knolle einen sicheren Platz in meinem Gärtnerherzen und in meinem Beet.\nDu kannst ihn sehr gut den Winter über einlagern und bei uns kommt er regelmäßig in Form von winterlichen Suppen, in der Lasagne oder als Sellerieschnitzel auf den Tisch. Knollensellerie wächst sehr langsam und beansprucht die Beetfläche vom Frühling bis in den Herbst hinein.\nAber der unglaubliche Geschmack rechtfertigt das allemal.'
+  },
+  {
+    name: 'Spinat',
+    botanicname: 'Spinacia oleracea',
+    imagename: 'spinach.webp',
+    plantfamily: 'Fuchsschwanzgewächse',
+    nutrition: 'Mittelzehrer',
+    goodNeighbors:
+      'Rhabarber, Rettich, Radieschen, Bohne,\nKohl, Kresse, Tomate, Sellerie, Aubergine',
+    badNeighbors: 'Rote Bete, Mangold',
+    description:
+      'Beim Spinat scheiden sich bekanntlich die Geister.\nAber ich bin stark dafür, dass du ihm einen Platz in deinen Beeten gibst, auch wenn du ihn eigentlich nicht magst! Er schmeckt aus eigener Ernte nämlich unvergleichlich viel besser als der tiefgefrorene Spinat aus dem Supermarkt. Viele Spinatsorten sind außerdem winterhart und winterharte Gemüse sind vermutlich in jedem Garten gerne gesehen!\nSpinat ist super vielseitig. Du kannst ihn kochen (Spinatlasagne, mhhh!) oder auch roh im Salat mit knusprigen Croutons genießen. Als Gänsefußgewächs kommen ihm in der Fruchtfolge nur Mangold und Rote Bete in die Quere - sehr praktisch!'
+  },
+  {
+    name: 'Steckrübe',
+    botanicname: '',
+    imagename: 'turnip.webp',
+    plantfamily: 'Kreuzblütler',
+    nutrition: 'Starkzehrer',
+    goodNeighbors: 'Erbse, Stangenbohne, Pfefferminze',
+    badNeighbors: 'Kohl',
+    description:
+      'Diese alte Gemüsesorte wurde erst in den letzten Jahren von Hobbygärtnern wiederentdeckt. Lange hatte die Steckrübe nämlich einen schlechten Ruf, weil sie während des ersten Weltkriegs Hauptnahrungsmittel war, um eine Hungersnot zu verhindern.\nDie Steckrübe steckt mittlere Fröste locker weg und ist unkompliziert im Anbau. Sie schmeckt lecker und lässt sich vielseitig zubereiten. Ob als Gratin, Eintopf, Mus oder Schnitzel - sie kann so ziemlich alles!'
+  },
+  {
+    name: 'Süßkartoffel',
+    botanicname: '',
+    imagename: 'sweetpotatoe.webp',
+    plantfamily: 'Windengewächse',
+    nutrition: 'Starkzehrer',
+    goodNeighbors: 'Salat, Radieschen, Spinat',
+    badNeighbors: '',
+    description:
+      'Diese tolle Knolle mit dem Zweitnamen Batate stammt nach neusten Erkenntnissen ursprünglich aus Asien und liegt bei vielen Hobbygärtnern zurzeit total im Trend. Kein Wunder, sie schmeckt ja auch ziemlich lecker!\nFür deine erste Süßkartoffelpflanze kannst du eine Knolle austreiben lassen und Stecklinge nehmen, die du dann weiter pflegst.\nSüßkartoffeln kannst du übrigens auch sehr gut in Kübeln anbauen, die dann eine Größe von mind.\n30 Litern haben sollten. Die Blätter sind auch essbar - bereite sie am besten wie Spinat zu.'
+  },
+  {
+    name: 'Tomate',
+    botanicname: '',
+    imagename: 'tomato.webp',
+    plantfamily: 'Nachtschattengewächse',
+    nutrition: 'Starkzehrer',
+    goodNeighbors:
+      'Salat, Kohl, Sellerie, Lauch, Bohne,\nKamille, Petersilie, Basilikum, Zwiebel, Knoblauch',
+    badNeighbors: 'Gurke, Fenchel, Kartoffel, Erbse',
+    description:
+      'Tomaten sind vermutlich das beliebteste Gartengemüse überhaupt, nicht umsonst tragen sie auch den Namen „Paradiesäpfel". In meinem Garten dürfen sie auf keinen Fall fehlen.\nDer Duft, den Tomatensträucher verbreiten, wenn ich die Blätter im Vorbeigehen streife, gehört für mich genauso zum Sommer wie Tomatensalat mit Basilikum und der brodelnde Einkochkessel, in dem wir die leckerste Tomatensauce der Welt einkochen. So können wir das ganze Jahr über unsere eigenen Tomaten schlemmen. Yams! :)'
+  },
+  {
+    name: 'Zwiebel',
+    botanicname: '',
+    imagename: 'onion.webp',
+    plantfamily: 'Zwiebelgewächse',
+    nutrition: 'Mittelzehrer',
+    goodNeighbors: 'Möhre, Kürbis, Erdbeeren, Tomate,\nRote Bete, Dill, Kamille, Zucchini',
+    badNeighbors: 'Bohne, Kartoffel, Kohl, Erbse,\nLauchgewächse',
+    description:
+      'Zwiebeln sind ein Gemüse, von dem wir nie genug haben können! Wir verbrauchen jeden Tag mindestens ein bis zwei Zwiebeln beim Kochen und müssen dementsprechend viel davon anbauen.\nDas ist aber zum Glück gar nicht schwer -besonders dann nicht, wenn du deine Zwiebeln aus Steckzwiebeln anbaust, statt sie aus Samen zu ziehen.'
+  },
+  {
+    name: 'Kohlrabi',
+    botanicname: 'Brassica oleracea',
+    imagename: 'kohlrabi.webp',
+    plantfamily: 'Kreuzblütler',
+    nutrition: 'Mittelzehrer',
+    goodNeighbors:
+      'Möhre, Erbse, Rhabarber, Tomate,\nSellerie, Spinat, Kresse, Gurke, Aubergine,\nMangold, Rote Bete, Pfefferminze',
+    badNeighbors: 'andere Kohlarten, Zwiebel, Knoblauch,\nErdbeeren, Kartoffel',
+    description:
+      'Kohlrabi ist ein ziemlich anspruchsloser Kandidat aus der Kohlfamilie und wächst mit am schnellsten von allen. Wenn du ihn gestaffelt aussäst, kannst du mehrfach leckeren Kohlrabi ernten und vernaschen! Auch als Gemüsegarten-Anfänger schaffst du es, Kohlrabi erfolgreich anzubauen.\nWie bei allen Kohlarten ist es wichtig, den Kohlrabi mit einem Kulturschutznetz abzudecken. Das schützt ihn vor den Insekten, die es auf deine Ernte abgesehen haben.'
+  },
+  {
+    name: 'Weißkohl',
+    botanicname: '',
+    imagename: 'cabbage-white.webp',
+    plantfamily: 'Kreuzblütler',
+    nutrition: 'Starkzehrer',
+    goodNeighbors: '',
+    badNeighbors: '',
+    description:
+      'Wusstest du, dass Kopfkohl erst seit dem Mittelalter gezüchtet wird? Davor gab es nur den losen Blattkohl, der keine festen Köpfe bildet. Wie gut, dass wir in der heutigen Zeit leben und die leckeren Kohlköpfe genießen können!\n„Kopfkohl" ist ein Sammelbegriff für Weißkohl, Rotkohl und Wirsing. Diese Kandidaten anzubauen, ist gar nicht so einfach. Zum einen benötigen sie als Starkzehrer viele Nährstoffe, um große Köpfe auszubilden. Zum anderen gibt es einige Krankheiten, für die sie anfällig sind - und Schädlinge, die es darauf anlegen, deinen Kohl zu verputzen. Deswegen führt kaum ein Weg dran vorbei: Kopfkohle solltest du mit einem Kulturschutznetz vor seinen „Feinden" schützen.\nWenn du schon mehr Erfahrung im Gärtnern hast, lohnt sich Kopfkohl aber alleine schon deswegen, weil es kaum etwas Besseres gibt als Sauerkraut aus dem eigenen Garten! Ich baue immer einen Weißkohl-Satz nur für Sauerkraut an. Die langsam wachsenden Sorten eignen sich dafür übrigens besser als die schnellen Frühsorten.'
+  },
+  {
+    name: 'Grünkohl',
+    botanicname: '',
+    imagename: 'kale.webp',
+    plantfamily: 'Kreuzblütler',
+    nutrition: 'Starkzehrer',
+    goodNeighbors: '',
+    badNeighbors: '',
+    description:
+      'Grünkohl und Palmkohl sind robuster als viele andere Verwandte aus ihrer Familie und damit auch gut für Anfänger geeignet. Trotzdem solltest du auch diese beiden Kreuzblütler den Sommer über mit einem Schutznetz abdecken, um die Schädlinge auszusperren.\nGrünkohl übersteht auch klirrende Kälte und du kannst ihn den ganzen Winter über ernten.\nDer wunderschöne Palmkohl bringt Abwechslung in deine Winterbeere. Er ist etwas empfindlicher als Grünkohl, weswegen du ihn besser schon vor den ersten stärkeren Frösten erntest und aufisst.'
+  },
+  {
+    name: 'Palmkohl',
+    botanicname: '',
+    imagename: 'kale-palm.webp',
+    plantfamily: 'Kreuzblütler',
+    nutrition: 'Starkzehrer',
+    goodNeighbors: '',
+    badNeighbors: '',
+    description:
+      'Grünkohl und Palmkohl sind robuster als viele andere Verwandte aus ihrer Familie und damit auch gut für Anfänger geeignet. Trotzdem solltest du auch diese beiden Kreuzblütler den Sommer über mit einem Schutznetz abdecken, um die Schädlinge auszusperren.\nGrünkohl übersteht auch klirrende Kälte und du kannst ihn den ganzen Winter über ernten.\nDer wunderschöne Palmkohl bringt Abwechslung in deine Winterbeere. Er ist etwas empfindlicher als Grünkohl, weswegen du ihn besser schon vor den ersten stärkeren Frösten erntest und aufisst.'
+  },
+  {
+    name: 'Rotkohl',
+    botanicname: '',
+    imagename: 'cabbage-red.webp',
+    plantfamily: '',
+    nutrition: '',
+    goodNeighbors: '',
+    badNeighbors: '',
+    description:
+      'Wusstest du, dass Kopfkohl erst seit dem Mittelalter gezüchtet wird? Davor gab es nur den losen Blattkohl, der keine festen Köpfe bildet. Wie gut, dass wir in der heutigen Zeit leben und die leckeren Kohlköpfe genießen können!\n„Kopfkohl" ist ein Sammelbegriff für Weißkohl, Rotkohl und Wirsing. Diese Kandidaten anzubauen, ist gar nicht so einfach. Zum einen benötigen sie als Starkzehrer viele Nährstoffe, um große Köpfe auszubilden. Zum anderen gibt es einige Krankheiten, für die sie anfällig sind - und Schädlinge, die es darauf anlegen, deinen Kohl zu verputzen. Deswegen führt kaum ein Weg dran vorbei: Kopfkohle solltest du mit einem Kulturschutznetz vor seinen „Feinden" schützen.\nWenn du schon mehr Erfahrung im Gärtnern hast, lohnt sich Kopfkohl aber alleine schon deswegen, weil es kaum etwas Besseres gibt als Sauerkraut aus dem eigenen Garten! Ich baue immer einen Weißkohl-Satz nur für Sauerkraut an. Die langsam wachsenden Sorten eignen sich dafür übrigens besser als die schnellen Frühsorten.'
+  },
+  {
+    name: 'Rosenkohl',
+    botanicname: '',
+    imagename: 'brusselssprout.webp',
+    plantfamily: 'Kreuzblütler',
+    nutrition: 'Starkzehrer',
+    goodNeighbors: '',
+    badNeighbors: '',
+    description:
+      'Rosenkohl gehört für mich zum Winter einfach dazu! Er lässt sich ganz ohne Frostschutz oft bis in den Februar hinein beernten. Gerade im Winter weiß ich frisches Gartengemüse richtig zu schätzen und Rosenkohl ist eine wahre Delikatesse!'
+  },
+  {
+    name: 'Wirsing',
+    botanicname: 'Brassica oleracea var. sabauda',
+    imagename: 'cabbage-savoy.webp',
+    plantfamily: 'Kreuzblütler',
+    nutrition: 'Starkzehrer',
+    goodNeighbors: '',
+    badNeighbors: '',
+    description:
+      'Wusstest du, dass Kopfkohl erst seit dem Mittelalter gezüchtet wird? Davor gab es nur den losen Blattkohl, der keine festen Köpfe bildet. Wie gut, dass wir in der heutigen Zeit leben und die leckeren Kohlköpfe genießen können!\n„Kopfkohl" ist ein Sammelbegriff für Weißkohl, Rotkohl und Wirsing. Diese Kandidaten anzubauen, ist gar nicht so einfach. Zum einen benötigen sie als Starkzehrer viele Nährstoffe, um große Köpfe auszubilden. Zum anderen gibt es einige Krankheiten, für die sie anfällig sind - und Schädlinge, die es darauf anlegen, deinen Kohl zu verputzen. Deswegen führt kaum ein Weg dran vorbei: Kopfkohle solltest du mit einem Kulturschutznetz vor seinen „Feinden" schützen.\nWenn du schon mehr Erfahrung im Gärtnern hast, lohnt sich Kopfkohl aber alleine schon deswegen, weil es kaum etwas Besseres gibt als Sauerkraut aus dem eigenen Garten! Ich baue immer einen Weißkohl-Satz nur für Sauerkraut an. Die langsam wachsenden Sorten eignen sich dafür übrigens besser als die schnellen Frühsorten.'
+  },
+  {
+    name: 'Asia-Salat',
+    botanicname: '',
+    imagename: 'salad-asia.webp',
+    plantfamily: 'Kreuzblütler',
+    nutrition: 'Mittelzehrer',
+    goodNeighbors: '',
+    badNeighbors: '',
+    description:
+      'Asiasalate stammen (wie der Name schon vermuten lässt) aus dem südostasiatischen Raum und gehören zur Familie der Kreuzblütler. Sie sind sehr winterhart und lassen sich das ganze Jahr über anbauen. Ihre Blätter schmecken würziger als Kopfsalat und verleihen einem winterlichen Salatteller richtig Pfiff. Ich möchte im Garten nicht mehr auf Asiasalate verzichten!'
+  },
+  {
+    name: 'Salat',
+    botanicname: 'Lactuca sativa',
+    imagename: 'lettuce.webp',
+    plantfamily: 'Korbblütler',
+    nutrition: 'Mittelzehrer',
+    goodNeighbors:
+      'Aubergine, Bohne, Bohnekraut, Erbse, Rettich, Schwarzwurzeln,\nRhabarber, Lauch, Knoblauch, Spargel, Ringelblume',
+    badNeighbors: 'Petersilie, Sellerie, Kartoffel',
+    description:
+      'Ich liebe es, das ganze Jahr über Salat aus dem eigenen Garten ernten zu können. Und das Beste ist: Blatt- und Kopfsalate anzubauen, ist richtig einfach. Sie stellen keine hohen Ansprüche an Boden und Nährstoffversorgung und sind (je nach Sorte) nach wenigen Wochen erntebereit.\nWenn du deine Salate dann noch so beerntest, dass sie nachwachsen können, musst du seltener nachpflanzen und bist das ganze Jahr über mit frischem Grün versorgt.'
+  },
+  {
+    name: 'Feldsalat',
+    botanicname: '',
+    imagename: 'lambslettuce.webp',
+    plantfamily: 'Baldriangewächse',
+    nutrition: 'Schwachzehrer',
+    goodNeighbors: '',
+    badNeighbors: '',
+    description:
+      'Der Feldsalat ist die einzige Gemüsepflanze in der Familie der Baldriangewächse. Das ist super praktisch, so kann er in der Fruchtfolge nämlich keiner anderen Kultur in die Quere kommen.\nFeldsalat wird in Nordhessen auch als „Nüsschen" bezeichnet. Meine Urgroßmutter, die einen wunderschönen Marktgarten hatte, hat im Winter oft gesagt: „Ich sitze hier und putz mein Nüsschen, und wer mich mag, der gibt mir\'n Küsschen." Und das hatte sie auch verdient! Feldsalat anzubauen, ist nämlich relativ einfach, aber ihn nach der Ernte zu putzen, macht ganz schön viel Arbeit.'
+  },
+  {
+    name: 'Postelein',
+    botanicname: 'Claytonia perfoliata',
+    imagename: 'lettuce-indian.webp',
+    plantfamily: 'Quellkrautgewächse',
+    nutrition: 'Schwachzehrer',
+    goodNeighbors: 'Salat, Rettich, Rucula',
+    badNeighbors: '',
+    description:
+      'Postelein, auch Portulak genannt, ist ein relativ unbekanntes winterhartes Blattgemüse, das viel Vitamin C enthält. Das saftige Kraut schmeckt leicht sauer, aber sehr mild, und macht sich wunderbar in winterlichen Salaten oder gekocht als\nSpinat.\nIch liebe es, wenn ich meine Beete nach der Ernte im Spätsommer zusätzlich für eine Winterkultur nutzen kann. Postelein kannst du bis in den September hinein aussäen und dann den ganzen Winter über frisches Grün ernten. Wenn du noch nie Postelein angebaut hast, solltest du das unbedingt einmal ausprobieren.'
+  },
+  {
+    name: 'Knollenfenchel',
+    botanicname: '',
+    imagename: 'fennel-florence.webp',
+    plantfamily: 'Doldenblütler',
+    nutrition: 'Mittelzehrer',
+    goodNeighbors: '',
+    badNeighbors: '',
+    description: ''
+  },
+  {
+    name: 'Petersilie',
+    botanicname: '',
+    imagename: 'parsley.webp',
+    plantfamily: 'Doldenblütler',
+    nutrition: 'Mittelzehrer',
+    goodNeighbors: '',
+    badNeighbors: '',
+    description: ''
+  },
+  {
+    name: 'Busch-Bohne',
+    botanicname: 'Phasealus vulgaris',
+    imagename: 'bean-dwarf.webp',
+    plantfamily: 'Hülsenfrüchte',
+    nutrition: 'Schwachzehrer',
+    goodNeighbors:
+      'Kohl, Sellerie, Bohnekraut, Gurke, Kürbis, Tomate, Salat, Rüben, Spargel, Rhabarber, Kresse, Dill',
+    badNeighbors: 'andere Bohne, Erbse, Zwiebel, Schalotte, Knoblauch, Fenchel',
+    description:
+      'Buschbohnen sind zarter als Stangenbohnen und haben ein besseres Aroma. Sie brauchen außerdem kein Rankgerüst und sind leichter zuzubereiten.\nBesonders hübsch sind Sorten mit violetten, gelben oder gefleckten Schoten.\nIch sãe mehrere Sätze aus, um laufend frische Buschbohnen zu ernten. Jedes Jahr plane ich einen großen Satz zum Einkochen und Fermentieren ein.\nBeim Haltbarmachen ist es nämlich praktisch, einmal eine große Menge zu ernten, sodass du die Ausbeute in einem Aufwasch verarbeiten kannst.'
+  },
+  {
+    name: 'Dicke Bohne',
+    botanicname: 'Vicia faba',
+    imagename: 'bean-broad.webp',
+    plantfamily: 'Hülsenfrüchte',
+    nutrition: 'Schwachzehrer',
+    goodNeighbors: '',
+    badNeighbors: '',
+    description:
+      'Die Dicke Bohne ist eine unserer ältesten Kulturpflanzen. Sie liefert sehr früh im Jahr erste Ernten und schmeckt einfach fantastisch, wenn du sie ganz frisch zubereitest.\nJe länger die Schoten am Strauch hängen, desto mehr Stärke bilden sie. Deswegen solltest du Dicke Bohnen ernten, wenn sie noch klein und weich sind.'
+  },
+  {
+    name: 'Stangenbohne',
+    botanicname: '',
+    imagename: 'bean-runner.webp',
+    plantfamily: 'Hülsenfrüchte',
+    nutrition: 'Schwachzehrer',
+    goodNeighbors: '',
+    badNeighbors: '',
+    description:
+      'Die Stangenbohne ist eng verwandt mit der Buschbohne. Im Gegensatz zur Buschbohne kann die Stangenbohne praktisch unbegrenzt wachsen - deshalb braucht sie ein stabiles Rankgerüst, das auch einem kräftigeren Wind standhalten kann.\nStangenbohnen sind vielleicht etwas zäher als Buschbohnen, aber deutlich rückenschonender zu ernten. Und wenn sie so eifrig an ihrer Bohnenstange hochranken, ist das ein wunderbarer\nAnblick!'
+  },
+  {
+    name: 'Schalotte',
+    botanicname: '',
+    imagename: 'shallot.webp',
+    plantfamily: 'Zwiebelgewächse',
+    nutrition: 'Mittelzehrer',
+    goodNeighbors: '',
+    badNeighbors: '',
+    description: ''
+  },
+  {
+    name: 'Artischocke',
+    botanicname: '',
+    imagename: 'artichoke.webp',
+    plantfamily: 'Korbblütler',
+    nutrition: 'Mittelzehrer',
+    goodNeighbors: '',
+    badNeighbors: '',
+    description:
+      'Artischocken machen sich nicht nur fantastisch als mehrjährige Solitärstaude im Gemüsebeet, sie schmecken auch wahnsinnig lecker! Leider gedeihen Artischocken nur an warmen Standorten und können im Winter trotz Frostschutz erfrieren.\nWenn du dir nicht sicher bist, ob es in deiner Region warm genug ist, probier es einfach aus.\nSelbst wenn die Pflanzen im Winter erfrieren, kannst du oft schon im ersten Jahr einige Knospen ernten.'
+  },
+  {
+    name: 'Chicorée',
+    botanicname: '',
+    imagename: 'chicoree.webp',
+    plantfamily: 'Korbblütler',
+    nutrition: 'Mittelzehrer',
+    goodNeighbors: '',
+    badNeighbors: '',
+    description:
+      'Wir verdanken den leckeren Chicorée wohl einem Zufall: Belgische Bauern hatten vor etwa 150 jahren eine besonders große Ernte von Zichorienwurzeln und lagerten sie in einer Erdmiete ein. Über den Winter entwickelten die Wurzeln dann überraschend leckere bleiche Blätter!\nChicorée hat viele Vitaminen und Mineralstoffe und ist daher sehr gesund. Leider ist der Anbau etwas kompliziert, gerade wenn dir kein Keller zur Verfügung steht. Chicorée ist nämlich eine zweijährige Pflanze. Erst säst du sie im Beet aus, um dann im Herbst die Wurzel zu ernten, aus der dann der eigentlichen Chicorée austreibt.'
+  },
+  {
+    name: 'Haferwurzel',
+    botanicname: '',
+    imagename: 'oat.webp',
+    plantfamily: 'Korbblütler',
+    nutrition: 'Mittelzehrer',
+    goodNeighbors: '',
+    badNeighbors: '',
+    description: ''
+  },
+  {
+    name: 'Kapuzinerkresse',
+    botanicname: 'Tropaeolum majus',
+    imagename: 'nasturtium.webp',
+    plantfamily: 'Kapuzinerkressengewächse',
+    nutrition: '',
+    goodNeighbors: '',
+    badNeighbors: '',
+    description: ''
+  },
+  {
+    name: 'Dill',
+    botanicname: 'Anethum graveolens',
+    imagename: 'dill.webp',
+    plantfamily: 'Doldenblütler',
+    nutrition: '',
+    goodNeighbors: '',
+    badNeighbors: '',
+    description: ''
+  }
+]
+
+const varieties = [
+  {
+    name: 'Cocozelle von Tripolis',
+    botanicname: 'Cucurbita pepo',
+    speciesId: '',
+    species: 'Zucchini',
+    plantfamily: 'Kürbisgewächse',
+    description: '',
+    sowingForPlantingStart: 'mitte April',
+    sowingForPlantingEnd: 'mitte Juni',
+    plantingStart: 'mitte Mai',
+    plantingEnd: 'mitte Juli',
+    directSowingStart: 'mitte Mai',
+    directSowingEnd: 'mitte Juni',
+    harvestingStart: 'ende Juli',
+    harvestingEnd: 'mitte Oktober',
+    growingSeason: '',
+    growingSeasonIntern: '',
+    plantingDistance: 100,
+    rowDistance: 100,
+    nutrition: 'starkzehrer',
+    light: 'Sonne',
+    water: 'hoch',
+    sowingDepth: 3,
+    cultivationTips: '',
+    imagename: 'zucchini.webp'
+  },
+  {
+    name: 'Oxhella',
+    botanicname: 'Daucus carota',
+    speciesId: '',
+    species: 'Möhre',
+    plantfamily: 'Doldenblütler',
+    description: '',
+    sowingForPlantingStart: '',
+    sowingForPlantingEnd: '',
+    plantingStart: '',
+    plantingEnd: '',
+    directSowingStart: 'Anfang März',
+    directSowingEnd: 'Ende Mai',
+    harvestingStart: 'Anfang Juli',
+    harvestingEnd: 'mitte Oktober',
+    growingSeason: '',
+    growingSeasonIntern: '',
+    plantingDistance: 3,
+    rowDistance: 30,
+    nutrition: 'mittelzehrer',
+    light: 'Sonne bis Halbschatten',
+    water: 'mittel',
+    sowingDepth: '1,5-2,5',
+    cultivationTips: '',
+    imagename: 'carrot.webp'
+  },
+  {
+    name: 'Treenetaler',
+    botanicname: 'Daucus carota',
+    speciesId: '',
+    species: 'Möhre',
+    plantfamily: 'Doldenblütler',
+    description: '',
+    sowingForPlantingStart: '',
+    sowingForPlantingEnd: '',
+    plantingStart: '',
+    plantingEnd: '',
+    directSowingStart: 'Anfang März',
+    directSowingEnd: 'Ende Juni',
+    harvestingStart: 'mitte Juni',
+    harvestingEnd: 'Ende Oktober',
+    growingSeason: '',
+    growingSeasonIntern: '',
+    plantingDistance: 3,
+    rowDistance: 20,
+    nutrition: 'mittelzehrer',
+    light: 'Sonne bis Halbschatten',
+    water: 'mittel',
+    sowingDepth: 3,
+    cultivationTips: '',
+    imagename: 'carrot.webp'
+  },
+  {
+    name: 'Ljubascha',
+    botanicname: 'Allium sativum',
+    speciesId: '',
+    species: 'Knoblauch',
+    plantfamily: 'Zwiebelgewächse',
+    description: '',
+    sowingForPlantingStart: '',
+    sowingForPlantingEnd: '',
+    plantingStart: 'Ende September',
+    plantingEnd: 'mitte Oktober',
+    directSowingStart: '',
+    directSowingEnd: '',
+    harvestingStart: 'Ende Mai',
+    harvestingEnd: 'mitte Juli',
+    growingSeason: '',
+    growingSeasonIntern: '',
+    plantingDistance: 15,
+    rowDistance: 25,
+    nutrition: 'mittelzehrer',
+    light: 'Sonne bis Halbschatten',
+    water: 'mittel',
+    sowingDepth: 5,
+    cultivationTips: '',
+    imagename: 'garlic.webp'
+  },
+  {
+    name: 'Asiasalat Mischung',
+    botanicname: 'Mizuna, Moutrade rouge metis, Red giant, Salatrauke',
+    speciesId: '',
+    species: 'Asiasalat',
+    plantfamily: 'Kreuzblütler',
+    description: '',
+    sowingForPlantingStart: '',
+    sowingForPlantingEnd: '',
+    plantingStart: '',
+    plantingEnd: '',
+    directSowingStart: 'Anfang März',
+    directSowingEnd: 'Ende Oktober',
+    harvestingStart: 'Anfang Januar',
+    harvestingEnd: 'Ende Dezember',
+    growingSeason: '',
+    growingSeasonIntern: '',
+    plantingDistance: 2,
+    rowDistance: 25,
+    nutrition: 'mittelzehrer',
+    light: 'Sonne bis Halbschatten',
+    water: 'mittel',
+    sowingDepth: 1,
+    cultivationTips: '',
+    imagename: 'salad-asia.webp'
+  },
+  {
+    name: 'Eiszapfen',
+    botanicname: 'Raphanus sativus',
+    speciesId: '',
+    species: 'Radieschen',
+    plantfamily: 'Kreuzblütler',
+    description: '',
+    sowingForPlantingStart: '',
+    sowingForPlantingEnd: '',
+    plantingStart: '',
+    plantingEnd: '',
+    directSowingStart: 'Anfang März',
+    directSowingEnd: 'Mitte September',
+    harvestingStart: 'mitte Mai',
+    harvestingEnd: 'Ende November',
+    growingSeason: '',
+    growingSeasonIntern: '',
+    plantingDistance: 3,
+    rowDistance: 15,
+    nutrition: 'mittelzehrer',
+    light: 'Sonne bis Halbschatten',
+    water: 'mittel',
+    sowingDepth: 1,
+    cultivationTips: '',
+    imagename: 'radish.webp'
+  },
+  {
+    name: 'Hangdown Grünkernig',
+    botanicname: 'Vicia faba',
+    speciesId: '',
+    species: 'Dicke Bohne',
+    plantfamily: 'Hülsenfrüchte',
+    description: '',
+    sowingForPlantingStart: '',
+    sowingForPlantingEnd: '',
+    plantingStart: '',
+    plantingEnd: '',
+    directSowingStart: 'mitte Februar, mitte August',
+    directSowingEnd: 'mitte April, Ende September',
+    harvestingStart: 'mitte Juni',
+    harvestingEnd: 'Anfang August',
+    growingSeason: '',
+    growingSeasonIntern: '',
+    plantingDistance: 10,
+    rowDistance: 60,
+    nutrition: 'schwachzehrer',
+    light: 'Sonne bis Halbschatten',
+    water: 'mittel',
+    sowingDepth: 6,
+    cultivationTips: '',
+    imagename: 'bean-broad.webp'
+  },
+  {
+    name: 'Butterflay',
+    botanicname: 'Spinacia oleracea',
+    speciesId: '',
+    species: 'Spinat',
+    plantfamily: 'Fuchsschwanzgewächse',
+    description: '',
+    sowingForPlantingStart: '',
+    sowingForPlantingEnd: '',
+    plantingStart: '',
+    plantingEnd: '',
+    directSowingStart: 'Anfang März, Anfang August',
+    directSowingEnd: 'Ende April, Ende Oktober',
+    harvestingStart: 'Anfang März, Anfang September',
+    harvestingEnd: 'Ende Mai, Ende November',
+    growingSeason: '',
+    growingSeasonIntern: '',
+    plantingDistance: 5,
+    rowDistance: 20,
+    nutrition: 'mittelzehrer',
+    light: 'Sonne bis Halbschatten',
+    water: 'mittel',
+    sowingDepth: 3,
+    cultivationTips: '',
+    imagename: 'spinach.webp'
+  },
+  {
+    name: 'Winterpostelein',
+    botanicname: 'Claytonia perfoliata',
+    speciesId: '',
+    species: 'Postelein',
+    plantfamily: 'Quellkrautgewächse',
+    description: '',
+    sowingForPlantingStart: '',
+    sowingForPlantingEnd: '',
+    plantingStart: '',
+    plantingEnd: '',
+    directSowingStart: 'Anfang August',
+    directSowingEnd: 'Ende September',
+    harvestingStart: 'Anfang Oktober',
+    harvestingEnd: 'Ende März',
+    growingSeason: '',
+    growingSeasonIntern: '',
+    plantingDistance: 5,
+    rowDistance: 15,
+    nutrition: 'schwachzehrer',
+    light: 'Halbschatten bis Schatten',
+    water: 'gering',
+    sowingDepth: '0,5',
+    cultivationTips: '',
+    imagename: 'lettuce-indian.webp'
+  },
+  {
+    name: 'Wintermarkerbse Sima',
+    botanicname: 'Pisum sativum',
+    speciesId: '',
+    species: 'Erbse',
+    plantfamily: 'Hülsenfrüchte',
+    description: '',
+    sowingForPlantingStart: '',
+    sowingForPlantingEnd: '',
+    plantingStart: '',
+    plantingEnd: '',
+    directSowingStart: 'Anfang Oktober',
+    directSowingEnd: 'Ende Oktober',
+    harvestingStart: 'Anfang Mai',
+    harvestingEnd: 'Ende Juni',
+    growingSeason: '',
+    growingSeasonIntern: '',
+    plantingDistance: 5,
+    rowDistance: 20,
+    nutrition: 'schwachzehrer',
+    light: 'Sonne bis Halbschatten',
+    water: 'mittel',
+    sowingDepth: '3-5',
+    cultivationTips: '',
+    imagename: 'pea.webp'
+  },
+  {
+    name: 'Purple Teepee',
+    botanicname: 'Phasealus vulgaris',
+    speciesId: '',
+    species: 'Buschbohne',
+    plantfamily: 'Hülsenfrüchte',
+    description: '',
+    sowingForPlantingStart: '',
+    sowingForPlantingEnd: '',
+    plantingStart: '',
+    plantingEnd: '',
+    directSowingStart: 'mitte Mai',
+    directSowingEnd: 'mitte Juli',
+    harvestingStart: 'mitte Juli',
+    harvestingEnd: 'Anfang Oktober',
+    growingSeason: '',
+    growingSeasonIntern: '',
+    plantingDistance: 4,
+    rowDistance: 20,
+    nutrition: 'schwachzehrer',
+    light: 'Sonne',
+    water: 'mittel',
+    sowingDepth: '2-3',
+    cultivationTips: '',
+    imagename: 'bean-dwarf.webp'
+  },
+  {
+    name: 'Paradiesler',
+    botanicname: 'Brassica oleracea var. sabauda',
+    speciesId: '',
+    species: 'Wirsing',
+    plantfamily: 'Kreuzblütler',
+    description: '',
+    sowingForPlantingStart: 'Anfang April',
+    sowingForPlantingEnd: 'Ende Juni',
+    plantingStart: 'Anfang Mai',
+    plantingEnd: 'Ende Juli',
+    directSowingStart: 'Anfang Mai',
+    directSowingEnd: 'Ende Juni',
+    harvestingStart: 'Anfang Dezember',
+    harvestingEnd: 'Ende Februar',
+    growingSeason: '',
+    growingSeasonIntern: '',
+    plantingDistance: 60,
+    rowDistance: 60,
+    nutrition: 'starkzehrer',
+    light: 'Sonne bis Halbschatten',
+    water: 'mittel',
+    sowingDepth: '1-2',
+    cultivationTips: '',
+    imagename: 'cabbage-savoy.webp'
+  },
+  {
+    name: 'Winterlauch Blaugrüner Winter Husky',
+    botanicname: 'Allium porrum',
+    speciesId: '',
+    species: 'Lauch',
+    plantfamily: 'Zwiebelgewächse',
+    description: '',
+    sowingForPlantingStart: 'Ende März',
+    sowingForPlantingEnd: 'Ende April',
+    plantingStart: 'Anfang Juni',
+    plantingEnd: 'Anfang Juli',
+    directSowingStart: '',
+    directSowingEnd: '',
+    harvestingStart: 'Anfang Dezember',
+    harvestingEnd: 'Ende März',
+    growingSeason: '',
+    growingSeasonIntern: '',
+    plantingDistance: 10,
+    rowDistance: 25,
+    nutrition: 'starkzehrer',
+    light: 'Sonne bis Halbschatten',
+    water: 'mittel',
+    sowingDepth: '1,5',
+    cultivationTips: '',
+    imagename: 'leek.webp'
+  },
+  {
+    name: 'Summertime',
+    botanicname: 'Lactuca sativa',
+    speciesId: '',
+    species: 'Salat',
+    plantfamily: 'Korbblütler',
+    description: '',
+    sowingForPlantingStart: 'Anfang Februar',
+    sowingForPlantingEnd: 'Ende April',
+    plantingStart: 'Anfang März',
+    plantingEnd: 'Ende Mai',
+    directSowingStart: 'Anfang April',
+    directSowingEnd: 'Ende Juli',
+    harvestingStart: 'Anfang Mai',
+    harvestingEnd: 'Ende Oktober',
+    growingSeason: '',
+    growingSeasonIntern: '',
+    plantingDistance: 30,
+    rowDistance: 30,
+    nutrition: 'mittelzehrer',
+    light: 'Sonne bis Halbschatten',
+    water: 'mittel',
+    sowingDepth: 0,
+    cultivationTips: '',
+    imagename: 'lettuce.webp'
+  },
+  {
+    name: 'Dill',
+    botanicname: 'Anethum graveolens',
+    speciesId: '',
+    species: 'Dill',
+    plantfamily: 'Doldenblütler',
+    description: '',
+    sowingForPlantingStart: '',
+    sowingForPlantingEnd: '',
+    plantingStart: '',
+    plantingEnd: '',
+    directSowingStart: 'Anfang April',
+    directSowingEnd: 'mitte Juli',
+    harvestingStart: 'mitte Mai',
+    harvestingEnd: 'Ende Oktober',
+    growingSeason: '',
+    growingSeasonIntern: '',
+    plantingDistance: 10,
+    rowDistance: 30,
+    nutrition: 'mittelzehrer',
+    light: 'Sonne bis Halbschatten',
+    water: 'mittel',
+    sowingDepth: '1-2',
+    cultivationTips: '',
+    imagename: 'dill.webp'
+  },
+  {
+    name: 'Azur Star',
+    botanicname: 'Brassica oleracea',
+    speciesId: '',
+    species: 'Kohlrabi',
+    plantfamily: 'Kreuzblütler',
+    description: '',
+    sowingForPlantingStart: 'Ende Januar',
+    sowingForPlantingEnd: 'mitte Juli',
+    plantingStart: 'mitte März',
+    plantingEnd: 'Ende August',
+    directSowingStart: 'Anfang Februar',
+    directSowingEnd: 'mitte Juli',
+    harvestingStart: 'mitte Mai',
+    harvestingEnd: 'mitte Oktober',
+    growingSeason: '',
+    growingSeasonIntern: '',
+    plantingDistance: 20,
+    rowDistance: 30,
+    nutrition: 'mittelzehrer',
+    light: 'Sonne bis Halbschatten',
+    water: 'mittel',
+    sowingDepth: 1,
+    cultivationTips: '',
+    imagename: 'kohlrabi.webp'
+  },
+  {
+    name: 'Feurio',
+    botanicname: 'Beta vulgaris',
+    speciesId: '',
+    species: 'Mangold',
+    plantfamily: 'Fuchsschwanzgewächse',
+    description: '',
+    sowingForPlantingStart: 'mitte März',
+    sowingForPlantingEnd: 'mitte Juni',
+    plantingStart: 'mitte April',
+    plantingEnd: 'mitte Juli',
+    directSowingStart: 'Anfang April',
+    directSowingEnd: 'mitte Juni',
+    harvestingStart: 'mitte Mai',
+    harvestingEnd: 'Ende Oktober',
+    growingSeason: '',
+    growingSeasonIntern: '',
+    plantingDistance: 8,
+    rowDistance: 30,
+    nutrition: 'starkzehrer',
+    light: 'Sonne bis Halbschatten',
+    water: 'mittel',
+    sowingDepth: 2,
+    cultivationTips: '',
+    imagename: 'chard.webp'
+  },
+  {
+    name: 'Kapuzinerkresse rankend',
+    botanicname: 'Tropaeolum majus',
+    speciesId: '',
+    species: 'Kapuzinerkresse',
+    plantfamily: 'Kapuzinerkressengewächse',
+    description: '',
+    sowingForPlantingStart: 'mitte März',
+    sowingForPlantingEnd: 'Ende Mai',
+    plantingStart: 'mitte Mai',
+    plantingEnd: 'mitte Juli',
+    directSowingStart: 'Anfang Mai',
+    directSowingEnd: 'Ende Mai',
+    harvestingStart: 'Anfang Juni',
+    harvestingEnd: 'Ende Oktober',
+    growingSeason: '',
+    growingSeasonIntern: '',
+    plantingDistance: 40,
+    rowDistance: 40,
+    nutrition: 'mittelzehrer',
+    light: 'Sonne bis Halbschatten',
+    water: '',
+    sowingDepth: 1,
+    cultivationTips: '',
+    imagename: 'nasturtium.webp'
+  },
+  {
+    name: 'Sunviva',
+    botanicname: 'Solanum lycopersicum',
+    speciesId: '',
+    species: 'Tomate',
+    plantfamily: 'Nachtschattengewächse',
+    description: '',
+    sowingForPlantingStart: 'Mitte Februar',
+    sowingForPlantingEnd: 'Ende April',
+    plantingStart: 'Anfang Mai',
+    plantingEnd: 'mitte Juli',
+    directSowingStart: '',
+    directSowingEnd: '',
+    harvestingStart: 'Anfang Juli',
+    harvestingEnd: 'Ende Oktober',
+    growingSeason: '',
+    growingSeasonIntern: '',
+    plantingDistance: 60,
+    rowDistance: 60,
+    nutrition: 'starkzehrer',
+    light: 'Sonne bis Halbschatten',
+    water: '',
+    sowingDepth: '0,5-1',
+    cultivationTips: '',
+    imagename: 'tomato.webp'
+  },
+  {
+    name: 'Baquieu',
+    botanicname: 'Lactuca sativa',
+    speciesId: '',
+    species: 'Salat',
+    plantfamily: 'Korbblütler',
+    description: '',
+    sowingForPlantingStart: '',
+    sowingForPlantingEnd: '',
+    plantingStart: '',
+    plantingEnd: '',
+    directSowingStart: 'Anfang August, Anfang März',
+    directSowingEnd: 'Ende September, Ende März',
+    harvestingStart: 'Anfang Mai',
+    harvestingEnd: 'Ende Juni',
+    growingSeason: '',
+    growingSeasonIntern: '',
+    plantingDistance: 25,
+    rowDistance: 30,
+    nutrition: 'mittelzehrer',
+    light: '',
+    water: '',
+    sowingDepth: 1,
+    cultivationTips: '',
+    imagename: 'lettuce.webp'
+  }
+]
+</script>
+
+<template>
+  <br />
+  <button @click="setSpecies()">Set species / Arten</button>
+  <br />
+  <br />
+  <p>nacheinander ausführen!!</p>
+  <button @click="setVarieties()">Set Varieties / Sorten</button>
+</template>
