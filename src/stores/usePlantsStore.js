@@ -70,7 +70,7 @@ export const usePlantsStore = defineStore('plants', () => {
       imagename: imagename,
       botanicname: botanicname,
       plantfamily: plantfamily,
-      descriprion: description,
+      descriptrion: description,
       goodNeighbors: goodNeighbors,
       badNeighbors: badNeighbors
     })
