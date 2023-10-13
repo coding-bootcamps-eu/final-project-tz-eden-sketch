@@ -1,4 +1,4 @@
-import { reactive, onBeforeMount } from 'vue'
+import { reactive, onBeforeMount, computed } from 'vue'
 import { defineStore } from 'pinia'
 
 export const usePlantsStore = defineStore('plants', () => {
@@ -7,16 +7,18 @@ export const usePlantsStore = defineStore('plants', () => {
     plantVarieties: [] //Pflanzensorte z.B. Oxhella
   })
 
-  async function loadPlantSpecies() {
-    const resp = await fetch('http://localhost:3000/plantspecies')
-    const data = await resp.json()
-    state.plantSpecies = data
+  function loadPlantSpecies() {
+    fetch('http://localhost:3000/plantspecies').then(async (resp) => {
+      const data = await resp.json()
+      state.plantSpecies = data
+    })
   }
 
-  async function loadPlantVarieties() {
-    const resp = await fetch('http://localhost:3000/plantvarieties')
-    const data = await resp.json()
-    state.plantVarieties = data
+  function loadPlantVarieties() {
+    fetch('http://localhost:3000/plantvarieties').then(async (resp) => {
+      const data = await resp.json()
+      state.plantVarieties = data
+    })
   }
 
   //vorerst keine Funktion zum erfassen von Pflanzen im Frontend vorgesehen
@@ -26,16 +28,8 @@ export const usePlantsStore = defineStore('plants', () => {
   // }
 
   //get all species / varieties
-  function getAllSpecies() {
-    return state.plantSpecies
-  }
-  function getAllVarieties() {
-    return state.plantVariety
-  }
-
-  function getAllVarieties() {
-    return state.plantVarieties
-  }
+  const getAllVarieties = computed(() => state.plantVarieties)
+  const getAllSpecies = computed(() => state.plantSpecies)
 
   //get single species / variety
   function getSpecies(id) {
@@ -46,6 +40,7 @@ export const usePlantsStore = defineStore('plants', () => {
   }
 
   //todo: delete Funktion
+  //vorerst nicht vorgesehen
 
   // add new species / variety
   async function setSpecies(
@@ -75,91 +70,88 @@ export const usePlantsStore = defineStore('plants', () => {
       description: description
     }
 
-    const resp = await fetch('http://localhost:3000/plantspecies/', {
+    // const resp =
+    await fetch('http://localhost:3000/plantspecies/', {
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
       body: JSON.stringify(newSpecies)
     })
-    const savedSpecies = await resp.json()
+    // const savedSpecies = await resp.json()
 
     return true
   }
 
-  async function setVariety(
-      name,
-      botanicname,
-      species,
-      plantfamily,
-      description,
-      sowingForPlantingStart,
-      sowingForPlantingEnd,
-      plantingStart,
-      plantingEnd,
-      directSowingStart,
-      directSowingEnd,
-      harvestingStart,
-      growingSeason,
-      growingSeasonIntern,
-      plantingDistance,
-      rowDistance,
-      nutrition,
-      light,
-      water,
-      sowingDepth,
-      cultivationTips,
-      imagename
-    ) {
-      const newVariety = {
-        name: name,
-        botanicname,
-        speciesId: getSpeciesIdFromName(species),
-        species,
-        plantfamily,
-        description,
-        sowingForPlantingStart,
-        sowingForPlantingEnd,
-        plantingStart,
-        plantingEnd,
-        directSowingStart,
-        directSowingEnd,
-        harvestingStart,
-        growingSeason,
-        growingSeasonIntern,
-        plantingDistance,
-        rowDistance,
-        nutrition,
-        light,
-        water,
-        sowingDepth,
-        cultivationTips,
-        imagename
-  }
+  // async function setVariety(
+  //     name,
+  //     botanicname,
+  //     species,
+  //     plantfamily,
+  //     description,
+  //     sowingForPlantingStart,
+  //     sowingForPlantingEnd,
+  //     plantingStart,
+  //     plantingEnd,
+  //     directSowingStart,
+  //     directSowingEnd,
+  //     harvestingStart,
+  //     growingSeason,
+  //     growingSeasonIntern,
+  //     plantingDistance,
+  //     rowDistance,
+  //     nutrition,
+  //     light,
+  //     water,
+  //     sowingDepth,
+  //     cultivationTips,
+  //     imagename
+  //   ) {
+  //     const newVariety = {
+  //       name: name,
+  //       botanicname,
+  //       speciesId: getSpeciesIdFromName(species),
+  //       species,
+  //       plantfamily,
+  //       description,
+  //       sowingForPlantingStart,
+  //       sowingForPlantingEnd,
+  //       plantingStart,
+  //       plantingEnd,
+  //       directSowingStart,
+  //       directSowingEnd,
+  //       harvestingStart,
+  //       growingSeason,
+  //       growingSeasonIntern,
+  //       plantingDistance,
+  //       rowDistance,
+  //       nutrition,
+  //       light,
+  //       water,
+  //       sowingDepth,
+  //       cultivationTips,
+  //       imagename
+  // }
 
   function varietiesBySpecies(speciesId) {
     return state.plantVarieties.filter((varietyItem) => varietyItem['speciesId'] === speciesId)
   }
 
   function getSpeciesIdFromName(name) {
-    console.log(name)
     return state.plantSpecies.filter(
       (plantSpeciesItem) => plantSpeciesItem['name'] === name
     )?.[0]?.['id']
     //optional chaining
   }
-  onBeforeMount(async () => {
-    await loadPlantSpecies()
-    await loadPlantVarieties()
-  })
-
-  onBeforeMount(async () => {
-    await loadPlantSpecies()
-    await loadPlantVarieties()
+  onBeforeMount(() => {
+    loadPlantSpecies()
+    loadPlantVarieties()
   })
 
   return {
     state,
     setSpecies,
-    setVariety,
+    // setVariety,
+    loadPlantSpecies,
+    loadPlantVarieties,
     getAllSpecies,
     getAllVarieties,
     getSpecies,

@@ -11,7 +11,7 @@ const plantsStore = usePlantsStore()
 
     <div class="card-wrapper">
       <CardComponent
-        v-for="species of plantsStore.getAllSpecies()"
+        v-for="species of plantsStore.getAllSpecies"
         :key="species.id"
         :card-image="species.imagename"
         :card-title="species.name"

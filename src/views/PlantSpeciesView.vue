@@ -63,6 +63,7 @@ const imageUrl = computed(() => {
       <q-icon name="bi-suit-heart-fill"></q-icon>
       Gute Nachbarn
     </h3>
+    <p style="color: red">{{ species[0].goodNeighbors }}</p>
     <ol class="list">
       <li v-for="neighbor in species[0].goodNeighbors" :key="neighbor">{{ neighbor }}</li>
     </ol>
@@ -77,6 +78,7 @@ const imageUrl = computed(() => {
     <SeparatorElement />
 
     <h2>Sorten</h2>
+    <p style="color: red">{{ varieties }}</p>
     <ol class="list">
       <routerLink
         v-for="variety in varieties"
