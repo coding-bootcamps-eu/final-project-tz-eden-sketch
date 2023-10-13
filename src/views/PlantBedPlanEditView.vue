@@ -5,6 +5,8 @@
 
   <main>
     <!--Beet 1-->
+    <p>{{ plantBedsStore.bed_1 }}</p>
+
     <p>{{ plantBedsStore.state.currentMonth }}</p>
     <p>{{ plantBedsStore.state.currentPeriod }}</p>
 
