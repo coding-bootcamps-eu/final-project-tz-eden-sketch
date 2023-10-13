@@ -1,18 +1,18 @@
 <template>
   <header>
     <PlantBedNavigation></PlantBedNavigation>
-    <!--Monats auswahl-->
-    <!-- Zeit Auswahl-->
   </header>
+
   <main>
     <!--Beet 1-->
     <p>{{ plantBedsStore.state.currentMonth }}</p>
     <p>{{ plantBedsStore.state.currentPeriod }}</p>
 
     <h2>Beet 1</h2>
-    <q-btn class="btn-add" color="primary" icon="add" @click="openAddPlant = true" />
+    <!-- <p style="color: red">{{ state.rows }}</p> -->
+    <q-btn class="btn-add" color="primary" icon="add" @click="state.openAddPlant = true" />
 
-    <q-dialog maximized class="popup-plant add-plants__card" v-model="openAddPlant">
+    <q-dialog maximized class="popup-plant add-plants__card" v-model="state.openAddPlant">
       <!-- 'full-width' für desktop, 'maximized' für mobile-->
       <q-card>
         <q-card-section>
@@ -21,12 +21,12 @@
 
         <q-card-section class="user-species-list">
           <q-table
-            :rows="rows"
-            :columns="columns"
+            :rows="state.rows"
+            :columns="state.columns"
             row-key="name"
             selection="multiple"
-            v-model:selected="selected"
-            :filter="filter"
+            v-model:selected="state.selected"
+            :filter="state.filter"
             grid
             hide-header
           >
@@ -71,7 +71,7 @@
           </q-table>
         </q-card-section>
 
-        <q-card-section>{{ plantVarieties }} </q-card-section>
+        <!-- <q-card-section>{{ state.userVarieties }} </q-card-section> -->
         <q-card-actions align="right">
           <q-btn flat label="OK" color="primary" v-close-popup />
         </q-card-actions>
@@ -88,67 +88,53 @@
 <script setup>
 import PlantBedNavigation from '../components/PlantBedNavigation.vue'
 import SiteNavigation from '@/components/SiteNavigation.vue'
-import { ref } from 'vue'
+import { computed, reactive, watch } from 'vue'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 import { usePlantsStore } from '@/stores/usePlantsStore'
-// import { storeToRefs } from 'pinia'
-
 const plantsStore = usePlantsStore()
-// const { plantVarieties } = storeToRefs(plantsStore)
 const plantBedsStore = usePlantBedsStore()
 
-// watch(question, async (newQuestion, oldQuestion) => {
-//   if (newQuestion.indexOf('?') > -1) {
-//     answer.value = 'Thinking...'
-//     try {
-//       const res = await fetch('https://yesno.wtf/api')
-//       answer.value = (await res.json()).answer
-//     } catch (error) {
-//       answer.value = 'Error! Could not reach the API. ' + error
-//     }
-//   }
-// })
+const state = reactive({
+  openAddPlant: false,
+  filter: '',
+  selected: [],
+  columns: [
+    { name: 'plantspecies', align: 'center', label: 'Art', field: 'plantspecies', sortable: true },
+    { name: 'plantfamily', label: 'Pflanzenfamilie', field: 'plantfamily', sortable: true },
+    { name: 'plantvariety', label: 'Sorte', field: 'plantvariety' },
+    { name: 'nutrition', label: 'Nährstoffbedarf', field: 'nutrition' }
+    // { name: 'goodNeighbors', label: 'gute Nachbarn', field: 'goodNeighbors' },
+    // { name: 'badNeighbors', label: 'schlechte Nachbarn', field: 'badNeighbors' }
+  ],
+  userVarieties: computed(() => {
+    return plantsStore.getAllVarieties
+  }),
+  rows: []
+})
 
-const openAddPlant = ref(false)
+watch(
+  () => state.userVarieties,
+  (newVal, oldVal) => {
+    state.rows = mapTableContent()
+  }
+)
 
-//alle Arten
-const userVarieties = plantsStore.getAllVarieties() //wird später noch nach userwünschen gefiltert
-
-// function addPlant() {}
-// console.log(plantsStore.getAllSpecies())
-const filter = ref('')
-const selected = ref([])
-const columns = ref([
-  { name: 'plantspecies', align: 'center', label: 'Art', field: 'plantspecies', sortable: true },
-  { name: 'plantfamily', label: 'Pflanzenfamilie', field: 'plantfamily', sortable: true },
-  { name: 'plantvariety', label: 'Sorte', field: 'plantvariety' },
-  { name: 'nutrition', label: 'Nährstoffbedarf', field: 'nutrition' },
-  { name: 'goodNeighbors', label: 'gute Nachbarn', field: 'goodNeighbors' },
-  { name: 'badNeighbors', label: 'schlechte Nachbarn', field: 'badNeighbors' }
-])
-
-const rows = mapTableContent(userVarieties)
-
-function mapTableContent(userVarieties) {
-  // console.log(userVarieties)
-  // console.log(userVarieties[0])
-  // console.log(userVarieties[0].name, userVarieties[0].speciesId)
-  // const speciesX = plantsStore.getSpecies(userVarieties[0].speciesId)
-  // console.log(speciesX)
-  // const rows = []
-  // for (let i = 0; i < userVarieties.length; i++) {
-  //   const species = plantsStore.getSpecies(userVarieties[i].speciesId)
-  //   const row = {}
-  //   row.name = userVarieties[i].name
-  //   row.plantfamily = species.plantfamily
-  //   row.plantspecies = species.name
-  //   row.plantvariety = userVarieties[i].name
-  //   row.nutrition = species.nutrition
-  //   row.goodNeighbors = species.goodNeighbors
-  //   row.badNeighbors = species.badNeighbors
-  //   rows.push(row)
-  // }
-  // return rows
+function mapTableContent() {
+  const rows = []
+  for (let varietyItem of state.userVarieties) {
+    // console.log(varietyItem)
+    // const species = plantsStore.getSpecies(userVarieties[varietyItem].plantspeciesId)
+    const row = {}
+    row.name = varietyItem.name
+    row.plantfamily = varietyItem.plantfamily
+    row.plantspecies = varietyItem.name
+    row.plantvariety = varietyItem.name
+    row.nutrition = varietyItem.nutrition
+    // row.goodNeighbors = species.goodNeighbors
+    // row.badNeighbors = species.badNeighbors
+    rows.push(row)
+  }
+  return rows
 }
 </script>
 

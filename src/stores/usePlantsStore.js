@@ -1,4 +1,4 @@
-import { reactive, onBeforeMount } from 'vue'
+import { reactive, onBeforeMount, computed } from 'vue'
 import { defineStore } from 'pinia'
 
 export const usePlantsStore = defineStore('plants', () => {
@@ -7,16 +7,18 @@ export const usePlantsStore = defineStore('plants', () => {
     plantVarieties: [] //Pflanzensorte z.B. Oxhella
   })
 
-  async function loadPlantSpecies() {
-    const resp = await fetch('http://localhost:3000/plantspecies')
-    const data = await resp.json()
-    state.plantSpecies = data
+  function loadPlantSpecies() {
+    fetch('http://localhost:3000/plantspecies').then(async (resp) => {
+      const data = await resp.json()
+      state.plantSpecies = data
+    })
   }
 
-  async function loadPlantVarieties() {
-    const resp = await fetch('http://localhost:3000/plantvarieties')
-    const data = await resp.json()
-    state.plantVarieties = data
+  function loadPlantVarieties() {
+    fetch('http://localhost:3000/plantvarieties').then(async (resp) => {
+      const data = await resp.json()
+      state.plantVarieties = data
+    })
   }
 
   //vorerst keine Funktion zum erfassen von Pflanzen im Frontend vorgesehen
@@ -26,13 +28,8 @@ export const usePlantsStore = defineStore('plants', () => {
   // }
 
   //get all species / varieties
-  function getAllSpecies() {
-    return state.plantSpecies
-  }
-
-  function getAllVarieties() {
-    return state.plantVarieties
-  }
+  const getAllVarieties = computed(() => state.plantVarieties)
+  const getAllSpecies = computed(() => state.plantSpecies)
 
   //get single species / variety
   function getSpecies(id) {
@@ -43,6 +40,7 @@ export const usePlantsStore = defineStore('plants', () => {
   }
 
   //todo: delete Funktion
+  //vorerst nicht vorgesehen
 
   // add new species / variety
   async function setSpecies(
@@ -138,28 +136,22 @@ export const usePlantsStore = defineStore('plants', () => {
   }
 
   function getSpeciesIdFromName(name) {
-    console.log(name)
     return state.plantSpecies.filter(
       (plantSpeciesItem) => plantSpeciesItem['name'] === name
     )?.[0]?.['id']
     //optional chaining
   }
-  onBeforeMount(async () => {
-    await loadPlantSpecies()
-    await loadPlantVarieties()
+  onBeforeMount(() => {
+    loadPlantSpecies()
+    loadPlantVarieties()
   })
-
-  // onBeforeMount(async () => {
-  //   await loadPlantSpecies()
-  //   await loadPlantVarieties()
-  // })
 
   return {
     state,
     setSpecies,
+    // setVariety,
     loadPlantSpecies,
     loadPlantVarieties,
-    // setVariety,
     getAllSpecies,
     getAllVarieties,
     getSpecies,
