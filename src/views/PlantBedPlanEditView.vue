@@ -4,6 +4,7 @@
   </header>
 
   <main>
+    {{ plantBedsStore.translateTime('März', 'Mitte') }}
     <!--Beet 1-->
     <p>{{ plantBedsStore.bed_1 }}</p>
 
