@@ -65,8 +65,8 @@ export const usePlantsStore = defineStore('plants', () => {
       imagename: imagename,
       plantfamily: plantfamily,
       nutrition: nutrition,
-      goodNeighbors: goodNeighbors,
-      badNeighbors: badNeighbors,
+      goodNeighbors: goodNeighbors.split(', '),
+      badNeighbors: badNeighbors.split(', '),
       description: description
     }
 
@@ -81,68 +81,68 @@ export const usePlantsStore = defineStore('plants', () => {
     return true
   }
 
-  async function setVariety(
-    name,
-    botanicname,
-    species,
-    plantfamily,
-    description,
-    sowingForPlantingStart,
-    sowingForPlantingEnd,
-    plantingStart,
-    plantingEnd,
-    directSowingStart,
-    directSowingEnd,
-    harvestingStart,
-    growingSeason,
-    growingSeasonIntern,
-    plantingDistance,
-    rowDistance,
-    nutrition,
-    light,
-    water,
-    sowingDepth,
-    cultivationTips,
-    imagename
-  ) {
-    const speciesInStore = getSpeciesIdFromName(species)
+  // async function setVariety(
+  //   name,
+  //   botanicname,
+  //   species,
+  //   plantfamily,
+  //   description,
+  //   sowingForPlantingStart,
+  //   sowingForPlantingEnd,
+  //   plantingStart,
+  //   plantingEnd,
+  //   directSowingStart,
+  //   directSowingEnd,
+  //   harvestingStart,
+  //   growingSeason,
+  //   growingSeasonIntern,
+  //   plantingDistance,
+  //   rowDistance,
+  //   nutrition,
+  //   light,
+  //   water,
+  //   sowingDepth,
+  //   cultivationTips,
+  //   imagename
+  // ) {
+  //   const speciesInStore = getSpeciesIdFromName(species)
 
-    const newVariety = {
-      name: name,
-      botanicname: botanicname === '' ? getSpecies(speciesInStore)[0].botanicname : botanicname,
-      plantspeciesId: speciesInStore,
-      species: species,
-      plantfamily: plantfamily === '' ? getSpecies(speciesInStore)[0].plantfamily : plantfamily,
-      description: description,
-      sowingForPlantingStart: sowingForPlantingStart,
-      sowingForPlantingEnd: sowingForPlantingEnd,
-      plantingStart: plantingStart,
-      plantingEnd: plantingEnd,
-      directSowingStart: directSowingStart,
-      directSowingEnd: directSowingEnd,
-      harvestingStart: harvestingStart,
-      growingSeason: growingSeason,
-      growingSeasonIntern: growingSeasonIntern,
-      plantingDistance: plantingDistance,
-      rowDistance: rowDistance,
-      nutrition: nutrition === '' ? getSpecies(speciesInStore)[0].nutrition : nutrition,
-      light: light,
-      water: water,
-      sowingDepth: sowingDepth,
-      cultivationTips: cultivationTips,
-      imagename: imagename === '' ? getSpecies(speciesInStore)[0].imagename : imagename
-    }
+  //   const newVariety = {
+  //     name: name,
+  //     botanicname: botanicname === '' ? getSpecies(speciesInStore)[0].botanicname : botanicname,
+  //     plantspeciesId: speciesInStore,
+  //     species: species,
+  //     plantfamily: plantfamily === '' ? getSpecies(speciesInStore)[0].plantfamily : plantfamily,
+  //     description: description,
+  //     sowingForPlantingStart: sowingForPlantingStart,
+  //     sowingForPlantingEnd: sowingForPlantingEnd,
+  //     plantingStart: plantingStart,
+  //     plantingEnd: plantingEnd,
+  //     directSowingStart: directSowingStart,
+  //     directSowingEnd: directSowingEnd,
+  //     harvestingStart: harvestingStart,
+  //     growingSeason: growingSeason,
+  //     growingSeasonIntern: growingSeasonIntern,
+  //     plantingDistance: plantingDistance,
+  //     rowDistance: rowDistance,
+  //     nutrition: nutrition === '' ? getSpecies(speciesInStore)[0].nutrition : nutrition,
+  //     light: light,
+  //     water: water,
+  //     sowingDepth: sowingDepth,
+  //     cultivationTips: cultivationTips,
+  //     imagename: imagename === '' ? getSpecies(speciesInStore)[0].imagename : imagename
+  //   }
 
-    // const resp =
-    await fetch('http://localhost:3000/plantvarieties/', {
-      method: 'POST',
-      headers: { 'Content-type': 'application/json' },
-      body: JSON.stringify(newVariety)
-    })
-    // const savedVariety = await resp.json()
+  //   // const resp =
+  //   await fetch('http://localhost:3000/plantvarieties/', {
+  //     method: 'POST',
+  //     headers: { 'Content-type': 'application/json' },
+  //     body: JSON.stringify(newVariety)
+  //   })
+  //   // const savedVariety = await resp.json()
 
-    return true
-  }
+  //   return true
+  // }
 
   function varietiesBySpecies(speciesId) {
     return state.plantVarieties.filter((varietyItem) => varietyItem['speciesId'] === speciesId)
@@ -162,7 +162,7 @@ export const usePlantsStore = defineStore('plants', () => {
   return {
     state,
     setSpecies,
-    setVariety,
+    // setVariety,
     loadPlantSpecies,
     loadPlantVarieties,
     getAllSpecies,

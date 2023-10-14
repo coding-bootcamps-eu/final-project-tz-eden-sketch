@@ -89,7 +89,7 @@ const species = [
     imagename: 'broccoli.webp',
     plantfamily: 'Kreuzblütler',
     nutrition: 'Starkzehrer',
-    goodNeighbors: 'Rote Bete, Sellerie, Aubergine, Erbse,\nKartoffel',
+    goodNeighbors: 'Rote Bete, Sellerie, Aubergine, Erbse, Kartoffel',
     badNeighbors: 'Zwiebel, Kohl',
     description:
       'Zugegebenermaßen gehören Brokkoli und Blumenkohl schon eher zu den Primadonnen im Gemüsegarten. Ich habe ein paar Jahre gebraucht, bis ich verstanden habe, welche Bedürfnisse ich stillen muss, damit sie eine richtig gute Ernte abwerfen. In deinem ersten Gartenjahr solltest du dich besser an einfachere Kulturen halten.\nDie leckeren Kohlgewächse stehen nicht nur auf unserem Speiseplan, sondern auch so einige Schädlinge haben diese Kreuzblütler zum Fressen gern. Deswegen sind die Pflanzen sehr dankbar, wenn du sie mit einem Kulturschutznetz vor ihnen beschützt.'
@@ -100,7 +100,7 @@ const species = [
     imagename: 'cauliflower.webp',
     plantfamily: 'Kreuzblütler',
     nutrition: 'Starkzehrer',
-    goodNeighbors: 'Rote Bete, Sellerie, Aubergine, Erbse,\nKartoffel',
+    goodNeighbors: 'Rote Bete, Sellerie, Aubergine, Erbse, Kartoffel',
     badNeighbors: 'Zwiebel, Kohl',
     description:
       'Zugegebenermaßen gehören Brokkoli und Blumenkohl schon eher zu den Primadonnen im Gemüsegarten. Ich habe ein paar Jahre gebraucht, bis ich verstanden habe, welche Bedürfnisse ich stillen muss, damit sie eine richtig gute Ernte abwerfen. In deinem ersten Gartenjahr solltest du dich besser an einfachere Kulturen halten.\nDie leckeren Kohlgewächse stehen nicht nur auf unserem Speiseplan, sondern auch so einige Schädlinge haben diese Kreuzblütler zum Fressen gern. Deswegen sind die Pflanzen sehr dankbar, wenn du sie mit einem Kulturschutznetz vor ihnen beschützt.'
@@ -122,7 +122,7 @@ const species = [
     imagename: 'cucumber.webp',
     plantfamily: 'Kürbisgewächse',
     nutrition: 'Starkzehrer',
-    goodNeighbors: 'Dill, Bohne, Kohl, Zwiebel, Salat,\nKnoblauch, Mais, Paprika, Sellerie, Spinat',
+    goodNeighbors: 'Dill, Bohne, Kohl, Zwiebel, Salat, Knoblauch, Mais, Paprika, Sellerie, Spinat',
     badNeighbors: 'Radieschen, Rettich, Zucchini',
     description:
       'Gurken aus dem Garten sind kleiner und haben eine rauere Haut als die Gewächshausware aus dem Supermarkt. Dafür schmecken sie umso besser!\nDu solltest deinen Gurken eine Kletterunterlage bauen, damit sie in die Höhe wachsen, statt über den Boden zu kriechen. So bleiben die Früchte sauber und du kannst mehr Gurken auf derselben Fläche anbauen. Ein einfaches Rankgerüst kannst du ganz leicht aufbauen, indem du drei lange Stangen am oberen Ende zusammenbindest und zu einem Tipi aufstellst.'
@@ -133,7 +133,7 @@ const species = [
     imagename: 'potatoe.webp',
     plantfamily: 'Nachtschattengewächse',
     nutrition: 'Starkzehrer',
-    goodNeighbors: 'Bohne, Meerrettich, Pfefferminze,\nBaldrian, Kohlrabi, Kapuzinerkresse, Mais',
+    goodNeighbors: 'Bohne, Meerrettich, Pfefferminze, Baldrian, Kohlrabi, Kapuzinerkresse, Mais',
     badNeighbors: 'Aubergine, Tomate, Erbse, Sellerie',
     description:
       'Es gibt kaum etwas Besseres, als frische Kartoffeln auszugraben, und sie nur mit Butter und Salz gewürzt zu essen! Die erste Kartoffelernte ist bei uns immer ein kleines Fest und unser Sohn wartet jedes Jahr ungeduldig darauf, die ersten Knollen aus der Erde zu holen.\nWer glaubt, Kartoffeln schmecken alle gleich, irrt gewaltig. Es gibt enorme Geschmacksunterschiede zwischen den einzelnen Sorten! Wenn du deine eigenen Kartoffeln anbaust, solltest du unbedingt verschiedene - auch ungewöhnliche - Sorten ausprobieren.'
@@ -144,7 +144,7 @@ const species = [
     imagename: 'garlic.webp',
     plantfamily: 'Zwiebelgewächse',
     nutrition: 'Mittelzehrer',
-    goodNeighbors: 'Möhre, Erdbeere, Salat, Pastinake, Gurke,\nObstbäume',
+    goodNeighbors: 'Möhre, Erdbeere, Salat, Pastinake, Gurke, Obstbäume',
     badNeighbors: 'Erbse, Bohne, Kohl, Zwiebel, Lauch',
     description:
       'Entweder man liebt ihn, oder man hasst ihn! Für uns jedenfalls darf Knoblauch beim Kochen nicht fehlen. Wenn du auch bekennender Knoblauch-Fan bist, solltest du ihn unbedingt selbst anbauen.\nEs gibt wenige Gemüsearten, die so unkompliziert sind wie Knoblauch!\nWir bauen Knoblauch seit unserem ersten Gartenjahr zu 100 % selbst an. Die dicksten Zehen, die wir ernten, stecken wir im Herbst in neue Beete und vermehren ihn so Jahr für Jahr weiter.'
@@ -166,9 +166,8 @@ const species = [
     imagename: 'leek.webp',
     plantfamily: 'Zwiebelgewächse',
     nutrition: 'Starkzehrer',
-    goodNeighbors:
-      'Möhre, Schwarzwurzeln, Kohlrabi,\nErdbeeren, Salat, Tomate, Sellerie, Pastinake',
-    badNeighbors: 'Rote Bete, Bohne, Erbse, Zwiebel,\nKnoblauch',
+    goodNeighbors: 'Möhre, Schwarzwurzeln, Kohlrabi, Erdbeeren, Salat, Tomate, Sellerie, Pastinake',
+    badNeighbors: 'Rote Bete, Bohne, Erbse, Zwiebel, Knoblauch',
     description:
       'Lauch ist verwandt mit Zwiebel und Knoblauch und in der Küche ein sehr vielseitiges und köstliches Gemüse mit vielen guten Inhaltsstoffen.\nDu kannst ihn sowohl im Sommer als auch im Winter anbauen, er ist nämlich super frosthart. In der kalten Jahreszeit kannst du ihn, ganz nach Bedarf, frisch aus dem Beet ernten.\nWeil Lauch so viele Schädlinge hat, solltest du ihn mit einem Kulturschutznetz abdecken. Erst nach dem ersten Frost im Herbst kannst du das Netz abnehmen. Ich baue Lauch immer zusammen mit meinen Kohlpflanzen an, die ich ja auch abdecke.\nSo sind alle empfindlichen Gemüsearten bequem auf einmal geschützt.'
   },
@@ -178,7 +177,7 @@ const species = [
     imagename: 'corn.webp',
     plantfamily: 'Süßgräser',
     nutrition: 'Starkzehrer',
-    goodNeighbors: 'Bohne, Kürbis, Gurke, Kohl, Möhre,\nPastinake',
+    goodNeighbors: 'Bohne, Kürbis, Gurke, Kohl, Möhre, Pastinake',
     badNeighbors: 'Sellerie, Rote Bete',
     description:
       'Kaum ein Gemüse ist so lecker wie frisch geernteter Zuckermais. Egal ob roh, gekocht mit Butter und Kräutersalz oder zum Grillen, Zuckermais ist ein absolutes Sommer Must-Have im Gemüsegarten!'
@@ -224,7 +223,7 @@ const species = [
     plantfamily: 'Kreuzblütler',
     nutrition: 'Mittelzehrer',
     goodNeighbors:
-      'Salat, Spinat, Erbse, Möhre, Bohne, Kohl, Mangold, Kresse, Petersilie,\nPfefferminze, Erdbeeren',
+      'Salat, Spinat, Erbse, Möhre, Bohne, Kohl, Mangold, Kresse, Petersilie, Pfefferminze, Erdbeeren',
     badNeighbors: 'Gurke',
     description:
       'Dass Radieschen und Brokkoli zu der gleichen Familie gehören, mag überraschen - aber beide sind Kreuzblütler und damit Kohlgewächse. Wer mit Kindern zusammen gärtnert, sollte unbedingt Radieschen anbauen. Sie sind (je nach Sorte) schon 20 bis 30 Tage nach der Aussaat erntebereit und verschaffen den kleinen Gärtnern schnell ein Erfolgserlebnis.\nIch verwende Radieschen gerne als „Lückenfüller" um meine Beetfläche vor oder nach einer anderen Kultur noch einmal nutzen zu können.\nÜberschüssige Radieschen lege ich für den Winter ein.'
@@ -236,7 +235,7 @@ const species = [
     plantfamily: '',
     nutrition: '',
     goodNeighbors:
-      'Salat, Spinat, Erbse, Möhre, Bohne, Kohl, Mangold, Kresse, Petersilie,\nPfefferminze, Erdbeeren',
+      'Salat, Spinat, Erbse, Möhre, Bohne, Kohl, Mangold, Kresse, Petersilie, Pfefferminze, Erdbeeren',
     badNeighbors: 'Gurke',
     description: ''
   },
@@ -257,7 +256,7 @@ const species = [
     imagename: 'salsify-black.webp',
     plantfamily: 'Korbblütler',
     nutrition: 'Mittelzehrer',
-    goodNeighbors: 'Lauch, Ringelblume, Salat, Bohne,\nMöhre, Radieschen',
+    goodNeighbors: 'Lauch, Ringelblume, Salat, Bohne, Möhre, Radieschen',
     badNeighbors: 'Mangold',
     description:
       'Die Schwarzwurzel galt lange als „Spargel des kleinen Mannes", weil sie einfacher und günstiger anzubauen ist, aber ein ähnliches Aroma besitzt.\nEin weiterer Name für die Wurzel ist\n"Winterspargel". Im Winter trotzen sie nämlich selbst klirrender Kälte und du kannst sie einfach frisch aus dem Beet ernten.'
@@ -268,7 +267,7 @@ const species = [
     imagename: 'celery.webp',
     plantfamily: 'Doldenblütler',
     nutrition: 'Mittelzehrer',
-    goodNeighbors: 'Bohne, Erbse, Dill, Ringelblume, Kohl,\nTomate, Spinat, Lauch',
+    goodNeighbors: 'Bohne, Erbse, Dill, Ringelblume, Kohl, Tomate, Spinat, Lauch',
     badNeighbors: 'Möhre, Mais, Salat, Kartoffel',
     description: ''
   },
@@ -290,7 +289,7 @@ const species = [
     plantfamily: 'Fuchsschwanzgewächse',
     nutrition: 'Mittelzehrer',
     goodNeighbors:
-      'Rhabarber, Rettich, Radieschen, Bohne,\nKohl, Kresse, Tomate, Sellerie, Aubergine',
+      'Rhabarber, Rettich, Radieschen, Bohne, Kohl, Kresse, Tomate, Sellerie, Aubergine',
     badNeighbors: 'Rote Bete, Mangold',
     description:
       'Beim Spinat scheiden sich bekanntlich die Geister.\nAber ich bin stark dafür, dass du ihm einen Platz in deinen Beeten gibst, auch wenn du ihn eigentlich nicht magst! Er schmeckt aus eigener Ernte nämlich unvergleichlich viel besser als der tiefgefrorene Spinat aus dem Supermarkt. Viele Spinatsorten sind außerdem winterhart und winterharte Gemüse sind vermutlich in jedem Garten gerne gesehen!\nSpinat ist super vielseitig. Du kannst ihn kochen (Spinatlasagne, mhhh!) oder auch roh im Salat mit knusprigen Croutons genießen. Als Gänsefußgewächs kommen ihm in der Fruchtfolge nur Mangold und Rote Bete in die Quere - sehr praktisch!'
@@ -324,7 +323,7 @@ const species = [
     plantfamily: 'Nachtschattengewächse',
     nutrition: 'Starkzehrer',
     goodNeighbors:
-      'Salat, Kohl, Sellerie, Lauch, Bohne,\nKamille, Petersilie, Basilikum, Zwiebel, Knoblauch',
+      'Salat, Kohl, Sellerie, Lauch, Bohne, Kamille, Petersilie, Basilikum, Zwiebel, Knoblauch',
     badNeighbors: 'Gurke, Fenchel, Kartoffel, Erbse',
     description:
       'Tomaten sind vermutlich das beliebteste Gartengemüse überhaupt, nicht umsonst tragen sie auch den Namen „Paradiesäpfel". In meinem Garten dürfen sie auf keinen Fall fehlen.\nDer Duft, den Tomatensträucher verbreiten, wenn ich die Blätter im Vorbeigehen streife, gehört für mich genauso zum Sommer wie Tomatensalat mit Basilikum und der brodelnde Einkochkessel, in dem wir die leckerste Tomatensauce der Welt einkochen. So können wir das ganze Jahr über unsere eigenen Tomaten schlemmen. Yams! :)'
@@ -335,8 +334,8 @@ const species = [
     imagename: 'onion.webp',
     plantfamily: 'Zwiebelgewächse',
     nutrition: 'Mittelzehrer',
-    goodNeighbors: 'Möhre, Kürbis, Erdbeeren, Tomate,\nRote Bete, Dill, Kamille, Zucchini',
-    badNeighbors: 'Bohne, Kartoffel, Kohl, Erbse,\nLauchgewächse',
+    goodNeighbors: 'Möhre, Kürbis, Erdbeeren, Tomate, Rote Bete, Dill, Kamille, Zucchini',
+    badNeighbors: 'Bohne, Kartoffel, Kohl, Erbse, Lauchgewächse',
     description:
       'Zwiebeln sind ein Gemüse, von dem wir nie genug haben können! Wir verbrauchen jeden Tag mindestens ein bis zwei Zwiebeln beim Kochen und müssen dementsprechend viel davon anbauen.\nDas ist aber zum Glück gar nicht schwer -besonders dann nicht, wenn du deine Zwiebeln aus Steckzwiebeln anbaust, statt sie aus Samen zu ziehen.'
   },
@@ -347,8 +346,8 @@ const species = [
     plantfamily: 'Kreuzblütler',
     nutrition: 'Mittelzehrer',
     goodNeighbors:
-      'Möhre, Erbse, Rhabarber, Tomate,\nSellerie, Spinat, Kresse, Gurke, Aubergine,\nMangold, Rote Bete, Pfefferminze',
-    badNeighbors: 'andere Kohlarten, Zwiebel, Knoblauch,\nErdbeeren, Kartoffel',
+      'Möhre, Erbse, Rhabarber, Tomate, Sellerie, Spinat, Kresse, Gurke, Aubergine, Mangold, Rote Bete, Pfefferminze',
+    badNeighbors: 'andere Kohlarten, Zwiebel, Knoblauch, Erdbeeren, Kartoffel',
     description:
       'Kohlrabi ist ein ziemlich anspruchsloser Kandidat aus der Kohlfamilie und wächst mit am schnellsten von allen. Wenn du ihn gestaffelt aussäst, kannst du mehrfach leckeren Kohlrabi ernten und vernaschen! Auch als Gemüsegarten-Anfänger schaffst du es, Kohlrabi erfolgreich anzubauen.\nWie bei allen Kohlarten ist es wichtig, den Kohlrabi mit einem Kulturschutznetz abzudecken. Das schützt ihn vor den Insekten, die es auf deine Ernte abgesehen haben.'
   },
@@ -436,7 +435,7 @@ const species = [
     plantfamily: 'Korbblütler',
     nutrition: 'Mittelzehrer',
     goodNeighbors:
-      'Aubergine, Bohne, Bohnekraut, Erbse, Rettich, Schwarzwurzeln,\nRhabarber, Lauch, Knoblauch, Spargel, Ringelblume',
+      'Aubergine, Bohne, Bohnekraut, Erbse, Rettich, Schwarzwurzeln, Rhabarber, Lauch, Knoblauch, Spargel, Ringelblume',
     badNeighbors: 'Petersilie, Sellerie, Kartoffel',
     description:
       'Ich liebe es, das ganze Jahr über Salat aus dem eigenen Garten ernten zu können. Und das Beste ist: Blatt- und Kopfsalate anzubauen, ist richtig einfach. Sie stellen keine hohen Ansprüche an Boden und Nährstoffversorgung und sind (je nach Sorte) nach wenigen Wochen erntebereit.\nWenn du deine Salate dann noch so beerntest, dass sie nachwachsen können, musst du seltener nachpflanzen und bist das ganze Jahr über mit frischem Grün versorgt.'
