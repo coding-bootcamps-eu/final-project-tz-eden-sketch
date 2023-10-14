@@ -1,4 +1,4 @@
-import { reactive, computed } from 'vue'
+import { reactive } from 'vue'
 import { defineStore } from 'pinia'
 
 export const usePlantBedsStore = defineStore('plants', () => {
@@ -62,44 +62,66 @@ export const usePlantBedsStore = defineStore('plants', () => {
       Dezember: [34, 35, 36]
     }
     if (period === 'Anfang') {
-      translation = timeDictionary.month[0]
+      translation = timeDictionary[month][0]
     } else if (period === 'Mitte') {
-      translation = timeDictionary.month[1]
+      translation = timeDictionary[month][1]
     } else {
-      translation = timeDictionary.month[2]
+      translation = timeDictionary[month][2]
     }
+
+    // const monthDictionary = {
+    //   Januar: 1,
+    //   Februar: 2,
+    //   März: 3,
+    //   April: 4,
+    //   Mai: 5,
+    //   Juni: 6,
+    //   Juli: 7,
+    //   August: 8,
+    //   September: 9,
+    //   Oktober: 10,
+    //   November: 11,
+    //   Dezember: 12
+    // }
+
+    // const periodDictionary = {
+    //   Anfang: 1,
+    //   Mitte: 2,
+    //   Ende: 3
+    // }
+    // translation = (monthDictionary[month] - 1) * 3 + periodDictionary[period]
 
     return translation
   }
 
   //const bed_1 = computed(() => calculateBedState())
 
-  function calculateBedState(bedNumber, month, period) {
-    let bedSets = state.beds.filter((bedItem) => bedItem['bedNumber'] === bedNumber).sets
+  // function calculateBedState(bedNumber, month, period) {
+  //   let bedSets = state.beds.filter((bedItem) => bedItem['bedNumber'] === bedNumber).sets
 
-    //preparing empty bed
-    const currentBed = [] //24 colums = 120cm in reality
-    for (let i = 0; i < 24; i++) {
-      currentBed[i] = 'frei'
-    }
+  //   //preparing empty bed
+  //   const currentBed = [] //24 colums = 120cm in reality
+  //   for (let i = 0; i < 24; i++) {
+  //     currentBed[i] = 'frei'
+  //   }
 
-    //check each set in bed
-    for (let set of bedSets) {
-      //ist das set zum Zeitpunkt den wir uns ansehen gerade im Beet?
+  //   //check each set in bed
+  //   for (let set of bedSets) {
+  //     //ist das set zum Zeitpunkt den wir uns ansehen gerade im Beet?
 
-      for (let i = 0; i < set.neededColums; i++) {
-        currentBed[set.startColum + i] = set.plantvarietiesId
-      }
-    }
-    return currentBed
-  }
+  //     for (let i = 0; i < set.neededColums; i++) {
+  //       currentBed[set.startColum + i] = set.plantvarietiesId
+  //     }
+  //   }
+  //   return currentBed
+  // }
   // function addPlant() {
 
   // }
 
   return {
     state,
-    calculateBedState,
+    // calculateBedState,
     translateTime
     // addPlant
   }

@@ -4,9 +4,9 @@
   </header>
 
   <main>
-    {{ plantBedsStore.translateTime('März', 'Mitte') }}
+    {{ plantBedsStore.translateTime('Januar', 'Anfang') }}
     <!--Beet 1-->
-    <p>{{ plantBedsStore.bed_1 }}</p>
+    <!-- <p>{{ plantBedsStore.bed_1 }}</p> -->
 
     <p>{{ plantBedsStore.state.currentMonth }}</p>
     <p>{{ plantBedsStore.state.currentPeriod }}</p>
@@ -91,9 +91,10 @@
 <script setup>
 import PlantBedNavigation from '../components/PlantBedNavigation.vue'
 import SiteNavigation from '@/components/SiteNavigation.vue'
-import { computed, reactive, watch } from 'vue'
+import { computed, reactive } from 'vue'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 import { usePlantsStore } from '@/stores/usePlantsStore'
+
 const plantsStore = usePlantsStore()
 const plantBedsStore = usePlantBedsStore()
 
@@ -115,30 +116,30 @@ const state = reactive({
   rows: []
 })
 
-watch(
-  () => state.userVarieties,
-  (newVal, oldVal) => {
-    state.rows = mapTableContent()
-  }
-)
+// watch(
+//   () => state.userVarieties,
+//   (newVal, oldVal) => {
+//     state.rows = mapTableContent()
+//   }
+// )
 
-function mapTableContent() {
-  const rows = []
-  for (let varietyItem of state.userVarieties) {
-    // console.log(varietyItem)
-    // const species = plantsStore.getSpecies(userVarieties[varietyItem].plantspeciesId)
-    const row = {}
-    row.name = varietyItem.name
-    row.plantfamily = varietyItem.plantfamily
-    row.plantspecies = varietyItem.name
-    row.plantvariety = varietyItem.name
-    row.nutrition = varietyItem.nutrition
-    // row.goodNeighbors = species.goodNeighbors
-    // row.badNeighbors = species.badNeighbors
-    rows.push(row)
-  }
-  return rows
-}
+// function mapTableContent() {
+//   const rows = []
+//   for (let varietyItem of state.userVarieties) {
+//     // console.log(varietyItem)
+//     // const species = plantsStore.getSpecies(userVarieties[varietyItem].plantspeciesId)
+//     const row = {}
+//     row.name = varietyItem.name
+//     row.plantfamily = varietyItem.plantfamily
+//     row.plantspecies = varietyItem.name
+//     row.plantvariety = varietyItem.name
+//     row.nutrition = varietyItem.nutrition
+//     // row.goodNeighbors = species.goodNeighbors
+//     // row.badNeighbors = species.badNeighbors
+//     rows.push(row)
+//   }
+//   return rows
+// }
 </script>
 
 <style scoped>
