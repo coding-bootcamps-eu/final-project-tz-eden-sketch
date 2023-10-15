@@ -4,7 +4,7 @@
   </header>
 
   <main>
-    {{ plantBedsStore.translateTime('Januar', 'Anfang') }}
+    {{ plantBedsStore.translateTime('März', 'Anfang') }}
     <!--Beet 1-->
     <!-- <p>{{ plantBedsStore.bed_1 }}</p> -->
 
@@ -92,11 +92,11 @@
 import PlantBedNavigation from '../components/PlantBedNavigation.vue'
 import SiteNavigation from '@/components/SiteNavigation.vue'
 import { computed, reactive } from 'vue'
-import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 import { usePlantsStore } from '@/stores/usePlantsStore'
+import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 
-const plantsStore = usePlantsStore()
 const plantBedsStore = usePlantBedsStore()
+const plantsStore = usePlantsStore()
 
 const state = reactive({
   openAddPlant: false,
