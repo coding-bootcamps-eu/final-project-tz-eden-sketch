@@ -5,7 +5,7 @@
 
   <main>
     <p>{{ plantBedsStore.translateTime('märz', 'ende') }}</p>
-    <p>{{ state.currentTime }}</p>
+    <p>{{ plantBedsStore.currentTime }}</p>
 
     <!--Beet 1-->
     <!-- <p>{{ plantBedsStore.bed_1 }}</p> -->
@@ -115,13 +115,13 @@ const state = reactive({
   userVarieties: computed(() => {
     return plantsStore.getAllVarieties
   }),
-  rows: [],
-  currentTime: computed(() => {
-    return plantBedsStore.translateTime(
-      plantBedsStore.state.currentMonth,
-      plantBedsStore.state.currentPeriod
-    )
-  })
+  rows: []
+  // currentTime: computed(() => {
+  //   return plantBedsStore.translateTime(
+  //     plantBedsStore.state.currentMonth,
+  //     plantBedsStore.state.currentPeriod
+  //   )
+  // })
 })
 
 // watch(

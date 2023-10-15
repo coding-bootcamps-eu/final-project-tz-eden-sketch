@@ -1,4 +1,4 @@
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
 import { defineStore } from 'pinia'
 
 export const usePlantBedsStore = defineStore('plants', () => {
@@ -43,6 +43,10 @@ export const usePlantBedsStore = defineStore('plants', () => {
         ]
       }
     ] //6 Beete
+  })
+
+  const currentTime = computed(() => {
+    return translateTime(state.currentMonth, state.currentPeriod)
   })
 
   function translateTime(month, period) {
@@ -120,6 +124,7 @@ export const usePlantBedsStore = defineStore('plants', () => {
 
   return {
     state,
+    currentTime,
     // calculateBedState,
     translateTime
     // addPlant
