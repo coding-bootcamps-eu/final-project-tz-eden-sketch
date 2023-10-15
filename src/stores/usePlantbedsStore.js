@@ -59,7 +59,7 @@ export const usePlantBedsStore = defineStore('plants', () => {
       mai: [13, 14, 15],
       juni: [16, 17, 18],
       juli: [19, 20, 21],
-      argumentsugust: [22, 23, 24],
+      august: [22, 23, 24],
       september: [25, 26, 27],
       oktober: [28, 29, 30],
       november: [31, 32, 33],
