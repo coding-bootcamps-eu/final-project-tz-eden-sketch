@@ -101,8 +101,8 @@ const imageUrl = computed(() => {
           </li>
           <br />
           <br />
-          <li v-if="variety[0].growingSeason">
-            Zeit in Beet / Kulturdauer: {{ variety[0].growingSeason }} Tage
+          <li v-if="variety[0].cultureDuration">
+            Zeit in Beet / Kulturdauer: {{ variety[0].cultureDuration }} Tage
           </li>
         </ul>
       </article>
