@@ -4,7 +4,9 @@
   </header>
 
   <main>
-    {{ plantBedsStore.translateTime('Januar', 'Anfang') }}
+    <p>{{ plantBedsStore.translateTime('märz', 'ende') }}</p>
+    <p>{{ plantBedsStore.currentTime }}</p>
+
     <!--Beet 1-->
     <!-- <p>{{ plantBedsStore.bed_1 }}</p> -->
 
@@ -92,11 +94,11 @@
 import PlantBedNavigation from '../components/PlantBedNavigation.vue'
 import SiteNavigation from '@/components/SiteNavigation.vue'
 import { computed, reactive } from 'vue'
-import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 import { usePlantsStore } from '@/stores/usePlantsStore'
+import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 
-const plantsStore = usePlantsStore()
 const plantBedsStore = usePlantBedsStore()
+const plantsStore = usePlantsStore()
 
 const state = reactive({
   openAddPlant: false,
@@ -114,6 +116,12 @@ const state = reactive({
     return plantsStore.getAllVarieties
   }),
   rows: []
+  // currentTime: computed(() => {
+  //   return plantBedsStore.translateTime(
+  //     plantBedsStore.state.currentMonth,
+  //     plantBedsStore.state.currentPeriod
+  //   )
+  // })
 })
 
 // watch(

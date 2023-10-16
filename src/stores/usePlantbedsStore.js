@@ -1,4 +1,4 @@
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
 import { defineStore } from 'pinia'
 
 export const usePlantBedsStore = defineStore('plants', () => {
@@ -45,30 +45,33 @@ export const usePlantBedsStore = defineStore('plants', () => {
     ] //6 Beete
   })
 
+  const currentTime = computed(() => {
+    return translateTime(state.currentMonth, state.currentPeriod)
+  })
+
   function translateTime(month, period) {
     let translation = 0
     const timeDictionary = {
-      Januar: [1, 2, 3],
-      Februar: [4, 5, 6],
-      März: [7, 8, 9],
-      April: [10, 11, 12],
-      Mai: [13, 14, 15],
-      Juni: [16, 17, 18],
-      Juli: [19, 20, 21],
-      August: [22, 23, 24],
-      September: [25, 26, 27],
-      Oktober: [28, 29, 30],
-      November: [31, 32, 33],
-      Dezember: [34, 35, 36]
+      januar: [1, 2, 3],
+      februar: [4, 5, 6],
+      märz: [7, 8, 9],
+      april: [10, 11, 12],
+      mai: [13, 14, 15],
+      juni: [16, 17, 18],
+      juli: [19, 20, 21],
+      august: [22, 23, 24],
+      september: [25, 26, 27],
+      oktober: [28, 29, 30],
+      november: [31, 32, 33],
+      dezember: [34, 35, 36]
     }
-    if (period === 'Anfang') {
+    if (period === 'anfang') {
       translation = timeDictionary[month][0]
-    } else if (period === 'Mitte') {
+    } else if (period === 'mitte') {
       translation = timeDictionary[month][1]
-    } else {
+    } else if (period === 'ende') {
       translation = timeDictionary[month][2]
     }
-
     // const monthDictionary = {
     //   Januar: 1,
     //   Februar: 2,
@@ -121,6 +124,7 @@ export const usePlantBedsStore = defineStore('plants', () => {
 
   return {
     state,
+    currentTime,
     // calculateBedState,
     translateTime
     // addPlant
