@@ -1,7 +1,7 @@
 import { reactive, computed } from 'vue'
 import { defineStore } from 'pinia'
 
-export const usePlantBedsStore = defineStore('plants', () => {
+export const usePlantBedsStore = defineStore('beds', () => {
   const state = reactive({
     currentMonth: '',
     currentPeriod: '',
