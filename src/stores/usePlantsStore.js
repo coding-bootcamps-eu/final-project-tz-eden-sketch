@@ -167,8 +167,6 @@ export const usePlantsStore = defineStore('plants', () => {
     setVariety,
     loadPlantSpecies,
     loadPlantVarieties,
-    // getAllSpecies,
-    // getAllVarieties,
     getSpecies,
     getVariety,
     varietiesBySpecies,
