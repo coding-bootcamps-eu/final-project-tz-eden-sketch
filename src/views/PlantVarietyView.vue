@@ -15,45 +15,31 @@ const variety = computed(() => {
 const imageUrl = computed(() => {
   return new URL(`/src/assets/images/${variety.value[0].imagename}`, import.meta.url).href
 })
-
-// const speciesUrl = computed(() => {
-//   return new URL(`/src/assets/images/${variety.value[0].imagename}`, import.meta.url).href
-// })
 </script>
 
 <template>
   <div>
     <q-breadcrumbs color="primary" class="breadcrum">
-      <!-- todo: Verlinkungen anpassen -->
       <template v-slot:separator>
         <q-icon size="1.5em" name="chevron_right" color="primary" />
       </template>
 
       <q-breadcrumbs-el label="Übersicht" to="/" icon="bi-house" />
+
       <q-breadcrumbs-el
         label="Pflanzenarten"
         to="/plantspecies/list/"
         icon="svguse:/icons.svg#sprout"
       />
 
-      <!-- todo: geht nicht -->
-
-      <!-- <q-breadcrumbs-el
-        style="color: red"
+      <q-breadcrumbs-el
         :label="variety[0].species"
         :to="{
           name: 'plantspeciesview',
-          params: { plantspecies: variety[0].species }
+          params: { plantspecies: variety[0].plantspeciesId }
         }"
-      /> -->
+      />
 
-      <!-- <routerLink
-        :to="{
-          name: 'plantspeciesview',
-          // params: { plantspeciesy: plantsStore.getSpecies(variety.speciesID) }
-          params: { plantspecies: variety.species }
-        }"
-      /> -->
       <q-breadcrumbs-el :label="variety[0].name" />
     </q-breadcrumbs>
     <!-- <SeparatorElement /> -->
