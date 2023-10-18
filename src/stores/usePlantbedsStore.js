@@ -72,52 +72,50 @@ export const usePlantBedsStore = defineStore('beds', () => {
     } else if (period === 'ende') {
       translation = timeDictionary[month][2]
     }
-    // const monthDictionary = {
-    //   Januar: 1,
-    //   Februar: 2,
-    //   März: 3,
-    //   April: 4,
-    //   Mai: 5,
-    //   Juni: 6,
-    //   Juli: 7,
-    //   August: 8,
-    //   September: 9,
-    //   Oktober: 10,
-    //   November: 11,
-    //   Dezember: 12
-    // }
-
-    // const periodDictionary = {
-    //   Anfang: 1,
-    //   Mitte: 2,
-    //   Ende: 3
-    // }
-    // translation = (monthDictionary[month] - 1) * 3 + periodDictionary[period]
 
     return translation
   }
 
   //const bed_1 = computed(() => calculateBedState())
 
-  // function calculateBedState(bedNumber, month, period) {
-  //   let bedSets = state.beds.filter((bedItem) => bedItem['bedNumber'] === bedNumber).sets
+  function calculateBedState(bedNumber, month, period) {
+    // const bedSets = state.beds.filter((bedItem) => {
+    //   if (bedItem['bedNumber'] === bedNumber) {
+    //     return true
+    //   }
+    //   return false
+    // }).sets
+    const bed = state.beds.filter((bedItem) => bedItem['bedNumber'] === bedNumber)
+    const bedSets = bed.sets
 
-  //   //preparing empty bed
-  //   const currentBed = [] //24 colums = 120cm in reality
-  //   for (let i = 0; i < 24; i++) {
-  //     currentBed[i] = 'frei'
-  //   }
+    const time = translateTime(month, period)
 
-  //   //check each set in bed
-  //   for (let set of bedSets) {
-  //     //ist das set zum Zeitpunkt den wir uns ansehen gerade im Beet?
+    //preparing empty bed
+    const currentBed = [] //24 colums = 120cm in reality
+    for (let i = 0; i < 24; i++) {
+      currentBed[i] = 'frei'
+    }
 
-  //     for (let i = 0; i < set.neededColums; i++) {
-  //       currentBed[set.startColum + i] = set.plantvarietiesId
-  //     }
-  //   }
-  //   return currentBed
-  // }
+    //check each set in bed
+    console.log('state.beds: ', state.beds)
+    console.log('bedsets: ', bedSets)
+    for (let set of bedSets) {
+      //ist das set zum Zeitpunkt den wir uns ansehen gerade im Beet?
+
+      if (set.startTime > time) {
+        //set wird erst NACH dem aktuellen Zeitpunkt angepflanzt
+      } else if (set.startTime + set.cultureDuration < time) {
+        //set ist gerade nicht mehr im Beet
+      } else {
+        //set ist gerade im Beet
+        //set im Beet eintragen
+        for (let i = 0; i < set.neededColums; i++) {
+          currentBed[set.startColum + i] = set.plantvarietiesId
+        }
+      }
+    }
+    return currentBed
+  }
   // function addPlant() {
 
   // }
@@ -125,7 +123,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
   return {
     state,
     currentTime,
-    // calculateBedState,
+    calculateBedState,
     translateTime
     // addPlant
   }
