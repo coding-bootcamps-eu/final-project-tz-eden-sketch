@@ -103,34 +103,34 @@ const imageUrl = computed(() => {
       <article>
         <h2>Pflege</h2>
         <ul class="plantcare-details">
-          <li class="info-wrapper">
+          <li class="info-wrapper" v-if="variety[0].plantingDistance">
             <!-- <img src="" alt="Planzabstand" class="info-icon" /> -->
             <q-icon name="svguse:/icons.svg#plantdistance" />
             <p class="info-category">Pflanzabstand</p>
             <p class="info-value">{{ variety[0].plantingDistance }} cm</p>
           </li>
-          <li class="info-wrapper">
+          <li class="info-wrapper" v-if="variety[0].rowDistance">
             <img src="" alt="Reihenabstand" class="info-icon" />
             <p class="info-category">Reihenabstand</p>
             <p class="info-value">{{ variety[0].rowDistance }} cm</p>
           </li>
-          <li class="info-wrapper">
+          <li class="info-wrapper" v-if="variety[0].sowingDepth">
             <img src="" alt="Saattiefe" class="info-icon" />
             <p class="info-category">Saattiefe</p>
             <p class="info-value">{{ variety[0].sowingDepth }} cm</p>
           </li>
-          <li class="info-wrapper">
+          <li class="info-wrapper" v-if="variety[0].light">
             <!-- <img src="" alt="Lichtbedarf" class="info-icon" /> -->
             <q-icon name="bi-sun" />
             <p class="info-category">Lichtbedarf</p>
             <p class="info-value">{{ variety[0].light }}</p>
           </li>
-          <li class="info-wrapper">
+          <li class="info-wrapper" v-if="variety[0].nutrition">
             <img src="" alt="Nährstoffbedarf" class="info-icon" />
             <p class="info-category">Nährstoffbedarf</p>
             <p class="info-value">{{ variety[0].nutrition }}</p>
           </li>
-          <li class="info-wrapper">
+          <li class="info-wrapper" v-if="variety[0].water">
             <!-- <img src="" alt="Wasserbedarf" class="info-icon" /> -->
             <q-icon name="bi-droplet" />
             <!-- <q-icon name="la-tint" /> geht nicht -->
