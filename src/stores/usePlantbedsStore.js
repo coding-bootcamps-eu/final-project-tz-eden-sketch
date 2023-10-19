@@ -3,47 +3,17 @@ import { defineStore } from 'pinia'
 
 export const usePlantBedsStore = defineStore('beds', () => {
   const state = reactive({
-    currentMonth: '',
-    currentPeriod: '',
+    currentMonth: 'januar',
+    currentPeriod: 'anfang',
 
-    beds: [
-      {
-        id: '16515-5646',
-        bedNumber: 1,
-        name: 'Beet 1',
-        sets: [
-          {
-            plantvarietiesId: '37325a55-d047-4b27-bedb-5e718755ec7c', //Lujubscha(Knoblauch): 25/5=5Spalten
-            startColum: 6,
-            startTime: 2,
-            cultureDuration: 13,
-            neededColums: 5
-          },
-          {
-            plantvarietiesId: '6fe4e254-979a-4130-892f-8b53617f67cd', //Oxella: 30/5=6Spalten
-            startColum: 0,
-            startTime: 2,
-            cultureDuration: 13,
-            neededColums: 6
-          },
-          {
-            plantvarietiesId: 'eaa937e3-abfb-4af2-a6e9-df863a38a2ed', //Butterflay(Spinat): 20/5=4Spalten
-            startColum: 20,
-            startTime: 2,
-            cultureDuration: 13,
-            neededColums: 4
-          },
-          {
-            plantvarietiesId: 'eaa937e3-abfb-4af2-a6e9-df863a38a2ed', //Butterflay(Spinat): 20/5=4Spalten
-            startColum: 20,
-            startTime: 10,
-            cultureDuration: 13,
-            neededColums: 4
-          }
-        ]
-      }
-    ] //6 Beete
+    currentBedplan: { beds: [] } //leeres Object
   })
+
+  async function loadBedplan(bedId) {
+    const response = await fetch('http://localhost:3000/bedplans/' + bedId)
+    const data = await response.json()
+    state.currentBedplan = data
+  }
 
   const currentTime = computed(() => {
     return translateTime(state.currentMonth, state.currentPeriod)
@@ -76,51 +46,9 @@ export const usePlantBedsStore = defineStore('beds', () => {
     return translation
   }
 
-  //const bed_1 = computed(() => calculateBedState())
-
   function calculateBedState(bedNumber, month, period) {
-    // const bedSets = state.beds.filter((bedItem) => {
-    //   if (bedItem['bedNumber'] === bedNumber) {
-    //     return true
-    //   }
-    //   return false
-    // }).sets
-    const bed = state.beds.find((bedItem) => bedItem['bedNumber'] === bedNumber)
-    console.log('hier ', bed.sets)
+    const bed = state.currentBedplan.beds.find((bedItem) => bedItem['bedNumber'] === bedNumber)
     const bedSets = bed.sets
-    /*
-    const bedSets = [
-      {
-        plantvarietiesId: '37325a55-d047-4b27-bedb-5e718755ec7c', //Lujubscha(Knoblauch): 25/5=5Spalten
-        startColum: 6,
-        startTime: 2,
-        cultureDuration: 13,
-        neededColums: 5
-      },
-      {
-        plantvarietiesId: '6fe4e254-979a-4130-892f-8b53617f67cd', //Oxella: 30/5=6Spalten
-        startColum: 0,
-        startTime: 2,
-        cultureDuration: 13,
-        neededColums: 6
-      },
-      {
-        plantvarietiesId: 'eaa937e3-abfb-4af2-a6e9-df863a38a2ed', //Butterflay(Spinat): 20/5=4Spalten
-        startColum: 20,
-        startTime: 2,
-        cultureDuration: 13,
-        neededColums: 4
-      },
-      {
-        plantvarietiesId: 'eaa937e3-abfb-4af2-a6e9-df863a38a2ed', //Butterflay(Spinat): 20/5=4Spalten
-        startColum: 20,
-        startTime: 10,
-        cultureDuration: 13,
-        neededColums: 4
-      }
-    ]*/
-
-    console.log('bedSets in Store: ', bedSets)
 
     const time = translateTime(month, period)
     const relevantSets = []
@@ -134,7 +62,6 @@ export const usePlantBedsStore = defineStore('beds', () => {
     //check each set in bed
     // for (let set of bedSets) {
     for (let b = 0; b < bedSets.length; b++) {
-      console.log('bedSets[b]:', bedSets[b])
       let currentSet = bedSets[b]
 
       //ist das set zum Zeitpunkt den wir uns ansehen gerade im Beet?
@@ -146,7 +73,6 @@ export const usePlantBedsStore = defineStore('beds', () => {
       } else {
         //set ist gerade im Beet
         relevantSets.push(currentSet)
-        console.log('relevant sets', relevantSets)
         //set im Beet eintragen
         for (let i = 0; i < currentSet.neededColums; i++) {
           currentBed[currentSet.startColum + i] = currentSet.plantvarietiesId
@@ -162,6 +88,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
 
   return {
     state,
+    loadBedplan,
     currentTime,
     calculateBedState,
     translateTime

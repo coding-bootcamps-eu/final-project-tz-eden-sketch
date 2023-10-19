@@ -20,7 +20,11 @@ import SiteNavigation from '@/components/SiteNavigation.vue'
         card-link="/plantspecies/list"
         card-image="root-vegetable_1000px.svg"
       />
-      <CardComponent card-title="Beetplanung" card-image="raised-bed-vegetables.svg" />
+      <CardComponent
+        card-title="Beetplanung"
+        card-link="/plantbed-selection"
+        card-image="raised-bed-vegetables.svg"
+      />
       <CardComponent card-title="Aufgaben" card-link="/todos" card-image="gloves.svg" />
       <CardComponent card-title="Wissen" card-link="/blog" card-image="book.svg" />
     </main>

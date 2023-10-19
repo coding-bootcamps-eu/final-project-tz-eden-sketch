@@ -20,7 +20,14 @@
           <q-btn no-caps class="bg-warning text-white button__card" @click="confirm = true" flat
             >Lösche den Plan</q-btn
           >
-          <q-btn no-caps class="bg-primary text-white button__card" flat>Gehe zum Plan</q-btn>
+          <q-btn
+            no-caps
+            class="bg-primary text-white button__card"
+            :to="'/plantbed-edit/' + bed.id"
+            flat
+            >Gehe zum Plan</q-btn
+          >
+          <!-- <router-link :to="'/plantbed-edit/'+bed.id">Gehe zum Plan</router-link> -->
           <q-dialog v-model="confirm" persistent>
             <q-card>
               <q-card-section class="row items-center">
@@ -74,6 +81,7 @@ const confirm = ref(false)
 const plantBeds = ref([
   {
     name: 'Beet 1',
+    id: '7220e93a-804f-4c9e-880a-8e53e429c1b3',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquet enim urna, ac posuere mauris pellentesque ac. Nam luctus sit amet tellus vitae sagittis. Duis laoreet libero ac augue mollis cursus.'
   },

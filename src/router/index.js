@@ -62,7 +62,7 @@ const router = createRouter({
       component: ImpressumView
     },
     {
-      path: '/plantbed-edit',
+      path: '/plantbed-edit/:bedId',
       name: 'plantbed-edit',
       component: PlantBedPlanEditView
     },

@@ -4,15 +4,9 @@
   </header>
 
   <main>
-    <p>{{ plantBedsStore.translateTime('märz', 'ende') }}</p>
-    <p>{{ plantBedsStore.currentTime }}</p>
-
-    <!--Beet 1-->
-    <p>{{ plantBedsStore.state.currentMonth }}</p>
-    <p>{{ plantBedsStore.state.currentPeriod }}</p>
+    <p>Beetplan: {{ plantBedsStore.state.currentBedplan.beds }}</p>
 
     <h2>Beet 1</h2>
-    <!-- <p style="color: red">{{ state.rows }}</p> -->
     <q-btn class="btn-add" color="primary" icon="add" @click="state.openAddPlant = true" />
 
     <q-dialog maximized class="popup-plant add-plants__card" v-model="state.openAddPlant">
@@ -81,13 +75,14 @@
       </q-card>
     </q-dialog>
 
-    <p>{{ plantBedsStore.calculateBedState(1, 'februar', 'mitte')[0] }}</p>
-    <br /><br />
-    <p>{{ plantBedsStore.calculateBedState(1, 'februar', 'mitte')[1] }}</p>
     <div class="bed">
       <!-- plantBedsStore.calculateBedState(1, 'februar', 'mitte')[1] -->
       <div
-        v-for="set of plantBedsStore.calculateBedState(1, 'februar', 'mitte')[1]"
+        v-for="set of plantBedsStore.calculateBedState(
+          1,
+          plantBedsStore.state.currentMonth,
+          plantBedsStore.state.currentPeriod
+        )[1]"
         :key="set.plantvarietiesId"
         class="set"
         :style="`--neededColums: ${set.neededColums}; --startColum:${set.startColum + 1};  
@@ -103,9 +98,12 @@
 <script setup>
 import PlantBedNavigation from '../components/PlantBedNavigation.vue'
 import SiteNavigation from '@/components/SiteNavigation.vue'
-import { computed, reactive } from 'vue'
+import { computed, reactive, onBeforeMount } from 'vue'
 //import { usePlantsStore } from '@/stores/usePlantsStore'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
+
+import { useRoute } from 'vue-router'
+const route = useRoute()
 
 const plantBedsStore = usePlantBedsStore()
 //const plantsStore = usePlantsStore()
@@ -166,6 +164,10 @@ function renderBed(bedNumber) {
     plantBedsStore.state.currentPeriod
   )
 }
+
+onBeforeMount(async () => {
+  await plantBedsStore.loadBedplan(route.params.bedId)
+})
 </script>
 
 <style scoped>
@@ -194,7 +196,5 @@ function renderBed(bedNumber) {
   background-color: var(--clr-info);
   grid-column: var(--startColum) / span var(--neededColums);
   grid-row-start: 1;
-
-  border: 1px solid red;
 }
 </style>
