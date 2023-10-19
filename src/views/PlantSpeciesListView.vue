@@ -11,11 +11,11 @@ const plantsStore = usePlantsStore()
 
     <div class="card-wrapper">
       <CardComponent
-        v-for="species of plantsStore.getAllSpecies"
+        v-for="species of plantsStore.state.plantSpecies"
         :key="species.id"
-        :card-image="species.imagename"
+        :card-image="species.imagename ? species.imagename : 'default_vegetable.webp'"
         :card-title="species.name"
-        :card-link="`/plantspecies/view/${species.name}`"
+        :card-link="`/plantspecies/view/${species.id}`"
       />
     </div>
   </main>
