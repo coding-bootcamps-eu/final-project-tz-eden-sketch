@@ -4,12 +4,9 @@
   </header>
 
   <main>
-    <!--Beet 1-->
-    <p>{{ plantBedsStore.state.currentMonth }}</p>
-    <p>{{ plantBedsStore.state.currentPeriod }}</p>
+    <p>Beetplan: {{ plantBedsStore.state.currentBedplan.beds }}</p>
 
     <h2>Beet 1</h2>
-    <!-- <p style="color: red">{{ state.rows }}</p> -->
     <q-btn class="btn-add" color="primary" icon="add" @click="state.openAddPlant = true" />
 
     <q-dialog maximized class="popup-plant add-plants__card" v-model="state.openAddPlant">
@@ -78,7 +75,20 @@
       </q-card>
     </q-dialog>
 
-    <div class="bed"></div>
+    <div class="bed">
+      <!-- plantBedsStore.calculateBedState(1, 'februar', 'mitte')[1] -->
+      <div
+        v-for="set of plantBedsStore.calculateBedState(
+          1,
+          plantBedsStore.state.currentMonth,
+          plantBedsStore.state.currentPeriod
+        )[1]"
+        :key="set.plantvarietiesId"
+        class="set"
+        :style="`--neededColums: ${set.neededColums}; --startColum:${set.startColum + 1};  
+        background-color: blue`"
+      ></div>
+    </div>
   </main>
   <nav class="view__nav">
     <SiteNavigation></SiteNavigation>
@@ -88,11 +98,15 @@
 <script setup>
 import PlantBedNavigation from '../components/PlantBedNavigation.vue'
 import SiteNavigation from '@/components/SiteNavigation.vue'
-import { computed, reactive, watch } from 'vue'
+import { computed, reactive, onBeforeMount } from 'vue'
+//import { usePlantsStore } from '@/stores/usePlantsStore'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
-import { usePlantsStore } from '@/stores/usePlantsStore'
-const plantsStore = usePlantsStore()
+
+import { useRoute } from 'vue-router'
+const route = useRoute()
+
 const plantBedsStore = usePlantBedsStore()
+//const plantsStore = usePlantsStore()
 
 const state = reactive({
   openAddPlant: false,
@@ -106,36 +120,54 @@ const state = reactive({
     // { name: 'goodNeighbors', label: 'gute Nachbarn', field: 'goodNeighbors' },
     // { name: 'badNeighbors', label: 'schlechte Nachbarn', field: 'badNeighbors' }
   ],
-  userVarieties: computed(() => {
-    return plantsStore.getAllVarieties
-  }),
+  // userVarieties: computed(() => {
+  //   return plantsStore.getAllVarieties
+  // }),
   rows: []
+  // currentTime: computed(() => {
+  //   return plantBedsStore.translateTime(
+  //     plantBedsStore.state.currentMonth,
+  //     plantBedsStore.state.currentPeriod
+  //   )
+  // })
 })
 
-watch(
-  () => state.userVarieties,
-  (newVal, oldVal) => {
-    state.rows = mapTableContent()
-  }
-)
+// watch(
+//   () => state.userVarieties,
+//   (newVal, oldVal) => {
+//     state.rows = mapTableContent()
+//   }
+// )
 
-function mapTableContent() {
-  const rows = []
-  for (let varietyItem of state.userVarieties) {
-    // console.log(varietyItem)
-    // const species = plantsStore.getSpecies(userVarieties[varietyItem].plantspeciesId)
-    const row = {}
-    row.name = varietyItem.name
-    row.plantfamily = varietyItem.plantfamily
-    row.plantspecies = varietyItem.name
-    row.plantvariety = varietyItem.name
-    row.nutrition = varietyItem.nutrition
-    // row.goodNeighbors = species.goodNeighbors
-    // row.badNeighbors = species.badNeighbors
-    rows.push(row)
-  }
-  return rows
+// function mapTableContent() {
+//   const rows = []
+//   for (let varietyItem of state.userVarieties) {
+//     // console.log(varietyItem)
+//     // const species = plantsStore.getSpecies(userVarieties[varietyItem].plantspeciesId)
+//     const row = {}
+//     row.name = varietyItem.name
+//     row.plantfamily = varietyItem.plantfamily
+//     row.plantspecies = varietyItem.name
+//     row.plantvariety = varietyItem.name
+//     row.nutrition = varietyItem.nutrition
+//     // row.goodNeighbors = species.goodNeighbors
+//     // row.badNeighbors = species.badNeighbors
+//     rows.push(row)
+//   }
+//   return rows
+// }
+
+function renderBed(bedNumber) {
+  let bed = plantBedsStore.calculateBedState(
+    bedNumber,
+    plantBedsStore.state.currentMonth,
+    plantBedsStore.state.currentPeriod
+  )
 }
+
+onBeforeMount(async () => {
+  await plantBedsStore.loadBedplan(route.params.bedId)
+})
 </script>
 
 <style scoped>
@@ -151,5 +183,18 @@ function mapTableContent() {
   aspect-ratio: 1.2/2.5;
   background-color: var(--clr-dark);
   border-radius: 10px;
+  padding: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(24, 1fr);
+  grid-template-rows: 1fr;
+  gap: 0.25rem;
+}
+.set {
+  --neededColums: 4;
+  --startColum: 3;
+  height: 100%;
+  background-color: var(--clr-info);
+  grid-column: var(--startColum) / span var(--neededColums);
+  grid-row-start: 1;
 }
 </style>
