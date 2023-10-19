@@ -86,7 +86,38 @@ export const usePlantBedsStore = defineStore('beds', () => {
     //   return false
     // }).sets
     const bed = state.beds.filter((bedItem) => bedItem['bedNumber'] === bedNumber)
-    const bedSets = bed.sets
+    // const bedSets = bed.sets
+    const bedSets = [
+      {
+        plantvarietiesId: '37325a55-d047-4b27-bedb-5e718755ec7c', //Lujubscha(Knoblauch): 25/5=5Spalten
+        startColum: 6,
+        startTime: 2,
+        cultureDuration: 13,
+        neededColums: 5
+      },
+      {
+        plantvarietiesId: '6fe4e254-979a-4130-892f-8b53617f67cd', //Oxella: 30/5=6Spalten
+        startColum: 0,
+        startTime: 2,
+        cultureDuration: 13,
+        neededColums: 6
+      },
+      {
+        plantvarietiesId: 'eaa937e3-abfb-4af2-a6e9-df863a38a2ed', //Butterflay(Spinat): 20/5=4Spalten
+        startColum: 20,
+        startTime: 2,
+        cultureDuration: 13,
+        neededColums: 4
+      },
+      {
+        plantvarietiesId: 'eaa937e3-abfb-4af2-a6e9-df863a38a2ed', //Butterflay(Spinat): 20/5=4Spalten
+        startColum: 20,
+        startTime: 10,
+        cultureDuration: 13,
+        neededColums: 4
+      }
+    ]
+    console.log('bedSets in Store: ', bedSets)
 
     const time = translateTime(month, period)
 
@@ -97,25 +128,28 @@ export const usePlantBedsStore = defineStore('beds', () => {
     }
 
     //check each set in bed
-    console.log('state.beds: ', state.beds)
-    console.log('bedsets: ', bedSets)
-    for (let set of bedSets) {
+    // for (let set of bedSets) {
+
+    for (let b = 0; b < bedSets.length; b++) {
+      console.log('bedSets[b]:', bedSets[b])
+      let currentSet = bedSets[b]
       //ist das set zum Zeitpunkt den wir uns ansehen gerade im Beet?
 
-      if (set.startTime > time) {
+      if (currentSet.startTime > time) {
         //set wird erst NACH dem aktuellen Zeitpunkt angepflanzt
-      } else if (set.startTime + set.cultureDuration < time) {
+      } else if (currentSet.startTime + currentSet.cultureDuration < time) {
         //set ist gerade nicht mehr im Beet
       } else {
         //set ist gerade im Beet
         //set im Beet eintragen
-        for (let i = 0; i < set.neededColums; i++) {
-          currentBed[set.startColum + i] = set.plantvarietiesId
+        for (let i = 0; i < currentSet.neededColums; i++) {
+          currentBed[currentSet.startColum + i] = currentSet.plantvarietiesId
         }
       }
     }
     return currentBed
   }
+
   // function addPlant() {
 
   // }

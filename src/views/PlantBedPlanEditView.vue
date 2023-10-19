@@ -94,11 +94,11 @@
 import PlantBedNavigation from '../components/PlantBedNavigation.vue'
 import SiteNavigation from '@/components/SiteNavigation.vue'
 import { computed, reactive } from 'vue'
-import { usePlantsStore } from '@/stores/usePlantsStore'
+//import { usePlantsStore } from '@/stores/usePlantsStore'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 
 const plantBedsStore = usePlantBedsStore()
-const plantsStore = usePlantsStore()
+//const plantsStore = usePlantsStore()
 
 const state = reactive({
   openAddPlant: false,
@@ -112,9 +112,9 @@ const state = reactive({
     // { name: 'goodNeighbors', label: 'gute Nachbarn', field: 'goodNeighbors' },
     // { name: 'badNeighbors', label: 'schlechte Nachbarn', field: 'badNeighbors' }
   ],
-  userVarieties: computed(() => {
-    return plantsStore.getAllVarieties
-  }),
+  // userVarieties: computed(() => {
+  //   return plantsStore.getAllVarieties
+  // }),
   rows: []
   // currentTime: computed(() => {
   //   return plantBedsStore.translateTime(
