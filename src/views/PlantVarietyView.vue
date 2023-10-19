@@ -15,45 +15,31 @@ const variety = computed(() => {
 const imageUrl = computed(() => {
   return new URL(`/src/assets/images/${variety.value[0].imagename}`, import.meta.url).href
 })
-
-// const speciesUrl = computed(() => {
-//   return new URL(`/src/assets/images/${variety.value[0].imagename}`, import.meta.url).href
-// })
 </script>
 
 <template>
   <div>
     <q-breadcrumbs color="primary" class="breadcrum">
-      <!-- todo: Verlinkungen anpassen -->
       <template v-slot:separator>
         <q-icon size="1.5em" name="chevron_right" color="primary" />
       </template>
 
       <q-breadcrumbs-el label="Übersicht" to="/" icon="bi-house" />
+
       <q-breadcrumbs-el
         label="Pflanzenarten"
         to="/plantspecies/list/"
         icon="svguse:/icons.svg#sprout"
       />
 
-      <!-- todo: geht nicht -->
-
-      <!-- <q-breadcrumbs-el
-        style="color: red"
+      <q-breadcrumbs-el
         :label="variety[0].species"
         :to="{
           name: 'plantspeciesview',
-          params: { plantspecies: variety[0].species }
+          params: { plantspecies: variety[0].plantspeciesId }
         }"
-      /> -->
+      />
 
-      <!-- <routerLink
-        :to="{
-          name: 'plantspeciesview',
-          // params: { plantspeciesy: plantsStore.getSpecies(variety.speciesID) }
-          params: { plantspecies: variety.species }
-        }"
-      /> -->
       <q-breadcrumbs-el :label="variety[0].name" />
     </q-breadcrumbs>
     <!-- <SeparatorElement /> -->
@@ -117,34 +103,34 @@ const imageUrl = computed(() => {
       <article>
         <h2>Pflege</h2>
         <ul class="plantcare-details">
-          <li class="info-wrapper">
+          <li class="info-wrapper" v-if="variety[0].plantingDistance">
             <!-- <img src="" alt="Planzabstand" class="info-icon" /> -->
             <q-icon name="svguse:/icons.svg#plantdistance" />
             <p class="info-category">Pflanzabstand</p>
             <p class="info-value">{{ variety[0].plantingDistance }} cm</p>
           </li>
-          <li class="info-wrapper">
+          <li class="info-wrapper" v-if="variety[0].rowDistance">
             <img src="" alt="Reihenabstand" class="info-icon" />
             <p class="info-category">Reihenabstand</p>
             <p class="info-value">{{ variety[0].rowDistance }} cm</p>
           </li>
-          <li class="info-wrapper">
+          <li class="info-wrapper" v-if="variety[0].sowingDepth">
             <img src="" alt="Saattiefe" class="info-icon" />
             <p class="info-category">Saattiefe</p>
             <p class="info-value">{{ variety[0].sowingDepth }} cm</p>
           </li>
-          <li class="info-wrapper">
+          <li class="info-wrapper" v-if="variety[0].light">
             <!-- <img src="" alt="Lichtbedarf" class="info-icon" /> -->
             <q-icon name="bi-sun" />
             <p class="info-category">Lichtbedarf</p>
             <p class="info-value">{{ variety[0].light }}</p>
           </li>
-          <li class="info-wrapper">
+          <li class="info-wrapper" v-if="variety[0].nutrition">
             <img src="" alt="Nährstoffbedarf" class="info-icon" />
             <p class="info-category">Nährstoffbedarf</p>
             <p class="info-value">{{ variety[0].nutrition }}</p>
           </li>
-          <li class="info-wrapper">
+          <li class="info-wrapper" v-if="variety[0].water">
             <!-- <img src="" alt="Wasserbedarf" class="info-icon" /> -->
             <q-icon name="bi-droplet" />
             <!-- <q-icon name="la-tint" /> geht nicht -->

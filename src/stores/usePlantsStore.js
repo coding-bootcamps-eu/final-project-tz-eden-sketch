@@ -1,4 +1,4 @@
-import { reactive, onBeforeMount, computed } from 'vue'
+import { reactive, onBeforeMount } from 'vue'
 import { defineStore } from 'pinia'
 
 export const usePlantsStore = defineStore('plants', () => {
@@ -21,16 +21,6 @@ export const usePlantsStore = defineStore('plants', () => {
     })
   }
 
-  //vorerst keine Funktion zum erfassen von Pflanzen im Frontend vorgesehen
-  // function saveToBackend() {
-  //speicher Daten im Backend
-  //fetch()
-  // }
-
-  //get all species / varieties
-  const getAllVarieties = computed(() => state.plantVarieties)
-  const getAllSpecies = computed(() => state.plantSpecies)
-
   //get single species / variety
   function getSpecies(id) {
     return state.plantSpecies.filter((speciesItem) => speciesItem['id'] === id)
@@ -38,9 +28,6 @@ export const usePlantsStore = defineStore('plants', () => {
   function getVariety(id) {
     return state.plantVarieties.filter((varietyItem) => varietyItem['id'] === id)
   }
-
-  //todo: delete Funktion
-  //vorerst nicht vorgesehen
 
   // add new species / variety
   function setSpecies(
@@ -147,11 +134,22 @@ export const usePlantsStore = defineStore('plants', () => {
   }
 
   function varietiesBySpecies(speciesId) {
-    return state.plantVarieties.filter((varietyItem) => varietyItem['speciesId'] === speciesId)
+    //Problem vom router. ID wird manchmal als Array ['id'] und manchmal als string 'id' übergeben
+    //Übergabe id aus params von URL
+    if (typeof speciesId !== 'string') {
+      speciesId = speciesId[0]
+    }
+
+    const varieties = state.plantVarieties.filter((varietyItem) => {
+      if (varietyItem['plantspeciesId'] === speciesId) {
+        return true
+      }
+      return false
+    })
+    return varieties
   }
 
   function getSpeciesIdFromName(name) {
-    console.log(state.plantSpecies.filter((plantSpeciesItem) => plantSpeciesItem['name'] === name))
     return state.plantSpecies.filter(
       (plantSpeciesItem) => plantSpeciesItem['name'] === name
     )?.[0]?.['id']
@@ -169,8 +167,6 @@ export const usePlantsStore = defineStore('plants', () => {
     setVariety,
     loadPlantSpecies,
     loadPlantVarieties,
-    getAllSpecies,
-    getAllVarieties,
     getSpecies,
     getVariety,
     varietiesBySpecies,

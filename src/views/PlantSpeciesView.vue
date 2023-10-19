@@ -1,23 +1,32 @@
 <script setup>
 import SeparatorElement from '@/components/SeparatorElement.vue'
 import SiteNavigation from '@/components/SiteNavigation.vue'
-import { computed } from 'vue'
+import { onBeforeMount, computed, reactive } from 'vue'
 import { useRoute } from 'vue-router'
-const route = useRoute()
-
 import { usePlantsStore } from '@/stores/usePlantsStore'
+
+const route = useRoute()
 const plantsStore = usePlantsStore()
 
-const species = computed(() => {
-  return plantsStore.getSpecies(plantsStore.getSpeciesIdFromName(route.params.plantspecies[0]))
-})
-
-const varieties = computed(() => {
-  return plantsStore.varietiesBySpecies(species.value[0].id)
-})
-
 const imageUrl = computed(() => {
-  return new URL(`/src/assets/images/${species.value[0].imagename}`, import.meta.url).href
+  return new URL(`/src/assets/images/${state.species.imagename}`, import.meta.url).href
+})
+
+const state = reactive({
+  species: {},
+  varieties: []
+})
+
+async function getSpecies() {
+  const URL = `http://localhost:3000/plantspecies/${route.params.plantspecies}`
+  const resp = await fetch(URL)
+  const data = resp.json()
+  return data
+}
+
+onBeforeMount(async () => {
+  state.species = await getSpecies()
+  state.varieties = plantsStore.varietiesBySpecies(route.params.plantspecies)
 })
 </script>
 <template>
@@ -34,28 +43,28 @@ const imageUrl = computed(() => {
         to="/plantspecies/list/"
         icon="svguse:/icons.svg#sprout"
       />
-      <q-breadcrumbs-el :label="species[0].name" />
+      <q-breadcrumbs-el :label="state.species.name" />
     </q-breadcrumbs>
 
     <SeparatorElement />
     <header class="header">
       <div class="image-container">
-        <img class="image" :src="imageUrl" :alt="species[0].name" />
+        <img class="image" :src="imageUrl" :alt="state.species.name" />
       </div>
       <div class="wrapper-headline">
         <p class="headline-label">Art</p>
-        <h1 class="headline-main headline-plantname">{{ species[0].name }}</h1>
-        <p class="headline-sub botanical-name">{{ species[0].botanicname }}</p>
+        <h1 class="headline-main headline-plantname">{{ state.species.name }}</h1>
+        <p class="headline-sub botanical-name">{{ state.species.botanicname }}</p>
       </div>
     </header>
     <SeparatorElement />
 
     <h2>Pflanzenfamilie</h2>
-    <p>{{ species[0].plantfamily }}</p>
+    <p>{{ state.species.plantfamily }}</p>
     <SeparatorElement />
 
     <h2>Beschreibung</h2>
-    <p>{{ species[0].description }}</p>
+    <p>{{ state.species.description }}</p>
     <SeparatorElement />
 
     <h2>Mischkultur</h2>
@@ -63,9 +72,8 @@ const imageUrl = computed(() => {
       <q-icon name="bi-suit-heart-fill"></q-icon>
       Gute Nachbarn
     </h3>
-    <p style="color: red">{{ species[0].goodNeighbors }}</p>
     <ol class="list">
-      <li v-for="neighbor in species[0].goodNeighbors" :key="neighbor">{{ neighbor }}</li>
+      <li v-for="neighbor in state.species.goodNeighbors" :key="neighbor">{{ neighbor }}</li>
     </ol>
 
     <h3>
@@ -73,15 +81,14 @@ const imageUrl = computed(() => {
       Schlechte Nachbarn
     </h3>
     <ol class="list">
-      <li v-for="neighbor in species[0].badNeighbors" :key="neighbor">{{ neighbor }}</li>
+      <li v-for="neighbor in state.species.badNeighbors" :key="neighbor">{{ neighbor }}</li>
     </ol>
     <SeparatorElement />
 
     <h2>Sorten</h2>
-    <p style="color: red">{{ varieties }}</p>
     <ol class="list">
       <routerLink
-        v-for="variety in varieties"
+        v-for="variety in state.varieties"
         :key="variety.id"
         :to="{ name: 'plantvarietyview', params: { plantvariety: variety.id } }"
       >
