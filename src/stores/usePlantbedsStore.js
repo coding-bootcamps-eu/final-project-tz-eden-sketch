@@ -85,8 +85,10 @@ export const usePlantBedsStore = defineStore('beds', () => {
     //   }
     //   return false
     // }).sets
-    const bed = state.beds.filter((bedItem) => bedItem['bedNumber'] === bedNumber)
-    // const bedSets = bed.sets
+    const bed = state.beds.find((bedItem) => bedItem['bedNumber'] === bedNumber)
+    console.log('hier ', bed.sets)
+    const bedSets = bed.sets
+    /*
     const bedSets = [
       {
         plantvarietiesId: '37325a55-d047-4b27-bedb-5e718755ec7c', //Lujubscha(Knoblauch): 25/5=5Spalten
@@ -116,10 +118,12 @@ export const usePlantBedsStore = defineStore('beds', () => {
         cultureDuration: 13,
         neededColums: 4
       }
-    ]
+    ]*/
+
     console.log('bedSets in Store: ', bedSets)
 
     const time = translateTime(month, period)
+    const relevantSets = []
 
     //preparing empty bed
     const currentBed = [] //24 colums = 120cm in reality
@@ -129,10 +133,10 @@ export const usePlantBedsStore = defineStore('beds', () => {
 
     //check each set in bed
     // for (let set of bedSets) {
-
     for (let b = 0; b < bedSets.length; b++) {
       console.log('bedSets[b]:', bedSets[b])
       let currentSet = bedSets[b]
+
       //ist das set zum Zeitpunkt den wir uns ansehen gerade im Beet?
 
       if (currentSet.startTime > time) {
@@ -141,13 +145,15 @@ export const usePlantBedsStore = defineStore('beds', () => {
         //set ist gerade nicht mehr im Beet
       } else {
         //set ist gerade im Beet
+        relevantSets.push(currentSet)
+        console.log('relevant sets', relevantSets)
         //set im Beet eintragen
         for (let i = 0; i < currentSet.neededColums; i++) {
           currentBed[currentSet.startColum + i] = currentSet.plantvarietiesId
         }
       }
     }
-    return currentBed
+    return [currentBed, relevantSets]
   }
 
   // function addPlant() {

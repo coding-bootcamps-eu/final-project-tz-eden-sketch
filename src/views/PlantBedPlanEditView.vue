@@ -8,8 +8,6 @@
     <p>{{ plantBedsStore.currentTime }}</p>
 
     <!--Beet 1-->
-    <p>{{ plantBedsStore.calculateBedState(1, 'februar', 'mitte') }}</p>
-
     <p>{{ plantBedsStore.state.currentMonth }}</p>
     <p>{{ plantBedsStore.state.currentPeriod }}</p>
 
@@ -83,7 +81,19 @@
       </q-card>
     </q-dialog>
 
-    <div class="bed"></div>
+    <p>{{ plantBedsStore.calculateBedState(1, 'februar', 'mitte')[0] }}</p>
+    <br /><br />
+    <p>{{ plantBedsStore.calculateBedState(1, 'februar', 'mitte')[1] }}</p>
+    <div class="bed">
+      <!-- plantBedsStore.calculateBedState(1, 'februar', 'mitte')[1] -->
+      <div
+        v-for="set of plantBedsStore.calculateBedState(1, 'februar', 'mitte')[1]"
+        :key="set.plantvarietiesId"
+        class="set"
+        :style="`--neededColums: ${set.neededColums}; --startColum:${set.startColum + 1};  
+        background-color: blue`"
+      ></div>
+    </div>
   </main>
   <nav class="view__nav">
     <SiteNavigation></SiteNavigation>
@@ -148,6 +158,14 @@ const state = reactive({
 //   }
 //   return rows
 // }
+
+function renderBed(bedNumber) {
+  let bed = plantBedsStore.calculateBedState(
+    bedNumber,
+    plantBedsStore.state.currentMonth,
+    plantBedsStore.state.currentPeriod
+  )
+}
 </script>
 
 <style scoped>
@@ -163,5 +181,20 @@ const state = reactive({
   aspect-ratio: 1.2/2.5;
   background-color: var(--clr-dark);
   border-radius: 10px;
+  padding: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(24, 1fr);
+  grid-template-rows: 1fr;
+  gap: 0.25rem;
+}
+.set {
+  --neededColums: 4;
+  --startColum: 3;
+  height: 100%;
+  background-color: var(--clr-info);
+  grid-column: var(--startColum) / span var(--neededColums);
+  grid-row-start: 1;
+
+  border: 1px solid red;
 }
 </style>
