@@ -48,6 +48,12 @@ export const usePlantBedsStore = defineStore('beds', () => {
 
   function calculateBedState(bedNumber, month, period) {
     const bed = state.currentBedplan.beds.find((bedItem) => bedItem['bedNumber'] === bedNumber)
+
+    if (!bed) {
+      //loading not finished jet
+      return [[], []]
+    }
+
     const bedSets = bed.sets
 
     const time = translateTime(month, period)

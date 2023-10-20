@@ -4,7 +4,9 @@
   </header>
 
   <main>
-    <p>Beetplan: {{ plantBedsStore.state.currentBedplan.beds }}</p>
+    <!-- <p><pre>
+      Beetplan: {{ plantBedsStore.state.currentBedplan.beds }}
+    </pre></p> -->
 
     <h2>Beet 1</h2>
     <q-btn class="btn-add" color="primary" icon="add" @click="state.openAddPlant = true" />
@@ -75,8 +77,14 @@
       </q-card>
     </q-dialog>
 
+    <pre>{{
+      plantBedsStore.calculateBedState(
+        1,
+        plantBedsStore.state.currentMonth,
+        plantBedsStore.state.currentPeriod
+      )
+    }}</pre>
     <div class="bed">
-      <!-- plantBedsStore.calculateBedState(1, 'februar', 'mitte')[1] -->
       <div
         v-for="set of plantBedsStore.calculateBedState(
           1,
@@ -85,9 +93,15 @@
         )[1]"
         :key="set.plantvarietiesId"
         class="set"
-        :style="`--neededColums: ${set.neededColums}; --startColum:${set.startColum + 1};  
-        background-color: blue`"
-      ></div>
+        :style="`--neededColums: ${set.neededColums}; --startColum:${set.startColum + 1}`"
+      >
+        <div class="set-image"></div>
+        <p>{{ set.plantvarietiesId }}</p>
+        <p>
+          {{ plantsStore.getVariety('22fa677e-a15f-4eeb-94ad-373f2499a0e8')[0].name }}
+        </p>
+        <!-- <p>{{ set.plantvarietiesId }}</p> -->
+      </div>
     </div>
   </main>
   <nav class="view__nav">
@@ -99,14 +113,14 @@
 import PlantBedNavigation from '../components/PlantBedNavigation.vue'
 import SiteNavigation from '@/components/SiteNavigation.vue'
 import { computed, reactive, onBeforeMount } from 'vue'
-//import { usePlantsStore } from '@/stores/usePlantsStore'
+import { usePlantsStore } from '@/stores/usePlantsStore'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 
 import { useRoute } from 'vue-router'
 const route = useRoute()
 
 const plantBedsStore = usePlantBedsStore()
-//const plantsStore = usePlantsStore()
+const plantsStore = usePlantsStore()
 
 const state = reactive({
   openAddPlant: false,
@@ -157,13 +171,27 @@ const state = reactive({
 //   return rows
 // }
 
-function renderBed(bedNumber) {
-  let bed = plantBedsStore.calculateBedState(
-    bedNumber,
-    plantBedsStore.state.currentMonth,
-    plantBedsStore.state.currentPeriod
-  )
-}
+// const currentBedSets = computed(() => {
+//   console.log(
+//     'array mir sets ',
+//     plantBedsStore.calculateBedState(
+//       1,
+//       plantBedsStore.state.currentMonth,
+//       plantBedsStore.state.currentPeriod
+//     )[1]
+//   )
+//   const relevantSetIds = plantBedsStore.calculateBedState(
+//     1,
+//     plantBedsStore.state.currentMonth,
+//     plantBedsStore.state.currentPeriod
+//   )[1]
+//   const relevantSetData = []
+//   console.log('relevantSetIds: ', relevantSetIds)
+//   for (let i = 0; i < relevantSetIds.length; i++) {
+//     relevantSetData.push(plantsStore.getVariety(i.plantvarietiesId))
+//   }
+//   return relevantSetData
+// })
 
 onBeforeMount(async () => {
   await plantBedsStore.loadBedplan(route.params.bedId)
@@ -182,7 +210,7 @@ onBeforeMount(async () => {
   width: 200px;
   aspect-ratio: 1.2/2.5;
   background-color: var(--clr-dark);
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 0.5rem;
   display: grid;
   grid-template-columns: repeat(24, 1fr);
@@ -196,5 +224,6 @@ onBeforeMount(async () => {
   background-color: var(--clr-info);
   grid-column: var(--startColum) / span var(--neededColums);
   grid-row-start: 1;
+  border-radius: 5px;
 }
 </style>

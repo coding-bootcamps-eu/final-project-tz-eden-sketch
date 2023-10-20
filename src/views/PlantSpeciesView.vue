@@ -20,7 +20,7 @@ const state = reactive({
 async function getSpecies() {
   const URL = `http://localhost:3000/plantspecies/${route.params.plantspecies}`
   const resp = await fetch(URL)
-  const data = resp.json()
+  const data = await resp.json()
   return data
 }
 
