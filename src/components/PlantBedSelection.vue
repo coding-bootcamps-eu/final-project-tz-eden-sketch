@@ -10,7 +10,7 @@
               </q-avatar>
             </q-item-section>
           </q-item>
-          <div class="text-h6 plantbed-name">{{ bed.name }}</div>
+          <div class="text-h6 plantbed-name">{{ bed.title }}</div>
         </q-card-section>
         <q-card-section class="q-pt-none plantbed-description">
           <div class="text-subtitle2">{{ bed.description }}</div>
@@ -36,11 +36,19 @@
                   color="warning"
                   text-color="white"
                 />
-                <span class="q-ml-sm">Willst du {{ bed.name }} wirklich löschen?</span>
+                <span class="q-ml-sm"
+                  >Willst du den Beetplan "{{ bed.title }}" wirklich löschen?</span
+                >
               </q-card-section>
 
               <q-card-actions align="right">
-                <q-btn flat label="Löschen" color="warning" v-close-popup />
+                <q-btn
+                  flat
+                  label="Löschen"
+                  color="warning"
+                  v-close-popup
+                  @click="deleteBedplan(bed.id)"
+                />
                 <q-btn flat label="Zurück" color="primary" v-close-popup />
               </q-card-actions>
             </q-card>
@@ -67,34 +75,110 @@
             label="Erstelle neuen Plan"
             class="bg-primary text-white button__card"
             flat
+            @click="newBedplan = true"
           ></q-btn>
         </q-card-actions>
       </q-card>
+
+      <q-dialog v-model="newBedplan" persistent>
+        <q-card class="full-width" style="max-width: 700px">
+          <q-bar class="bg-secondary text-white">
+            neuer Beetplan
+            <q-space></q-space>
+            <q-btn v-close-popup icon="close" size="sm" dense flat @click="resetForm"></q-btn>
+          </q-bar>
+          <q-card-section style="max-height: 60vh" class="scroll">
+            <q-form class="colum">
+              <q-input
+                outlined
+                v-model.trim="form.title"
+                label="Name des Beetplans"
+                :rules="[requiredRule]"
+              ></q-input>
+
+              <q-input
+                outlined
+                v-model="form.description"
+                type="textarea"
+                label="Beschreibung"
+                placeholder="Notizen zu deinem Beetplan"
+              ></q-input>
+            </q-form>
+          </q-card-section>
+          <q-card-actions align="right">
+            <q-btn flat label="Abbrechen" color="warning" v-close-popup @click="resetForm" />
+            <q-btn
+              flat
+              label="Speichern und zum neuen Beetplan"
+              color="primary"
+              v-close-popup
+              @click="addNewBedplan"
+            />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
     </div>
   </main>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-const confirm = ref(false)
+import { ref, onBeforeMount } from 'vue'
+import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
+import { useRoute } from 'vue-router'
 
-const plantBeds = ref([
-  {
-    name: 'Beet 1',
-    id: '7220e93a-804f-4c9e-880a-8e53e429c1b3',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquet enim urna, ac posuere mauris pellentesque ac. Nam luctus sit amet tellus vitae sagittis. Duis laoreet libero ac augue mollis cursus.'
-  },
-  {
-    name: 'Beet 2',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquet enim urna, ac posuere mauris pellentesque ac. '
-  },
-  {
-    name: 'Beet 3',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-  }
-])
+const plantBedsStore = usePlantBedsStore()
+const route = useRoute()
+
+const confirm = ref(false)
+const newBedplan = ref(false)
+const form = ref({
+  title: '',
+  decription: '',
+  userVarieties: []
+})
+
+const plantBeds = ref()
+
+const requiredRule = (val) => (val && val.length > 0) || 'Bitte gib einen Namen ein'
+
+async function addNewBedplan() {
+  //todo: echte User Id einfügen
+  const newBedId = await plantBedsStore.addBedplan(
+    '36169072-803a-4f09-83db-8f908f0eb33c',
+    form.value.title,
+    form.value.description,
+    [] //todo: userVarieties abfragen
+  )
+  console.log('neue Beet id ', newBedId)
+  resetForm()
+  await route.push({ name: 'plantbed-edit', params: { bedId: newBedId } })
+  //todo
+  // https://router.vuejs.org/guide/essentials/navigation.html#navigate-to-a-different-location
+  //https://stackoverflow.com/questions/35664550/vue-js-redirection-to-another-page
+}
+
+localStorage.setItem('userId', '36169072-803a-4f09-83db-8f908f0eb33c') //todo
+
+async function loadPlantbeds() {
+  const URL = `http://localhost:3000/users/${localStorage.getItem('userId')}?_embed=bedplans`
+  const resp = await fetch(URL)
+  const data = await resp.json()
+  return data.bedplans
+}
+function resetForm() {
+  form.value.title = ''
+  form.value.description = ''
+  form.value.userVarieties = []
+}
+
+async function deleteBedplan(bedplanId) {
+  await plantBedsStore.deleteBedplan(bedplanId)
+  await loadPlantbeds()
+}
+
+onBeforeMount(async () => {
+  plantBeds.value = await loadPlantbeds()
+})
 </script>
 
 <style scoped>

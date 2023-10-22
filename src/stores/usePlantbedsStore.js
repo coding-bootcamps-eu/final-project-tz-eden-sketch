@@ -88,16 +88,83 @@ export const usePlantBedsStore = defineStore('beds', () => {
     return [currentBed, relevantSets]
   }
 
-  // function addPlant() {
+  async function addBedplan(userId, title, description, userVarieties) {
+    const newBedplan = {
+      userId: userId,
+      title: title,
+      description: description,
+      userVarieties: userVarieties,
+      beds: [
+        {
+          bedNumber: 1,
+          name: 'Beet 1',
+          plantfamilies: ['Kreuzblütler', 'Zwiebelgewächse', 'Doldenblütler'],
+          nutrition: 'Starkzehrer',
+          sets: []
+        },
+        {
+          bedNumber: 2,
+          name: 'Beet 2',
+          plantfamilies: ['Kürbisgewächse', 'Nachtschattengewächse'],
+          nutrition: 'Starkzehrer + Dünger',
+          sets: []
+        },
+        {
+          bedNumber: 3,
+          name: 'Beet 3',
+          plantfamilies: ['Korbblütler', 'Gänsefußgewächse'],
+          nutrition: 'Mittelzehrer',
+          sets: []
+        },
+        {
+          bedNumber: 4,
+          name: 'Beet 4',
+          plantfamilies: ['Zwiebelgewächse', 'Doldenblütler'],
+          nutrition: 'Schwachzehrer',
+          sets: []
+        },
+        {
+          bedNumber: 5,
+          name: 'Beet 5',
+          plantfamilies: ['Nachtschattengewächse'],
+          nutrition: 'Starkzehrer',
+          sets: []
+        },
+        {
+          bedNumber: 6,
+          name: 'Beet 6',
+          plantfamilies: ['Leguminosen', 'Korbblütler'],
+          nutrition: 'Mittelzehrer',
+          sets: []
+        }
+      ]
+    }
 
-  // }
+    const resp = await fetch('http://localhost:3000/bedplans/', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify(newBedplan)
+    })
+    const data = await resp.json()
+    let newId = data
+    return newId.id
+  }
+
+  async function deleteBedplan(bedplanId) {
+    const resp = await fetch('http://localhost:3000/bedplans/' + bedplanId, {
+      method: 'DELETE',
+      headers: { 'Content-type': 'application/json' }
+    })
+    await resp.json()
+  }
 
   return {
     state,
     loadBedplan,
     currentTime,
     calculateBedState,
-    translateTime
-    // addPlant
+    translateTime,
+    addBedplan,
+    deleteBedplan
   }
 })
