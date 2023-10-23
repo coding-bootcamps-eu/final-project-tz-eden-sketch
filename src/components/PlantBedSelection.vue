@@ -124,9 +124,11 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
+import { useUserStore } from '@/stores/useUserStore'
 import { useRouter } from 'vue-router'
 
 const plantBedsStore = usePlantBedsStore()
+const userStore = useUserStore()
 const router = useRouter()
 
 const confirm = ref(false)
@@ -142,9 +144,8 @@ const plantBeds = ref()
 const requiredRule = (val) => (val && val.length > 0) || 'Bitte gib einen Namen ein'
 
 async function addNewBedplan() {
-  //todo: echte User Id einfügen
   const newBedId = await plantBedsStore.addBedplan(
-    '36169072-803a-4f09-83db-8f908f0eb33c',
+    userStore.state.currentUser.id,
     form.value.title,
     form.value.description,
     [] //todo: userVarieties abfragen
@@ -154,11 +155,11 @@ async function addNewBedplan() {
   router.push({ name: 'plantbed-edit', params: { bedId: newBedId } })
 }
 
-// localStorage.setItem('userId', '36169072-803a-4f09-83db-8f908f0eb33c') //todo
-
 async function loadPlantbeds() {
   const userId = localStorage.getItem('edenSketchUserId')
-  const URL = `http://localhost:3000/users/${userId}?_embed=bedplans`
+  console.log('userId', userId)
+  const URL = `http://localhost:3000/users/${userId}?_embed=bedplans` //todo: besser aus userStore holen??
+  console.log(URL)
   const resp = await fetch(URL)
   const data = await resp.json()
   return data.bedplans
