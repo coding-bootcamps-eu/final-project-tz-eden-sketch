@@ -24,7 +24,7 @@ const imageUrl = computed(() => {
         <q-icon size="1.5em" name="chevron_right" color="primary" />
       </template>
 
-      <q-breadcrumbs-el label="Übersicht" to="/" icon="bi-house" />
+      <q-breadcrumbs-el label="Übersicht" :to="{ name: 'home' }" icon="bi-house" />
 
       <q-breadcrumbs-el
         label="Pflanzenarten"

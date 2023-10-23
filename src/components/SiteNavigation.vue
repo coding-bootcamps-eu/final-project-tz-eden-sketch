@@ -8,16 +8,26 @@
       class="site-navigation bg-info text-primary shadow-2"
       indicator-color="primary"
     >
-      <q-route-tab name="home" label="Übersicht" icon="bi-house" to="/" />
+      <q-route-tab name="home" label="Übersicht" icon="bi-house" :to="{ name: 'home' }" />
       <q-route-tab
         name="plants"
         label="Pflanzen"
         icon="svguse:/icons.svg#sprout"
-        to="/plantspecies/list"
+        :to="{ name: 'PlantSpeciesListView' }"
       />
-      <q-route-tab name="plan" label="Plan" icon="bi-pencil-square" to="/plantbed-selection" />
-      <q-route-tab name="knowledge" label="Wissen" icon="bi-book" to="/blog" />
-      <q-route-tab name="todos" label="ToDos" icon="svguse:/icons.svg#gloves" to="/todos" />
+      <q-route-tab
+        name="plan"
+        label="Plan"
+        icon="bi-pencil-square"
+        :to="{ name: 'plantbed-selection' }"
+      />
+      <q-route-tab name="knowledge" label="Wissen" icon="bi-book" :to="{ name: 'blog' }" />
+      <q-route-tab
+        name="todos"
+        label="ToDos"
+        icon="svguse:/icons.svg#gloves"
+        :to="{ name: 'todos' }"
+      />
     </q-tabs>
   </nav>
 </template>

@@ -154,10 +154,11 @@ async function addNewBedplan() {
   router.push({ name: 'plantbed-edit', params: { bedId: newBedId } })
 }
 
-localStorage.setItem('userId', '36169072-803a-4f09-83db-8f908f0eb33c') //todo
+// localStorage.setItem('userId', '36169072-803a-4f09-83db-8f908f0eb33c') //todo
 
 async function loadPlantbeds() {
-  const URL = `http://localhost:3000/users/${localStorage.getItem('userId')}?_embed=bedplans`
+  const userId = localStorage.getItem('edenSketchUserId')
+  const URL = `http://localhost:3000/users/${userId}?_embed=bedplans`
   const resp = await fetch(URL)
   const data = await resp.json()
   return data.bedplans

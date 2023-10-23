@@ -37,7 +37,7 @@ onBeforeMount(async () => {
         <!--todo: icon selbst downloaden -->
       </template>
 
-      <q-breadcrumbs-el label="Übersicht" to="/" icon="bi-house" />
+      <q-breadcrumbs-el label="Übersicht" :to="{ name: 'home' }" icon="bi-house" />
       <q-breadcrumbs-el
         label="Pflanzenarten"
         to="/plantspecies/list/"
