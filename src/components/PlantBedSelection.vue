@@ -124,7 +124,7 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 const plantBedsStore = usePlantBedsStore()
 const router = useRouter()
@@ -152,9 +152,6 @@ async function addNewBedplan() {
   console.log('neue Beet id ', newBedId)
   resetForm()
   router.push({ name: 'plantbed-edit', params: { bedId: newBedId } })
-  //todo
-  // https://router.vuejs.org/guide/essentials/navigation.html#navigate-to-a-different-location
-  //https://stackoverflow.com/questions/35664550/vue-js-redirection-to-another-page
 }
 
 localStorage.setItem('userId', '36169072-803a-4f09-83db-8f908f0eb33c') //todo
@@ -163,7 +160,6 @@ async function loadPlantbeds() {
   const URL = `http://localhost:3000/users/${localStorage.getItem('userId')}?_embed=bedplans`
   const resp = await fetch(URL)
   const data = await resp.json()
-  console.log('2')
   return data.bedplans
 }
 function resetForm() {
@@ -174,9 +170,7 @@ function resetForm() {
 
 async function deleteBedplan(bedplanId) {
   await plantBedsStore.deleteBedplan(bedplanId)
-  console.log('1')
   plantBeds.value = await loadPlantbeds()
-  console.log('3')
 }
 
 onBeforeMount(async () => {
