@@ -13,14 +13,9 @@
         name="plants"
         label="Pflanzen"
         icon="svguse:/icons.svg#sprout"
-        :to="{ name: 'PlantSpeciesListView' }"
+        :to="{ name: 'plantspecieslist' }"
       />
-      <q-route-tab
-        name="plan"
-        label="Plan"
-        icon="bi-pencil-square"
-        :to="{ name: 'plantbed-selection' }"
-      />
+      <q-route-tab name="plan" label="Plan" icon="bi-pencil-square" :to="{ name: 'plantbeds' }" />
       <q-route-tab name="knowledge" label="Wissen" icon="bi-book" :to="{ name: 'blog' }" />
       <q-route-tab
         name="todos"
