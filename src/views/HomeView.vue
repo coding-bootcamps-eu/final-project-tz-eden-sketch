@@ -2,9 +2,119 @@
 import SeparatorElement from '@/components/SeparatorElement.vue'
 import CardComponent from '@/components/CardComponent.vue'
 import SiteNavigation from '@/components/SiteNavigation.vue'
+import { onBeforeMount, reactive } from 'vue'
+import { useUserStore } from '@/stores/useUserStore'
+import { useRouter } from 'vue-router'
+
+const userStore = useUserStore()
+const router = useRouter()
+
+const state = reactive({
+  confirmUserDelete: false,
+  changeUserName: false,
+  alert: false,
+  newName: ''
+})
+
+async function deleteUser() {
+  await userStore.deleteUser()
+  router.push({ name: 'landingpage' })
+}
+
+async function changeUser() {
+  if (userStore.validateUserName(state.newName)) {
+    await userStore.changeName(state.newName)
+    state.changeUserName = false
+    state.newName = ''
+  } else {
+    state.alert = true
+  }
+}
+
+onBeforeMount(async () => {
+  await userStore.loadUser()
+})
 </script>
 
 <template>
+  <q-bar class="bg-primary text-white">
+    <q-space></q-space>
+    <q-btn icon="las la-user" color="transparent" text-color="white" flat>
+      <q-menu transition-show="scale" transition-hide="scale">
+        <q-list style="min-width: 20ch">
+          <q-item>
+            <q-item-section>Hallo {{ userStore.state.currentUser.name }}</q-item-section>
+          </q-item>
+          <q-separator />
+
+          <q-item clickable @click="state.changeUserName = true">
+            <q-item-section>Nutzernamen ändern</q-item-section>
+          </q-item>
+
+          <q-item clickable @click="state.confirmUserDelete = true">
+            <q-item-section>Nutzer löschen</q-item-section>
+          </q-item>
+        </q-list>
+      </q-menu>
+    </q-btn>
+
+    <q-dialog v-model="state.confirmUserDelete" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="delete" color="warning" text-color="white" />
+          <span class="q-ml-sm"
+            >Willst du deinen Nutzer "{{ userStore.state.currentUser.name }}" wirklich
+            löschen?</span
+          >
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Löschen" color="warning" v-close-popup @click="deleteUser()" />
+          <q-btn flat label="Zurück" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="state.changeUserName" persistent>
+      <q-card>
+        <q-card-section class="items-center">
+          <!-- <q-avatar icon="las la-user" color="primary" text-color="white" /> -->
+          <span class="q-ml">Wähle einen neuen Nutzernamen: </span>
+          <q-input
+            class="input__username"
+            outlined
+            v-model.trim="state.newName"
+            label="neuer Username"
+          >
+            <template v-slot:append>
+              <q-icon name="las la-user" color="accent" />
+            </template>
+          </q-input>
+
+          <q-dialog v-model="state.alert">
+            <q-card>
+              <q-card-section>
+                <div class="text-h6">Username zu kurz</div>
+              </q-card-section>
+
+              <q-card-section class="q-pt-none">
+                Dein Username muss mindestens 2 Zeichen lang sein.
+              </q-card-section>
+
+              <q-card-actions align="right">
+                <q-btn flat label="OK" color="primary" v-close-popup />
+              </q-card-actions>
+            </q-card>
+          </q-dialog>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Zurück" color="warning" v-close-popup @click="state.newName = ''" />
+          <q-btn flat label="Speichern" color="primary" @click="changeUser()" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+  </q-bar>
   <div class="overview">
     <!-- <q-icon name="fa-brands fa-rebel" />
     <q-icon name="svguse:/icons.svg#seedling" />
@@ -58,6 +168,9 @@ import SiteNavigation from '@/components/SiteNavigation.vue'
   gap: 1rem;
 
   grid-template-columns: 1fr;
+}
+.username {
+  color: white;
 }
 
 @media screen and (min-width: 600px) {

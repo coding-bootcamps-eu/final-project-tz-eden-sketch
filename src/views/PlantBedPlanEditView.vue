@@ -4,7 +4,9 @@
   </header>
 
   <main>
-    <p>Beetplan: {{ plantBedsStore.state.currentBedplan.beds }}</p>
+    <!-- <p><pre>
+      Beetplan: {{ plantBedsStore.state.currentBedplan.beds }}
+    </pre></p> -->
 
     <h2>Beet 1</h2>
     <q-btn class="btn-add" color="primary" icon="add" @click="state.openAddPlant = true" />
@@ -27,6 +29,8 @@
             grid
             hide-header
           >
+            <!-- grid
+            hide-header-->
             <template v-slot:top-right>
               <q-input borderless dense debounce="300" v-model="filter" placeholder="Suche">
                 <template v-slot:append>
@@ -70,13 +74,26 @@
 
         <!-- <q-card-section>{{ state.userVarieties }} </q-card-section> -->
         <q-card-actions align="right">
-          <q-btn flat label="OK" color="primary" v-close-popup />
+          <q-btn flat label="Zurück" color="warning" v-close-popup />
+          <q-btn
+            flat
+            label="Sorte einpflanzen"
+            color="primary"
+            v-close-popup
+            @click="addVarietyToBed(1, plantBedsStore.calculateStartColumsInBed()[0])"
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>
 
+    <pre>{{
+      plantBedsStore.calculateBedState(
+        1,
+        plantBedsStore.state.currentMonth,
+        plantBedsStore.state.currentPeriod
+      )
+    }}</pre>
     <div class="bed">
-      <!-- plantBedsStore.calculateBedState(1, 'februar', 'mitte')[1] -->
       <div
         v-for="set of plantBedsStore.calculateBedState(
           1,
@@ -85,9 +102,15 @@
         )[1]"
         :key="set.plantvarietiesId"
         class="set"
-        :style="`--neededColums: ${set.neededColums}; --startColum:${set.startColum + 1};  
-        background-color: blue`"
-      ></div>
+        :style="`--neededColums: ${set.neededColums}; --startColum:${set.startColum + 1}`"
+      >
+        <div class="set-image"></div>
+        <p>{{ set.plantvarietiesId }}</p>
+        <p>
+          {{ plantsStore.getVariety('22fa677e-a15f-4eeb-94ad-373f2499a0e8')[0].name }}
+        </p>
+        <!-- <p>{{ set.plantvarietiesId }}</p> -->
+      </div>
     </div>
   </main>
   <nav class="view__nav">
@@ -99,14 +122,14 @@
 import PlantBedNavigation from '../components/PlantBedNavigation.vue'
 import SiteNavigation from '@/components/SiteNavigation.vue'
 import { computed, reactive, onBeforeMount } from 'vue'
-//import { usePlantsStore } from '@/stores/usePlantsStore'
+import { usePlantsStore } from '@/stores/usePlantsStore'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 
 import { useRoute } from 'vue-router'
 const route = useRoute()
 
 const plantBedsStore = usePlantBedsStore()
-//const plantsStore = usePlantsStore()
+const plantsStore = usePlantsStore()
 
 const state = reactive({
   openAddPlant: false,
@@ -120,16 +143,7 @@ const state = reactive({
     // { name: 'goodNeighbors', label: 'gute Nachbarn', field: 'goodNeighbors' },
     // { name: 'badNeighbors', label: 'schlechte Nachbarn', field: 'badNeighbors' }
   ],
-  // userVarieties: computed(() => {
-  //   return plantsStore.getAllVarieties
-  // }),
   rows: []
-  // currentTime: computed(() => {
-  //   return plantBedsStore.translateTime(
-  //     plantBedsStore.state.currentMonth,
-  //     plantBedsStore.state.currentPeriod
-  //   )
-  // })
 })
 
 // watch(
@@ -139,34 +153,79 @@ const state = reactive({
 //   }
 // )
 
-// function mapTableContent() {
-//   const rows = []
-//   for (let varietyItem of state.userVarieties) {
-//     // console.log(varietyItem)
-//     // const species = plantsStore.getSpecies(userVarieties[varietyItem].plantspeciesId)
-//     const row = {}
-//     row.name = varietyItem.name
-//     row.plantfamily = varietyItem.plantfamily
-//     row.plantspecies = varietyItem.name
-//     row.plantvariety = varietyItem.name
-//     row.nutrition = varietyItem.nutrition
-//     // row.goodNeighbors = species.goodNeighbors
-//     // row.badNeighbors = species.badNeighbors
-//     rows.push(row)
-//   }
-//   return rows
-// }
+async function mapTableContent() {
+  const rows = []
 
-function renderBed(bedNumber) {
-  let bed = plantBedsStore.calculateBedState(
-    bedNumber,
-    plantBedsStore.state.currentMonth,
-    plantBedsStore.state.currentPeriod
-  )
+  for (let i = 0; i < plantBedsStore.state.currentBedplan.userVarieties.length; i++) {
+    const currentUserVarietyId = plantBedsStore.state.currentBedplan.userVarieties[i]
+    // console.log(plantBedsStore.getVariety(currentUserVarietyId)[0])
+
+    const URL = `http://localhost:3000/plantvarieties/${currentUserVarietyId}?_embed=plantspeciesId` //todo: besser aus userStore holen??
+    const resp = await fetch(URL)
+    const currentUserVariety = await resp.json()
+
+    //const currentUserVariety = await plantBedsStore.getVariety(currentUserVarietyId)[0]
+    // const species = plantsStore.getSpecies(userVarieties[varietyItem].plantspeciesId)
+    // console.log('currentUserVariety ', currentUserVariety)
+    const row = {}
+    row.name = currentUserVariety.name
+    row.plantfamily = currentUserVariety.plantfamily
+    row.plantspecies = currentUserVariety.species
+    row.plantvariety = currentUserVariety.name
+    row.nutrition = currentUserVariety.nutrition
+    //extra data
+    row.plantspeciesId = currentUserVariety.plantspeciesId
+    row.varietyId = currentUserVariety.id
+    row.cultureDurationIntern = currentUserVariety.cultureDurationIntern
+    row.cultureDuration = currentUserVariety.cultureDuration
+    row.rowDistance = currentUserVariety.rowDistance
+    // row.goodNeighbors = species.goodNeighbors
+    // row.badNeighbors = species.badNeighbors
+
+    rows.push(row)
+  }
+  //console.log('alle rows ', rows)
+  return rows
+}
+
+function addVarietyToBed(bedNumber, startColum) {
+  let newSets = state.selected
+  for (let i = 0; i < newSets.length; i++) {
+    if (
+      plantBedsStore.checkAddSetPossible(
+        bedNumber,
+        plantBedsStore.currentMonth,
+        plantBedsStore.currentPeriod,
+        newSets[i].varietyId,
+        startColum,
+        newSets[i].cultureDurationIntern,
+        newSets[i].rowDistance
+      )
+    ) {
+      //Satz kann ins Beet eingepflanzt werden
+      console.log('newSet: ', i)
+
+      plantBedsStore.addSet(
+        bedNumber,
+        plantBedsStore.currentMonth,
+        plantBedsStore.currentPeriod,
+        newSets[i].varietyId,
+        startColum,
+        newSets[i].cultureDurationIntern,
+        newSets[i].rowDistance
+      )
+    } else {
+      //Satz kann nicht eingepflanzt werden
+      //todo: Nutzer Feedback geben
+      console.log('Sorte kann nicht eingepflanzt werden')
+    }
+  }
+  state.selected = []
 }
 
 onBeforeMount(async () => {
   await plantBedsStore.loadBedplan(route.params.bedId)
+  state.rows = await mapTableContent()
 })
 </script>
 
@@ -182,7 +241,7 @@ onBeforeMount(async () => {
   width: 200px;
   aspect-ratio: 1.2/2.5;
   background-color: var(--clr-dark);
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 0.5rem;
   display: grid;
   grid-template-columns: repeat(24, 1fr);
@@ -196,5 +255,6 @@ onBeforeMount(async () => {
   background-color: var(--clr-info);
   grid-column: var(--startColum) / span var(--neededColums);
   grid-row-start: 1;
+  border-radius: 5px;
 }
 </style>

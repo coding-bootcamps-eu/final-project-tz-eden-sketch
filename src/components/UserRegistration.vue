@@ -7,6 +7,7 @@
       <section class="intro-text">
         <p>Gib hier deinen gewünschten Usernamen an und starte durch mit der Beetplanung:</p>
       </section>
+
       <q-input class="input__username" outlined v-model.trim="username" label="Username">
         <template v-slot:append>
           <q-icon name="las la-user" color="accent" />
@@ -18,6 +19,7 @@
         label="Bestätige Namen"
         @click="userRegistration"
       />
+
       <q-dialog v-model="alert">
         <q-card>
           <q-card-section>
@@ -40,18 +42,22 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/useUserStore'
+
 const router = useRouter()
+const userStore = useUserStore()
+
 const username = ref('')
 const alert = ref(false)
 
-function userRegistration() {
-  if (username.value.length >= 2) {
-    console.log('ToDo: send username to api')
-    // call api function from pinia store
-    // example router push (add overview site path when available)
-    router.push({ path: '/' })
-  }
-  if (username.value.length < 2) {
+async function userRegistration() {
+  if (userStore.validateUserName(username.value)) {
+    //username is valid
+    await userStore.addNewUser(username.value)
+    username.value = ''
+    router.push({ name: 'home' })
+  } else {
+    //username is invalid
     alert.value = true
   }
 }

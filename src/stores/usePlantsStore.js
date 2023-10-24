@@ -7,14 +7,14 @@ export const usePlantsStore = defineStore('plants', () => {
     plantVarieties: [] //Pflanzensorte z.B. Oxhella
   })
 
-  function loadPlantSpecies() {
+  async function loadPlantSpecies() {
     fetch('http://localhost:3000/plantspecies').then(async (resp) => {
       const data = await resp.json()
       state.plantSpecies = data
     })
   }
 
-  function loadPlantVarieties() {
+  async function loadPlantVarieties() {
     fetch('http://localhost:3000/plantvarieties').then(async (resp) => {
       const data = await resp.json()
       state.plantVarieties = data
@@ -156,9 +156,9 @@ export const usePlantsStore = defineStore('plants', () => {
     //optional chaining
   }
 
-  onBeforeMount(() => {
-    loadPlantSpecies()
-    loadPlantVarieties()
+  onBeforeMount(async () => {
+    await loadPlantSpecies()
+    await loadPlantVarieties()
   })
 
   return {

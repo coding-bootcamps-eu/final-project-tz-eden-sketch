@@ -10,7 +10,7 @@
               </q-avatar>
             </q-item-section>
           </q-item>
-          <div class="text-h6 plantbed-name">{{ bed.name }}</div>
+          <div class="text-h6 plantbed-name">{{ bed.title }}</div>
         </q-card-section>
         <q-card-section class="q-pt-none plantbed-description">
           <div class="text-subtitle2">{{ bed.description }}</div>
@@ -36,11 +36,19 @@
                   color="warning"
                   text-color="white"
                 />
-                <span class="q-ml-sm">Willst du {{ bed.name }} wirklich löschen?</span>
+                <span class="q-ml-sm"
+                  >Willst du den Beetplan "{{ bed.title }}" wirklich löschen?</span
+                >
               </q-card-section>
 
               <q-card-actions align="right">
-                <q-btn flat label="Löschen" color="warning" v-close-popup />
+                <q-btn
+                  flat
+                  label="Löschen"
+                  color="warning"
+                  v-close-popup
+                  @click="deleteBedplan(bed.id)"
+                />
                 <q-btn flat label="Zurück" color="primary" v-close-popup />
               </q-card-actions>
             </q-card>
@@ -67,34 +75,137 @@
             label="Erstelle neuen Plan"
             class="bg-primary text-white button__card"
             flat
+            @click="newBedplan = true"
           ></q-btn>
         </q-card-actions>
       </q-card>
+
+      <q-dialog v-model="newBedplan" persistent>
+        <q-card class="full-width" style="max-width: 700px">
+          <q-bar class="bg-secondary text-white">
+            neuer Beetplan
+            <q-space></q-space>
+            <q-btn v-close-popup icon="close" size="sm" dense flat @click="resetForm"></q-btn>
+          </q-bar>
+          <q-card-section style="max-height: 60vh" class="scroll">
+            <q-form class="colum">
+              <q-input
+                outlined
+                v-model.trim="form.title"
+                label="Name des Beetplans"
+                :rules="[requiredRule]"
+              ></q-input>
+
+              <q-input
+                outlined
+                v-model="form.description"
+                type="textarea"
+                label="Beschreibung"
+                placeholder="Notizen zu deinem Beetplan"
+              ></q-input>
+              <q-toggle
+                checked-icon="check"
+                unchecked-icon="clear"
+                v-model="toggleChooseUserVarieties"
+                color="primary"
+                label="Wähle deine Beet-Sorten selbst aus"
+                right-label
+              >
+              </q-toggle>
+            </q-form>
+          </q-card-section>
+          <q-card-actions align="right">
+            <q-btn flat label="Abbrechen" color="warning" v-close-popup @click="resetForm" />
+            <q-btn
+              flat
+              label="Speichern und zum neuen Beetplan"
+              color="primary"
+              v-close-popup
+              @click="addNewBedplan"
+            />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
     </div>
   </main>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-const confirm = ref(false)
+import { ref, onBeforeMount } from 'vue'
+import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
+import { useUserStore } from '@/stores/useUserStore'
+import { usePlantsStore } from '@/stores/usePlantsStore'
+import { useRouter } from 'vue-router'
 
-const plantBeds = ref([
-  {
-    name: 'Beet 1',
-    id: '7220e93a-804f-4c9e-880a-8e53e429c1b3',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquet enim urna, ac posuere mauris pellentesque ac. Nam luctus sit amet tellus vitae sagittis. Duis laoreet libero ac augue mollis cursus.'
-  },
-  {
-    name: 'Beet 2',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquet enim urna, ac posuere mauris pellentesque ac. '
-  },
-  {
-    name: 'Beet 3',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+const plantBedsStore = usePlantBedsStore()
+const userStore = useUserStore()
+const plantsStore = usePlantsStore()
+const router = useRouter()
+
+const confirm = ref(false)
+const newBedplan = ref(false)
+const form = ref({
+  title: '',
+  decription: '',
+  userVarieties: []
+})
+
+const toggleChooseUserVarieties = ref(false)
+const plantBeds = ref()
+
+const requiredRule = (val) => (val && val.length > 0) || 'Bitte gib einen Namen ein'
+
+function chooseAllVarieties() {
+  const userVarieties = []
+  for (let i = 0; i < plantsStore.state.plantVarieties.length; i++) {
+    userVarieties.push(plantsStore.state.plantVarieties[i].id)
   }
-])
+  return userVarieties //array mit IDs von alles ausgewählten Sorten
+}
+
+async function addNewBedplan() {
+  if (toggleChooseUserVarieties.value === true) {
+    //todo: Nutze seine Sorten auswählen lassen
+    //chooseUserVarieties([IDs der ausgewählten Sorten])
+    chooseAllVarieties()
+  } else {
+    //User möchte ALLE Sorten aus der Datenbank im Beetplan nutzen
+    chooseAllVarieties()
+  }
+  const userVarieties = chooseAllVarieties()
+
+  const newBedId = await plantBedsStore.addBedplan(
+    userStore.state.currentUser.id,
+    form.value.title,
+    form.value.description,
+    userVarieties
+  )
+  console.log('neue Beet id ', newBedId)
+  resetForm()
+  router.push({ name: 'plantbed-edit', params: { bedId: newBedId } })
+}
+
+async function loadPlantbeds() {
+  const userId = localStorage.getItem('edenSketchUserId')
+  const URL = `http://localhost:3000/users/${userId}?_embed=bedplans` //todo: besser aus userStore holen??
+  const resp = await fetch(URL)
+  const data = await resp.json()
+  return data.bedplans
+}
+function resetForm() {
+  form.value.title = ''
+  form.value.description = ''
+  form.value.userVarieties = []
+}
+
+async function deleteBedplan(bedplanId) {
+  await plantBedsStore.deleteBedplan(bedplanId)
+  plantBeds.value = await loadPlantbeds()
+}
+
+onBeforeMount(async () => {
+  plantBeds.value = await loadPlantbeds()
+})
 </script>
 
 <style scoped>

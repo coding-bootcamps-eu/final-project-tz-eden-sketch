@@ -20,7 +20,7 @@ const state = reactive({
 async function getSpecies() {
   const URL = `http://localhost:3000/plantspecies/${route.params.plantspecies}`
   const resp = await fetch(URL)
-  const data = resp.json()
+  const data = await resp.json()
   return data
 }
 
@@ -37,7 +37,7 @@ onBeforeMount(async () => {
         <!--todo: icon selbst downloaden -->
       </template>
 
-      <q-breadcrumbs-el label="Übersicht" to="/" icon="bi-house" />
+      <q-breadcrumbs-el label="Übersicht" :to="{ name: 'home' }" icon="bi-house" />
       <q-breadcrumbs-el
         label="Pflanzenarten"
         to="/plantspecies/list/"
