@@ -139,14 +139,14 @@ onBeforeMount(async () => {
       <CardComponent card-title="Wissen" card-link="/blog" card-image="book.svg" />
     </main>
     <SeparatorElement />
-    <footer>
-      <a href="/impressum">Impressum</a>
+    <footer class="bg-info text-primary shadow-2">
+      <a class="impressum text-primary" href="/impressum">Impressum</a>
     </footer>
   </div>
 
-  <nav class="view__nav">
+  <!-- <nav class="view__nav">
     <SiteNavigation></SiteNavigation>
-  </nav>
+  </nav> -->
 </template>
 
 <style scoped>
@@ -189,5 +189,21 @@ onBeforeMount(async () => {
 
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
+}
+
+footer {
+  padding: 0.5rem;
+  text-align: center;
+  height: 3rem;
+  background-color: red;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  border-top: 1px solid var(--clr-secondary);
+}
+.impressum {
+  font-weight: 500;
+  text-underline-offset: 2px;
 }
 </style>
