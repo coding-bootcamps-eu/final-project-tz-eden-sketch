@@ -26,7 +26,10 @@
             selection="multiple"
             v-model:selected="state.selected"
             :filter="state.filter"
-            ><!-- grid
+            grid
+            hide-header
+          >
+            <!-- grid
             hide-header-->
             <template v-slot:top-right>
               <q-input borderless dense debounce="300" v-model="filter" placeholder="Suche">
@@ -71,7 +74,14 @@
 
         <!-- <q-card-section>{{ state.userVarieties }} </q-card-section> -->
         <q-card-actions align="right">
-          <q-btn flat label="OK" color="primary" v-close-popup />
+          <q-btn flat label="Zurück" color="warning" v-close-popup />
+          <q-btn
+            flat
+            label="Sorte einpflanzen"
+            color="primary"
+            v-close-popup
+            @click="addVarietyToBed(1, plantBedsStore.calculateStartColumsInBed()[0])"
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -163,6 +173,12 @@ async function mapTableContent() {
     row.plantspecies = currentUserVariety.species
     row.plantvariety = currentUserVariety.name
     row.nutrition = currentUserVariety.nutrition
+    //extra data
+    row.plantspeciesId = currentUserVariety.plantspeciesId
+    row.varietyId = currentUserVariety.id
+    row.cultureDurationIntern = currentUserVariety.cultureDurationIntern
+    row.cultureDuration = currentUserVariety.cultureDuration
+    row.rowDistance = currentUserVariety.rowDistance
     // row.goodNeighbors = species.goodNeighbors
     // row.badNeighbors = species.badNeighbors
 
@@ -172,27 +188,40 @@ async function mapTableContent() {
   return rows
 }
 
-// const currentBedSets = computed(() => {
-//   console.log(
-//     'array mir sets ',
-//     plantBedsStore.calculateBedState(
-//       1,
-//       plantBedsStore.state.currentMonth,
-//       plantBedsStore.state.currentPeriod
-//     )[1]
-//   )
-//   const relevantSetIds = plantBedsStore.calculateBedState(
-//     1,
-//     plantBedsStore.state.currentMonth,
-//     plantBedsStore.state.currentPeriod
-//   )[1]
-//   const relevantSetData = []
-//   console.log('relevantSetIds: ', relevantSetIds)
-//   for (let i = 0; i < relevantSetIds.length; i++) {
-//     relevantSetData.push(plantsStore.getVariety(i.plantvarietiesId))
-//   }
-//   return relevantSetData
-// })
+function addVarietyToBed(bedNumber, startColum) {
+  let newSets = state.selected
+  for (let i = 0; i < newSets.length; i++) {
+    if (
+      plantBedsStore.checkAddSetPossible(
+        bedNumber,
+        plantBedsStore.currentMonth,
+        plantBedsStore.currentPeriod,
+        newSets[i].varietyId,
+        startColum,
+        newSets[i].cultureDurationIntern,
+        newSets[i].rowDistance
+      )
+    ) {
+      //Satz kann ins Beet eingepflanzt werden
+      console.log('newSet: ', i)
+
+      plantBedsStore.addSet(
+        bedNumber,
+        plantBedsStore.currentMonth,
+        plantBedsStore.currentPeriod,
+        newSets[i].varietyId,
+        startColum,
+        newSets[i].cultureDurationIntern,
+        newSets[i].rowDistance
+      )
+    } else {
+      //Satz kann nicht eingepflanzt werden
+      //todo: Nutzer Feedback geben
+      console.log('Sorte kann nicht eingepflanzt werden')
+    }
+  }
+  state.selected = []
+}
 
 onBeforeMount(async () => {
   await plantBedsStore.loadBedplan(route.params.bedId)

@@ -6,7 +6,9 @@ export const usePlantBedsStore = defineStore('beds', () => {
     currentMonth: 'januar',
     currentPeriod: 'anfang',
 
-    currentBedplan: { beds: [] } //leeres Object
+    currentBedplan: { beds: [] }, //leeres Object
+
+    lastSetId: 0 //todo: bessere ID für sets
   })
 
   async function loadBedplan(bedId) {
@@ -44,6 +46,10 @@ export const usePlantBedsStore = defineStore('beds', () => {
     }
 
     return translation
+  }
+
+  function translateRowDistance(rowDistance) {
+    return rowDistance / 5
   }
 
   function calculateBedState(bedNumber, month, period) {
@@ -158,6 +164,56 @@ export const usePlantBedsStore = defineStore('beds', () => {
     await resp.json()
   }
 
+  function checkAddSetPossible(
+    bedNumber,
+    month,
+    period,
+    varietyId,
+    startColum,
+    cultureDurationIntern,
+    rowDistance
+  ) {
+    //todo: Validation here!!!
+    return true
+  }
+
+  function addSet(bedNumber, month, period, varietyId, startColum, cultureDuration, rowDistance) {
+    const bed = state.currentBedplan.beds.filter((bedItem) => bedItem.bedNumber === bedNumber)[0]
+
+    const newSet = {
+      id: state.lastSetId + 1, //todo: bessere ID
+      plantvarietiesId: varietyId,
+      startColum: startColum,
+      startTime: translateTime(month, period),
+      cultureDuration: cultureDuration,
+      neededColums: translateRowDistance(rowDistance)
+    }
+    bed.sets.push(newSet)
+    //an API updaten
+  }
+
+  function getRandomInt(min, max) {
+    min = Math.ceil(min)
+    max = Math.floor(max)
+    return Math.floor(Math.random() * (max - min) + min) // The maximum is exclusive and the minimum is inclusive
+  }
+
+  function calculateStartColumsInBed(
+    bedNumber,
+    month,
+    period,
+    varietyId,
+    cultureDuration,
+    rowDistance
+  ) {
+    const startColums = []
+
+    startColums[0] = getRandomInt(0, 25) //todo: richtig prüfen!!
+    startColums[1] = getRandomInt(0, 25)
+    startColums[3] = getRandomInt(0, 25)
+    return startColums
+  }
+
   return {
     state,
     loadBedplan,
@@ -165,6 +221,10 @@ export const usePlantBedsStore = defineStore('beds', () => {
     calculateBedState,
     translateTime,
     addBedplan,
-    deleteBedplan
+    deleteBedplan,
+    checkAddSetPossible,
+    addSet,
+    calculateStartColumsInBed,
+    getRandomInt //todo: später löschen
   }
 })
