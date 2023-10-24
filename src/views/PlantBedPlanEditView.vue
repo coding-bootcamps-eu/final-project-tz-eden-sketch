@@ -26,9 +26,8 @@
             selection="multiple"
             v-model:selected="state.selected"
             :filter="state.filter"
-            grid
-            hide-header
-          >
+            ><!-- grid
+            hide-header-->
             <template v-slot:top-right>
               <q-input borderless dense debounce="300" v-model="filter" placeholder="Suche">
                 <template v-slot:append>
@@ -134,9 +133,6 @@ const state = reactive({
     // { name: 'goodNeighbors', label: 'gute Nachbarn', field: 'goodNeighbors' },
     // { name: 'badNeighbors', label: 'schlechte Nachbarn', field: 'badNeighbors' }
   ],
-  userVarieties: computed(() => {
-    return plantsStore.state.plantVarieties
-  }),
   rows: []
 })
 
@@ -147,21 +143,32 @@ const state = reactive({
 //   }
 // )
 
-function mapTableContent() {
+async function mapTableContent() {
   const rows = []
-  for (let varietyItem of state.userVarieties) {
-    // console.log(varietyItem)
+
+  for (let i = 0; i < plantBedsStore.state.currentBedplan.userVarieties.length; i++) {
+    const currentUserVarietyId = plantBedsStore.state.currentBedplan.userVarieties[i]
+    // console.log(plantBedsStore.getVariety(currentUserVarietyId)[0])
+
+    const URL = `http://localhost:3000/plantvarieties/${currentUserVarietyId}?_embed=plantspeciesId` //todo: besser aus userStore holen??
+    const resp = await fetch(URL)
+    const currentUserVariety = await resp.json()
+
+    //const currentUserVariety = await plantBedsStore.getVariety(currentUserVarietyId)[0]
     // const species = plantsStore.getSpecies(userVarieties[varietyItem].plantspeciesId)
+    // console.log('currentUserVariety ', currentUserVariety)
     const row = {}
-    row.name = varietyItem.name
-    row.plantfamily = varietyItem.plantfamily
-    row.plantspecies = varietyItem.name
-    row.plantvariety = varietyItem.name
-    row.nutrition = varietyItem.nutrition
+    row.name = currentUserVariety.name
+    row.plantfamily = currentUserVariety.plantfamily
+    row.plantspecies = currentUserVariety.species
+    row.plantvariety = currentUserVariety.name
+    row.nutrition = currentUserVariety.nutrition
     // row.goodNeighbors = species.goodNeighbors
     // row.badNeighbors = species.badNeighbors
+
     rows.push(row)
   }
+  //console.log('alle rows ', rows)
   return rows
 }
 
@@ -189,7 +196,7 @@ function mapTableContent() {
 
 onBeforeMount(async () => {
   await plantBedsStore.loadBedplan(route.params.bedId)
-  mapTableContent()
+  state.rows = await mapTableContent()
 })
 </script>
 

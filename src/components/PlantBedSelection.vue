@@ -103,6 +103,15 @@
                 label="Beschreibung"
                 placeholder="Notizen zu deinem Beetplan"
               ></q-input>
+              <q-toggle
+                checked-icon="check"
+                unchecked-icon="clear"
+                v-model="toggleChooseUserVarieties"
+                color="primary"
+                label="Wähle deine Beet-Sorten selbst aus"
+                right-label
+              >
+              </q-toggle>
             </q-form>
           </q-card-section>
           <q-card-actions align="right">
@@ -141,16 +150,35 @@ const form = ref({
   userVarieties: []
 })
 
+const toggleChooseUserVarieties = ref(false)
 const plantBeds = ref()
 
 const requiredRule = (val) => (val && val.length > 0) || 'Bitte gib einen Namen ein'
 
+function chooseAllVarieties() {
+  const userVarieties = []
+  for (let i = 0; i < plantsStore.state.plantVarieties.length; i++) {
+    userVarieties.push(plantsStore.state.plantVarieties[i].id)
+  }
+  return userVarieties //array mit IDs von alles ausgewählten Sorten
+}
+
 async function addNewBedplan() {
+  if (toggleChooseUserVarieties.value === true) {
+    //todo: Nutze seine Sorten auswählen lassen
+    //chooseUserVarieties([IDs der ausgewählten Sorten])
+    chooseAllVarieties()
+  } else {
+    //User möchte ALLE Sorten aus der Datenbank im Beetplan nutzen
+    chooseAllVarieties()
+  }
+  const userVarieties = chooseAllVarieties()
+
   const newBedId = await plantBedsStore.addBedplan(
     userStore.state.currentUser.id,
     form.value.title,
     form.value.description,
-    plantsStore.plantVarieties //todo: userVarieties abfragen
+    userVarieties
   )
   console.log('neue Beet id ', newBedId)
   resetForm()
