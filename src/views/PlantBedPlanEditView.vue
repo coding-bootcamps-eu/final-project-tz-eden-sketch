@@ -134,16 +134,10 @@ const state = reactive({
     // { name: 'goodNeighbors', label: 'gute Nachbarn', field: 'goodNeighbors' },
     // { name: 'badNeighbors', label: 'schlechte Nachbarn', field: 'badNeighbors' }
   ],
-  // userVarieties: computed(() => {
-  //   return plantsStore.getAllVarieties
-  // }),
+  userVarieties: computed(() => {
+    return plantsStore.state.plantVarieties
+  }),
   rows: []
-  // currentTime: computed(() => {
-  //   return plantBedsStore.translateTime(
-  //     plantBedsStore.state.currentMonth,
-  //     plantBedsStore.state.currentPeriod
-  //   )
-  // })
 })
 
 // watch(
@@ -153,23 +147,23 @@ const state = reactive({
 //   }
 // )
 
-// function mapTableContent() {
-//   const rows = []
-//   for (let varietyItem of state.userVarieties) {
-//     // console.log(varietyItem)
-//     // const species = plantsStore.getSpecies(userVarieties[varietyItem].plantspeciesId)
-//     const row = {}
-//     row.name = varietyItem.name
-//     row.plantfamily = varietyItem.plantfamily
-//     row.plantspecies = varietyItem.name
-//     row.plantvariety = varietyItem.name
-//     row.nutrition = varietyItem.nutrition
-//     // row.goodNeighbors = species.goodNeighbors
-//     // row.badNeighbors = species.badNeighbors
-//     rows.push(row)
-//   }
-//   return rows
-// }
+function mapTableContent() {
+  const rows = []
+  for (let varietyItem of state.userVarieties) {
+    // console.log(varietyItem)
+    // const species = plantsStore.getSpecies(userVarieties[varietyItem].plantspeciesId)
+    const row = {}
+    row.name = varietyItem.name
+    row.plantfamily = varietyItem.plantfamily
+    row.plantspecies = varietyItem.name
+    row.plantvariety = varietyItem.name
+    row.nutrition = varietyItem.nutrition
+    // row.goodNeighbors = species.goodNeighbors
+    // row.badNeighbors = species.badNeighbors
+    rows.push(row)
+  }
+  return rows
+}
 
 // const currentBedSets = computed(() => {
 //   console.log(
@@ -195,6 +189,7 @@ const state = reactive({
 
 onBeforeMount(async () => {
   await plantBedsStore.loadBedplan(route.params.bedId)
+  mapTableContent()
 })
 </script>
 

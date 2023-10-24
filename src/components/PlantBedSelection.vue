@@ -125,10 +125,12 @@
 import { ref, onBeforeMount } from 'vue'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 import { useUserStore } from '@/stores/useUserStore'
+import { usePlantsStore } from '@/stores/usePlantsStore'
 import { useRouter } from 'vue-router'
 
 const plantBedsStore = usePlantBedsStore()
 const userStore = useUserStore()
+const plantsStore = usePlantsStore()
 const router = useRouter()
 
 const confirm = ref(false)
@@ -148,7 +150,7 @@ async function addNewBedplan() {
     userStore.state.currentUser.id,
     form.value.title,
     form.value.description,
-    [] //todo: userVarieties abfragen
+    plantsStore.plantVarieties //todo: userVarieties abfragen
   )
   console.log('neue Beet id ', newBedId)
   resetForm()
@@ -157,9 +159,7 @@ async function addNewBedplan() {
 
 async function loadPlantbeds() {
   const userId = localStorage.getItem('edenSketchUserId')
-  console.log('userId', userId)
   const URL = `http://localhost:3000/users/${userId}?_embed=bedplans` //todo: besser aus userStore holen??
-  console.log(URL)
   const resp = await fetch(URL)
   const data = await resp.json()
   return data.bedplans
