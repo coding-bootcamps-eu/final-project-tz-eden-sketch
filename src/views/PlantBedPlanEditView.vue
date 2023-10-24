@@ -194,7 +194,7 @@ function addVarietyToBed(bedNumber, startColum) {
   let newSets = state.selected
   for (let i = 0; i < newSets.length; i++) {
     if (
-      plantBedsStore.checkAddSetPossible(
+      plantBedsStore.checkIfAddSetPossible(
         bedNumber,
         plantBedsStore.currentMonth,
         plantBedsStore.currentPeriod,

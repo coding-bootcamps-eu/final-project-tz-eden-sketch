@@ -44,6 +44,39 @@ export const usePlantBedsStore = defineStore('beds', () => {
     } else if (period === 'ende') {
       translation = timeDictionary[month][2]
     }
+    return translation
+  }
+
+  function translateTimeBack(time) {
+    const translation = {
+      month: '',
+      period: ''
+    }
+
+    const timeDictionary = {
+      januar: [1, 2, 3],
+      februar: [4, 5, 6],
+      märz: [7, 8, 9],
+      april: [10, 11, 12],
+      mai: [13, 14, 15],
+      juni: [16, 17, 18],
+      juli: [19, 20, 21],
+      august: [22, 23, 24],
+      september: [25, 26, 27],
+      oktober: [28, 29, 30],
+      november: [31, 32, 33],
+      dezember: [34, 35, 36]
+    }
+    const periods = ['anfang', 'mitte', 'ende']
+
+    // const month= time/3
+
+    translation.month = Object.keys(timeDictionary).find((key) => timeDictionary[key] === time)
+    console.log(Object.keys(timeDictionary))
+    console.log(translation)
+    console.log(translation.month)
+    console.log(time)
+    translation.period = periods[timeDictionary[translation.month].indexOf(time)]
 
     return translation
   }
@@ -164,7 +197,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
     await resp.json()
   }
 
-  function checkAddSetPossible(
+  function checkIfAddSetPossible(
     bedNumber,
     month,
     period,
@@ -173,7 +206,15 @@ export const usePlantBedsStore = defineStore('beds', () => {
     cultureDurationIntern,
     rowDistance
   ) {
-    //todo: Validation here!!!
+    const start = translateTime(month, period)
+    const end = start + cultureDurationIntern
+
+    const relevantBeds = []
+
+    for (let i = start; i < end; i++) {
+      calculateBedState(bedNumber, month, period)
+    }
+
     return true
   }
 
@@ -218,11 +259,12 @@ export const usePlantBedsStore = defineStore('beds', () => {
     state,
     loadBedplan,
     currentTime,
+    translateTimeBack,
     calculateBedState,
     translateTime,
     addBedplan,
     deleteBedplan,
-    checkAddSetPossible,
+    checkIfAddSetPossible,
     addSet,
     calculateStartColumsInBed,
     getRandomInt //todo: später löschen
