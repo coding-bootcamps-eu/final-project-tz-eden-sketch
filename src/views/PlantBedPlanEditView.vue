@@ -28,11 +28,13 @@
             :filter="state.filter"
             grid
             hide-header
+            rows-per-page-label="Sorten pro Seite"
+            :rows-per-page-options="[0, 5, 10, 25, 50]"
           >
             <!-- grid
             hide-header-->
             <template v-slot:top-right>
-              <q-input borderless dense debounce="300" v-model="filter" placeholder="Suche">
+              <q-input borderless dense debounce="300" v-model="state.filter" placeholder="Suche">
                 <template v-slot:append>
                   <q-icon name="search" />
                 </template>
