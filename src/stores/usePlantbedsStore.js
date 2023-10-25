@@ -221,7 +221,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
         translateTimeBack(i).month,
         translateTimeBack(i).period
       )[0]
-      if (isSpaceInBedForSet(relevantBed, startColum, rowDistance)) {
+      if (isSpaceInBedForSet(relevantBed, startColum, translateRowDistance(rowDistance))) {
         //es ist von Aussaat bis Ernte Platz im Beet
         addSetIsPossible = true
       } else {
@@ -279,7 +279,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
   ) {
     const startColums = []
 
-    for (let i = 0; i < 24 - rowDistance; i++) {
+    for (let i = 0; i < 24 - translateRowDistance(rowDistance); i++) {
       if (
         checkIfAddSetPossible(
           bedNumber,
