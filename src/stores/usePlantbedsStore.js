@@ -210,13 +210,42 @@ export const usePlantBedsStore = defineStore('beds', () => {
     const start = translateTime(month, period)
     const end = start + cultureDurationIntern
 
-    const relevantBeds = []
+    let addSetIsPossible = false
 
-    for (let i = start; i < end; i++) {
-      calculateBedState(bedNumber, month, period)
+    //alle relevanten Beete berechnen
+    // const relevantBeds = []
+    for (let i = start; i < end + 1; i++) {
+      //todo: prüfen: mit +1 richtig?
+      const relevantBed = calculateBedState(
+        bedNumber,
+        translateTimeBack(i).month,
+        translateTimeBack(i).period
+      )[0]
+      if (isSpaceInBedForSet(relevantBed, startColum, rowDistance)) {
+        //es ist von Aussaat bis Ernte Platz im Beet
+        addSetIsPossible = true
+      } else {
+        addSetIsPossible = false
+        return (addSetIsPossible = true)
+      }
     }
 
-    return true
+    return addSetIsPossible
+  }
+
+  function isSpaceInBedForSet(bedArray, startColum, neededColums) {
+    let isSpace = false
+
+    for (let i = startColum; i < neededColums + 1; i++) {
+      //todo: prüfen: +1 richtig??
+      if (bedArray[i] === 'frei') {
+        isSpace = true
+      } else {
+        isSpace = false
+        return isSpace
+      }
+    }
+    return isSpace
   }
 
   function addSet(bedNumber, month, period, varietyId, startColum, cultureDuration, rowDistance) {
@@ -231,7 +260,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
       neededColums: translateRowDistance(rowDistance)
     }
     bed.sets.push(newSet)
-    //an API updaten
+    //todo: an API updaten
   }
 
   function getRandomInt(min, max) {
@@ -245,14 +274,27 @@ export const usePlantBedsStore = defineStore('beds', () => {
     month,
     period,
     varietyId,
-    cultureDuration,
+    cultureDurationIntern,
     rowDistance
   ) {
     const startColums = []
 
-    startColums[0] = getRandomInt(0, 25) //todo: richtig prüfen!!
-    startColums[1] = getRandomInt(0, 25)
-    startColums[3] = getRandomInt(0, 25)
+    for (let i = 0; i < 24 - rowDistance; i++) {
+      if (
+        checkIfAddSetPossible(
+          bedNumber,
+          month,
+          period,
+          varietyId,
+          i,
+          cultureDurationIntern,
+          rowDistance
+        )
+      ) {
+        startColums.push(i)
+      }
+    }
+
     return startColums
   }
 
@@ -267,6 +309,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
     deleteBedplan,
     checkIfAddSetPossible,
     addSet,
+    isSpaceInBedForSet,
     calculateStartColumsInBed,
     getRandomInt //todo: später löschen
   }
