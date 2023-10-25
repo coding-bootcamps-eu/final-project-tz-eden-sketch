@@ -47,72 +47,6 @@ export const usePlantBedsStore = defineStore('beds', () => {
     return translation
   }
 
-  // function translateTimeBack(time) {
-  //   const translation = {
-  //     month: '',
-  //     period: ''
-  //   }
-
-  //   const monthDict = [
-  //     'januar',
-  //     'februar',
-  //     'märz',
-  //     'april',
-  //     'mai',
-  //     'juni',
-  //     'juli',
-  //     'august',
-  //     'september',
-  //     'oktober',
-  //     'november',
-  //     'dezember'
-  //   ]
-  //   //   1: 'januar',
-  //   //   2: 'februar',
-  //   //   3: 'märz',
-  //   //   4: 'april',
-  //   //   5: 'mai',
-  //   //   6: 'juni',
-  //   //   7: 'juli',
-  //   //   8: 'august',
-  //   //   9: 'september',
-  //   //   10: 'oktober',
-  //   //   11: 'november',
-  //   //   12: 'dezember'
-  //   // }
-  //   const periods = ['anfang', 'mitte', 'ende']
-
-  //   let monthInteger = Math.trunc(time / 3)
-  //   translation.month = monthDict[monthInteger - 1]
-  //   translation.period=periods[time%3]
-
-  //   // const timeDictionary = {
-  //   //   januar: [1, 2, 3],
-  //   //   februar: [4, 5, 6],
-  //   //   märz: [7, 8, 9],
-  //   //   april: [10, 11, 12],
-  //   //   mai: [13, 14, 15],
-  //   //   juni: [16, 17, 18],
-  //   //   juli: [19, 20, 21],
-  //   //   august: [22, 23, 24],
-  //   //   september: [25, 26, 27],
-  //   //   oktober: [28, 29, 30],
-  //   //   november: [31, 32, 33],
-  //   //   dezember: [34, 35, 36]
-  //   // }
-
-  //   // // const month= time/3
-
-  //   // translation.month = Object.keys(timeDictionary).find((key) => timeDictionary[key] === time)
-  //   // console.log(Object.keys(timeDictionary))
-  //   // console.log(translation)
-  //   // console.log(translation.month)
-  //   // console.log(time)
-  //   // translation.period = periods[timeDictionary[translation.month].indexOf(time)]
-
-  //   return translation
-  // }
-
   function translateTimeBack(time) {
     const translation = {
       month: '',
@@ -138,19 +72,14 @@ export const usePlantBedsStore = defineStore('beds', () => {
 
     let monthInteger = Math.trunc(time / 3)
     if (time % 3 > 0) {
-      translation.month = monthDict[monthInteger + 1]
-    } else {
       translation.month = monthDict[monthInteger]
+    } else {
+      //Modulo=0
+      translation.month = monthDict[monthInteger - 1]
     }
     translation.period = periods[time % 3]
 
     return translation
-  }
-
-  function output() {
-    for (let i = 1; i < 37; i++) {
-      console.log(i, ': ', translateTimeBack(i))
-    }
   }
 
   function translateRowDistance(rowDistance) {
