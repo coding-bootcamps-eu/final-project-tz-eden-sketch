@@ -8,9 +8,6 @@
       Beetplan: {{ plantBedsStore.state.currentBedplan.beds }}
     </pre></p> -->
 
-    <h2>Beet 1</h2>
-    <p>noch freie Spalten: {{ plantBedsStore.spaceLeftInCurrentBed[0] }}</p>
-
     <!-- <pre>{{
       plantBedsStore.calculateBedState(
         1,
@@ -18,8 +15,12 @@
         plantBedsStore.state.currentPeriod
       )
     }}</pre> -->
-    <AddSetToBed :bedNumber="1"></AddSetToBed>
-    <PlantBed />
+    <section>
+      <h2>Beet 1</h2>
+      <p>noch freie Spalten: {{ plantBedsStore.spaceLeftInCurrentBed[0] }}</p>
+      <AddSetToBed :bedNumber="1"></AddSetToBed>
+      <PlantBed :bedNumber="1" />
+    </section>
   </main>
   <nav class="view__nav">
     <SiteNavigation></SiteNavigation>
