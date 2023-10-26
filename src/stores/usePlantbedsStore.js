@@ -7,6 +7,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
     currentPeriod: 'anfang',
 
     currentBedplan: { beds: [] }, //leeres Object
+    freeColumsLeft: [],
 
     lastSetId: 0 //todo: bessere ID für sets
   })
@@ -19,6 +20,24 @@ export const usePlantBedsStore = defineStore('beds', () => {
 
   const currentTime = computed(() => {
     return translateTime(state.currentMonth, state.currentPeriod)
+  })
+
+  const spaceLeftInCurrentBed = computed(() => {
+    const countArray = []
+    for (let b = 1; b < state.currentBedplan.beds.length + 1; b++) {
+      let currentBed = calculateBedState(b, state.currentMonth, state.currentPeriod)[0]
+      let count = 0
+
+      for (let i = 0; i < currentBed.length; i++) {
+        if (currentBed[i] === 'frei') {
+          count = count + 1
+        }
+      }
+      countArray.push(count)
+    }
+    // state.freeColumsLeft = countArray
+    // console.log(state.freeColumsLeft)
+    return countArray
   })
 
   function translateTime(month, period) {
@@ -44,6 +63,40 @@ export const usePlantBedsStore = defineStore('beds', () => {
     } else if (period === 'ende') {
       translation = timeDictionary[month][2]
     }
+    return translation
+  }
+
+  function translateTimeBack(time) {
+    const translation = {
+      month: '',
+      period: ''
+    }
+
+    const monthDict = [
+      'januar',
+      'februar',
+      'märz',
+      'april',
+      'mai',
+      'juni',
+      'juli',
+      'august',
+      'september',
+      'oktober',
+      'november',
+      'dezember'
+    ]
+
+    const periods = ['ende', 'anfang', 'mitte']
+
+    let monthInteger = Math.trunc(time / 3)
+    if (time % 3 > 0) {
+      translation.month = monthDict[monthInteger]
+    } else {
+      //Modulo=0
+      translation.month = monthDict[monthInteger - 1]
+    }
+    translation.period = periods[time % 3]
 
     return translation
   }
@@ -164,7 +217,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
     await resp.json()
   }
 
-  function checkAddSetPossible(
+  function checkIfAddSetPossible(
     bedNumber,
     month,
     period,
@@ -173,8 +226,45 @@ export const usePlantBedsStore = defineStore('beds', () => {
     cultureDurationIntern,
     rowDistance
   ) {
-    //todo: Validation here!!!
-    return true
+    const start = translateTime(month, period)
+    const end = start + cultureDurationIntern
+
+    let addSetIsPossible = false
+
+    //alle relevanten Beete berechnen
+    // const relevantBeds = []
+    for (let i = start; i < end + 1; i++) {
+      //todo: prüfen: mit +1 richtig?
+      const relevantBed = calculateBedState(
+        bedNumber,
+        translateTimeBack(i).month,
+        translateTimeBack(i).period
+      )[0]
+      if (isSpaceInBedForSet(relevantBed, startColum, translateRowDistance(rowDistance))) {
+        //es ist von Aussaat bis Ernte Platz im Beet
+        addSetIsPossible = true
+      } else {
+        addSetIsPossible = false
+        return addSetIsPossible
+      }
+    }
+
+    return addSetIsPossible
+  }
+
+  function isSpaceInBedForSet(bedArray, startColum, neededColums) {
+    let isSpace = false
+
+    for (let i = startColum; i < neededColums + 1; i++) {
+      //todo: prüfen: +1 richtig??
+      if (bedArray[i] === 'frei') {
+        isSpace = true
+      } else {
+        isSpace = false
+        return isSpace
+      }
+    }
+    return isSpace
   }
 
   function addSet(bedNumber, month, period, varietyId, startColum, cultureDuration, rowDistance) {
@@ -189,7 +279,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
       neededColums: translateRowDistance(rowDistance)
     }
     bed.sets.push(newSet)
-    //an API updaten
+    //todo: an API updaten
   }
 
   function getRandomInt(min, max) {
@@ -203,27 +293,43 @@ export const usePlantBedsStore = defineStore('beds', () => {
     month,
     period,
     varietyId,
-    cultureDuration,
+    cultureDurationIntern,
     rowDistance
   ) {
     const startColums = []
 
-    startColums[0] = getRandomInt(0, 25) //todo: richtig prüfen!!
-    startColums[1] = getRandomInt(0, 25)
-    startColums[3] = getRandomInt(0, 25)
+    for (let i = 0; i < 24; i++) {
+      if (
+        checkIfAddSetPossible(
+          bedNumber,
+          month,
+          period,
+          varietyId,
+          i,
+          cultureDurationIntern,
+          rowDistance
+        )
+      ) {
+        startColums.push(i)
+      }
+    }
+
     return startColums
   }
 
   return {
     state,
     loadBedplan,
+    spaceLeftInCurrentBed,
     currentTime,
+    translateTimeBack,
     calculateBedState,
     translateTime,
     addBedplan,
     deleteBedplan,
-    checkAddSetPossible,
+    checkIfAddSetPossible,
     addSet,
+    isSpaceInBedForSet,
     calculateStartColumsInBed,
     getRandomInt //todo: später löschen
   }

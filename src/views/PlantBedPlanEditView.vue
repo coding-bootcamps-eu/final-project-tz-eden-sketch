@@ -9,6 +9,7 @@
     </pre></p> -->
 
     <h2>Beet 1</h2>
+    <p>noch freie Spalten: {{ plantBedsStore.spaceLeftInCurrentBed[0] }}</p>
     <q-btn class="btn-add" color="primary" icon="add" @click="state.openAddPlant = true" />
 
     <q-dialog maximized class="popup-plant add-plants__card" v-model="state.openAddPlant">
@@ -82,7 +83,7 @@
             label="Sorte einpflanzen"
             color="primary"
             v-close-popup
-            @click="addVarietyToBed(1, plantBedsStore.calculateStartColumsInBed()[0])"
+            @click="addVarietyToBed(1)"
           />
         </q-card-actions>
       </q-card>
@@ -109,7 +110,7 @@
         <div class="set-image"></div>
         <p>{{ set.plantvarietiesId }}</p>
         <p>
-          {{ plantsStore.getVariety('22fa677e-a15f-4eeb-94ad-373f2499a0e8')[0].name }}
+          {{ plantsStore.getVariety(set.plantvarietiesId)[0].name }}
         </p>
         <!-- <p>{{ set.plantvarietiesId }}</p> -->
       </div>
@@ -190,14 +191,24 @@ async function mapTableContent() {
   return rows
 }
 
-function addVarietyToBed(bedNumber, startColum) {
+function addVarietyToBed(bedNumber) {
   let newSets = state.selected
   for (let i = 0; i < newSets.length; i++) {
+    //wähle erste verfügbare Position um Set in Beet einzupflanzen
+    const startColum = plantBedsStore.calculateStartColumsInBed(
+      bedNumber,
+      plantBedsStore.state.currentMonth,
+      plantBedsStore.state.currentPeriod,
+      newSets[i].varietyId,
+      newSets[i].cultureDurationIntern,
+      newSets[i].rowDistance
+    )[0]
+
     if (
-      plantBedsStore.checkAddSetPossible(
+      plantBedsStore.checkIfAddSetPossible(
         bedNumber,
-        plantBedsStore.currentMonth,
-        plantBedsStore.currentPeriod,
+        plantBedsStore.state.currentMonth,
+        plantBedsStore.state.currentPeriod,
         newSets[i].varietyId,
         startColum,
         newSets[i].cultureDurationIntern,
@@ -209,8 +220,8 @@ function addVarietyToBed(bedNumber, startColum) {
 
       plantBedsStore.addSet(
         bedNumber,
-        plantBedsStore.currentMonth,
-        plantBedsStore.currentPeriod,
+        plantBedsStore.state.currentMonth,
+        plantBedsStore.state.currentPeriod,
         newSets[i].varietyId,
         startColum,
         newSets[i].cultureDurationIntern,
