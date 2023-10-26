@@ -15,9 +15,20 @@
     <q-dialog maximized class="popup-plant add-plants__card" v-model="state.openAddPlant">
       <!-- 'full-width' für desktop, 'maximized' für mobile-->
       <q-card>
-        <q-card-section>
+        <q-toolbar class="bg-primary text-white">
           <div class="text-h6">Wähle deine Sorten aus:</div>
-        </q-card-section>
+          <q-space></q-space>
+          <q-card-actions align="right">
+            <q-btn
+              flat
+              label="Sorte einpflanzen"
+              color="primary bg-secondary"
+              v-close-popup
+              @click="addVarietyToBed(1)"
+            />
+            <q-btn flat icon="close" color="white" class="bg-secondary" v-close-popup />
+          </q-card-actions>
+        </q-toolbar>
 
         <q-card-section class="user-species-list">
           <q-table
@@ -27,8 +38,6 @@
             selection="multiple"
             v-model:selected="state.selected"
             :filter="state.filter"
-            grid
-            hide-header
             rows-per-page-label="Sorten pro Seite"
             :rows-per-page-options="[0, 5, 10, 25, 50]"
           >
@@ -142,7 +151,9 @@ const state = reactive({
     { name: 'plantspecies', align: 'center', label: 'Art', field: 'plantspecies', sortable: true },
     { name: 'plantfamily', label: 'Pflanzenfamilie', field: 'plantfamily', sortable: true },
     { name: 'plantvariety', label: 'Sorte', field: 'plantvariety' },
-    { name: 'nutrition', label: 'Nährstoffbedarf', field: 'nutrition' }
+    { name: 'nutrition', label: 'Nährstoffbedarf', field: 'nutrition' },
+    { name: 'rowDistance', label: 'Reihenabstand', field: 'rowDistance' },
+    { name: 'cultureDurationIntern', label: 'Kulturdauer INTERN', field: 'cultureDurationIntern' } //todo: später durch cultureDuration ersetzen
     // { name: 'goodNeighbors', label: 'gute Nachbarn', field: 'goodNeighbors' },
     // { name: 'badNeighbors', label: 'schlechte Nachbarn', field: 'badNeighbors' }
   ],
