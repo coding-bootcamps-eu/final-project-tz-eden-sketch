@@ -7,6 +7,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
     currentPeriod: 'anfang',
 
     currentBedplan: { beds: [] }, //leeres Object
+    freeColumsLeft: [],
 
     lastSetId: 0 //todo: bessere ID für sets
   })
@@ -19,6 +20,24 @@ export const usePlantBedsStore = defineStore('beds', () => {
 
   const currentTime = computed(() => {
     return translateTime(state.currentMonth, state.currentPeriod)
+  })
+
+  const spaceLeftInCurrentBed = computed(() => {
+    const countArray = []
+    for (let b = 1; b < state.currentBedplan.beds.length + 1; b++) {
+      let currentBed = calculateBedState(b, state.currentMonth, state.currentPeriod)[0]
+      let count = 0
+
+      for (let i = 0; i < currentBed.length; i++) {
+        if (currentBed[i] === 'frei') {
+          count = count + 1
+        }
+      }
+      countArray.push(count)
+    }
+    // state.freeColumsLeft = countArray
+    // console.log(state.freeColumsLeft)
+    return countArray
   })
 
   function translateTime(month, period) {
@@ -226,7 +245,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
         addSetIsPossible = true
       } else {
         addSetIsPossible = false
-        return (addSetIsPossible = true)
+        return addSetIsPossible
       }
     }
 
@@ -279,7 +298,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
   ) {
     const startColums = []
 
-    for (let i = 0; i < 24 - translateRowDistance(rowDistance); i++) {
+    for (let i = 0; i < 24; i++) {
       if (
         checkIfAddSetPossible(
           bedNumber,
@@ -301,6 +320,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
   return {
     state,
     loadBedplan,
+    spaceLeftInCurrentBed,
     currentTime,
     translateTimeBack,
     calculateBedState,
