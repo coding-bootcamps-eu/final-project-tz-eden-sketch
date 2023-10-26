@@ -122,15 +122,11 @@ async function mapTableContent() {
 
   for (let i = 0; i < plantBedsStore.state.currentBedplan.userVarieties.length; i++) {
     const currentUserVarietyId = plantBedsStore.state.currentBedplan.userVarieties[i]
-    // console.log(plantBedsStore.getVariety(currentUserVarietyId)[0])
 
     const URL = `http://localhost:3000/plantvarieties/${currentUserVarietyId}?_embed=plantspeciesId` //todo: besser aus userStore holen??
     const resp = await fetch(URL)
     const currentUserVariety = await resp.json()
 
-    //const currentUserVariety = await plantBedsStore.getVariety(currentUserVarietyId)[0]
-    // const species = plantsStore.getSpecies(userVarieties[varietyItem].plantspeciesId)
-    // console.log('currentUserVariety ', currentUserVariety)
     const row = {}
     row.name = currentUserVariety.name
     row.plantfamily = currentUserVariety.plantfamily
@@ -148,7 +144,7 @@ async function mapTableContent() {
 
     rows.push(row)
   }
-  //console.log('alle rows ', rows)
+
   return rows
 }
 
