@@ -210,6 +210,7 @@ function calc() {
 <style scoped>
 .landingpage {
   border: solid red 1px;
+  max-height: 100vh;
   /* min-height: 100vh; */
   /* display: flex;
   flex-direction: column;
@@ -233,8 +234,8 @@ svg {
 
 .path {
   /* stroke-dasharray: 4000;
-  stroke-dashoffset: 4000; */
-  /* animation: dash 5s alternate infinite; */
+  stroke-dashoffset: 4000;
+  animation: dash 5s alternate infinite; */
   /* animation: dash 7s linear forwards; */
   /*linear forwards;*/
 }
