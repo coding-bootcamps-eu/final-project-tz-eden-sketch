@@ -25,8 +25,21 @@
         <button class="todo-btn btn">
           <q-icon class="todo-icon" name="svguse:/icons.svg#gloves"></q-icon>
         </button>
+        <button class="harvest-btn btn">
+          <q-icon
+            class="harvest-icon"
+            name="bi-basket"
+            size="3ch"
+            @click="plantBedsStore.harvestSet(set.id, props.bedNumber)"
+          ></q-icon>
+        </button>
         <button class="delete-btn btn">
-          <q-icon class="delete-icon" name="delete" size="3ch"></q-icon>
+          <q-icon
+            class="delete-icon"
+            name="delete"
+            size="3ch"
+            @click="plantBedsStore.deleteSet(set.id, props.bedNumber)"
+          ></q-icon>
         </button>
       </div>
       <!-- <p>{{ set.plantvarietiesId }}</p> -->
@@ -104,12 +117,14 @@ function loadImage(imageName) {
 }
 
 .todo-icon,
+.harvest-icon,
 .delete-icon {
   width: 1.75rem;
   height: 1.75rem;
   color: var(--clr-dark);
 }
 .todo-icon:hover,
+.harvest-icon:hover,
 .delete-icon:hover {
   color: var(--clr-primary);
 }
