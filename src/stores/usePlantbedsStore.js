@@ -1,5 +1,6 @@
 import { reactive, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { nanoid } from 'nanoid'
 
 export const usePlantBedsStore = defineStore('beds', () => {
   const state = reactive({
@@ -271,13 +272,14 @@ export const usePlantBedsStore = defineStore('beds', () => {
     const bed = state.currentBedplan.beds.filter((bedItem) => bedItem.bedNumber === bedNumber)[0]
 
     const newSet = {
-      id: state.lastSetId + 1, //todo: bessere ID
+      id: nanoid(),
       plantvarietiesId: varietyId,
       startColum: startColum,
       startTime: translateTime(month, period),
       cultureDuration: cultureDuration,
       neededColums: translateRowDistance(rowDistance)
     }
+    console.log('newSet: ', newSet)
     bed.sets.push(newSet)
     //todo: an API updaten
   }
