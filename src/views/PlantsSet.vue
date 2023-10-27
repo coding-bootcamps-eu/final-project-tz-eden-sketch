@@ -3,12 +3,8 @@
 import { usePlantsStore } from '@/stores/usePlantsStore'
 const plantsStore = usePlantsStore()
 
-console.log('Länge plantSpecies: ', plantsStore.state.plantSpecies.length)
-console.log('Länge plantVarieties: ', plantsStore.state.plantVarieties.length)
-
 function setSpecies() {
   for (let speciesItem of species) {
-    // console.log(speciesItem)
     plantsStore.setSpecies(
       speciesItem.name,
       speciesItem.botanicname,

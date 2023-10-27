@@ -8,18 +8,22 @@
       Beetplan: {{ plantBedsStore.state.currentBedplan.beds }}
     </pre></p> -->
 
-    <!-- <pre>{{
-      plantBedsStore.calculateBedState(
-        1,
-        plantBedsStore.state.currentMonth,
-        plantBedsStore.state.currentPeriod
-      )
-    }}</pre> -->
     <section>
       <h2>Beet 1</h2>
       <p>noch freie Spalten: {{ plantBedsStore.spaceLeftInCurrentBed[0] }}</p>
       <AddSetToBed :bedNumber="1"></AddSetToBed>
-      <PlantBed :bedNumber="1" />
+
+      <div class="test">
+        <pre>{{
+          plantBedsStore.calculateBedState(
+            1,
+            plantBedsStore.state.currentMonth,
+            plantBedsStore.state.currentPeriod
+          )
+        }}</pre>
+
+        <PlantBed :bedNumber="1" />
+      </div>
     </section>
   </main>
   <nav class="view__nav">
@@ -30,8 +34,8 @@
 <script setup>
 import PlantBedNavigation from '../components/PlantBedNavigation.vue'
 import SiteNavigation from '@/components/SiteNavigation.vue'
-import { computed, reactive, onBeforeMount } from 'vue'
-import { usePlantsStore } from '@/stores/usePlantsStore'
+import { onBeforeMount } from 'vue'
+// import { usePlantsStore } from '@/stores/usePlantsStore'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 import PlantBed from '@/components/PlantBed.vue'
 import AddSetToBed from '@/components/AddSetToBed.vue'
@@ -40,11 +44,15 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 
 const plantBedsStore = usePlantBedsStore()
-const plantsStore = usePlantsStore()
+// const plantsStore = usePlantsStore()
 
 onBeforeMount(async () => {
   await plantBedsStore.loadBedplan(route.params.bedId)
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.test {
+  display: flex;
+}
+</style>

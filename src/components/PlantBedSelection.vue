@@ -180,7 +180,7 @@ async function addNewBedplan() {
     form.value.description,
     userVarieties
   )
-  console.log('neue Beet id ', newBedId)
+
   resetForm()
   router.push({ name: 'plantbed-edit', params: { bedId: newBedId } })
 }

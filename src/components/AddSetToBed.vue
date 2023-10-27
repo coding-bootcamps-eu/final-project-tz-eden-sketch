@@ -90,11 +90,11 @@
 
 <script setup>
 import { reactive, onUpdated } from 'vue'
-import { usePlantsStore } from '@/stores/usePlantsStore'
+// import { usePlantsStore } from '@/stores/usePlantsStore'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 
 const plantBedsStore = usePlantBedsStore()
-const plantsStore = usePlantsStore()
+// const plantsStore = usePlantsStore()
 
 const props = defineProps({
   bedNumber: Number
@@ -159,28 +159,32 @@ function addVarietyToBed() {
       newSets[i].varietyId,
       newSets[i].cultureDurationIntern,
       newSets[i].rowDistance
-    )[0]
+    )
 
-    if (
-      plantBedsStore.checkIfAddSetPossible(
-        props.bedNumber,
-        plantBedsStore.state.currentMonth,
-        plantBedsStore.state.currentPeriod,
-        newSets[i].varietyId,
-        startColum,
-        newSets[i].cultureDurationIntern,
-        newSets[i].rowDistance
-      )
-    ) {
+    if (startColum.length === 0) {
+      console.log('kein platz mehr im Beet')
+      break
+    }
+
+    const checkAddSetPossible = plantBedsStore.checkIfAddSetPossible(
+      props.bedNumber,
+      plantBedsStore.state.currentMonth,
+      plantBedsStore.state.currentPeriod,
+      newSets[i].varietyId,
+      startColum[0],
+      newSets[i].cultureDurationIntern,
+      newSets[i].rowDistance
+    )
+
+    if (checkAddSetPossible.value) {
       //Satz kann ins Beet eingepflanzt werden
-      console.log('newSet: ', i)
 
       plantBedsStore.addSet(
         props.bedNumber,
         plantBedsStore.state.currentMonth,
         plantBedsStore.state.currentPeriod,
         newSets[i].varietyId,
-        startColum,
+        startColum[0],
         newSets[i].cultureDurationIntern,
         newSets[i].rowDistance
       )
@@ -188,6 +192,7 @@ function addVarietyToBed() {
       //Satz kann nicht eingepflanzt werden
       //todo: Nutzer Feedback geben
       console.log('Sorte kann nicht eingepflanzt werden')
+      console.log(checkAddSetPossible.type, ': ', checkAddSetPossible.message)
     }
   }
   state.selected = []

@@ -41,6 +41,11 @@
             @click="plantBedsStore.deleteSet(set.id, props.bedNumber)"
           ></q-icon>
         </button>
+        <span
+          >start: {{ set.startColum }},<br />
+          Ende: {{ set.startColum + set.neededColums }},<br />
+          Spalten: {{ set.neededColums }}
+        </span>
       </div>
       <!-- <p>{{ set.plantvarietiesId }}</p> -->
       <!-- <p>
@@ -52,7 +57,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+// import { computed } from 'vue'
 import { usePlantsStore } from '@/stores/usePlantsStore'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 
@@ -75,8 +80,8 @@ function loadImage(imageName) {
 <style scoped>
 .bed {
   margin: 0 auto;
-  width: 200px;
-  aspect-ratio: 1.2/2.5;
+  width: 600px; /*200px;*/
+  /* aspect-ratio: 1.2/2.5; */
   background-color: var(--clr-dark);
   border-radius: 5px;
   padding: 0.5rem;
@@ -86,8 +91,8 @@ function loadImage(imageName) {
   gap: 0.25rem;
 }
 .set {
-  --neededColums: 4;
-  --startColum: 3;
+  --neededColums: 0;
+  --startColum: 0;
   height: 100%;
   background-color: var(--clr-info);
   grid-column: var(--startColum) / span var(--neededColums);
