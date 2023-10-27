@@ -319,6 +319,24 @@ export const usePlantBedsStore = defineStore('beds', () => {
     return startColums
   }
 
+  function deleteSet(setId, bedNumber) {
+    for (let i = 0; i < state.currentBedplan.beds[bedNumber - 1].sets.length; i++) {
+      if (state.currentBedplan.beds[bedNumber - 1].sets[i].id === setId) {
+        state.currentBedplan.beds[bedNumber - 1].sets.splice(i, 1)
+      }
+    }
+  }
+
+  function harvestSet(setId, bedNumber) {
+    for (let i = 0; i < state.currentBedplan.beds[bedNumber - 1].sets.length; i++) {
+      if (state.currentBedplan.beds[bedNumber - 1].sets[i].id === setId) {
+        const newCultureDuration =
+          this.currentTime - state.currentBedplan.beds[bedNumber - 1].sets[i].startTime
+        state.currentBedplan.beds[bedNumber - 1].sets[i].cultureDuration = newCultureDuration - 1
+      }
+    }
+  }
+
   return {
     state,
     loadBedplan,
@@ -333,6 +351,8 @@ export const usePlantBedsStore = defineStore('beds', () => {
     addSet,
     isSpaceInBedForSet,
     calculateStartColumsInBed,
-    getRandomInt //todo: später löschen
+    getRandomInt, //todo: später löschen,
+    deleteSet,
+    harvestSet
   }
 })
