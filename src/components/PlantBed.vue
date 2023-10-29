@@ -10,18 +10,19 @@
       class="set"
       :style="`--neededColums: ${set.neededColums}; --startColum:${set.startColum + 1}`"
     >
-      <!-- <q-tooltip class="bg-secondary text-black" anchor="center middle" self="center middle">
+      <q-tooltip class="bg-secondary text-black" anchor="center middle" self="center middle">
         <p>{{ plantsStore.getVariety(set.plantvarietiesId)[0].name }}</p>
-        <p></p>
-      </q-tooltip> -->
+        <p>{{ plantsStore.getVariety(set.plantvarietiesId)[0].species }}</p>
+      </q-tooltip>
 
       <div class="set-content-wrapper">
-        <div class="set-image">
+        <div class="image-wrapper">
           <img
             class="variety-image"
             :src="loadImage(plantsStore.getVariety(set.plantvarietiesId)[0].imagename)"
           />
         </div>
+
         <button class="todo-btn btn">
           <q-icon class="todo-icon" name="svguse:/icons.svg#gloves"></q-icon>
         </button>
@@ -41,6 +42,11 @@
             @click="plantBedsStore.deleteSet(set.id, props.bedNumber)"
           ></q-icon>
         </button>
+        <!-- <span
+          >start: {{ set.startColum }},<br />
+          Ende: {{ set.startColum + set.neededColums }},<br />
+          Spalten: {{ set.neededColums }}
+        </span> -->
       </div>
       <!-- <p>{{ set.plantvarietiesId }}</p> -->
       <!-- <p>
@@ -52,7 +58,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+// import { computed } from 'vue'
 import { usePlantsStore } from '@/stores/usePlantsStore'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 
@@ -86,8 +92,8 @@ function loadImage(imageName) {
   gap: 0.25rem;
 }
 .set {
-  --neededColums: 4;
-  --startColum: 3;
+  --neededColums: 0;
+  --startColum: 0;
   height: 100%;
   background-color: var(--clr-info);
   grid-column: var(--startColum) / span var(--neededColums);
@@ -103,7 +109,7 @@ function loadImage(imageName) {
   gap: 4rem;
   height: 100%;
 }
-.set-image {
+.image-wrapper {
   width: 100%;
   aspect-ratio: 1;
   border-radius: 50%;
@@ -113,7 +119,6 @@ function loadImage(imageName) {
 }
 .variety-image {
   object-fit: contain;
-  width: 2rem;
 }
 
 .todo-icon,

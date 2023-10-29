@@ -8,9 +8,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
     currentPeriod: 'anfang',
 
     currentBedplan: { beds: [] }, //leeres Object
-    freeColumsLeft: [],
-
-    lastSetId: 0 //todo: bessere ID für sets
+    freeColumsLeft: []
   })
 
   async function loadBedplan(bedId) {
@@ -37,7 +35,6 @@ export const usePlantBedsStore = defineStore('beds', () => {
       countArray.push(count)
     }
     // state.freeColumsLeft = countArray
-    // console.log(state.freeColumsLeft)
     return countArray
   })
 
@@ -218,68 +215,121 @@ export const usePlantBedsStore = defineStore('beds', () => {
     await resp.json()
   }
 
+  async function getVariety(id) {
+    //nicht außerhalb des stores erreichbar. nur für error message in checkIfAddSetPossible
+    const URL = `http://localhost:3000/plantvarieties/${id}`
+    const resp = await fetch(URL)
+    const data = await resp.json()
+
+    return data
+  }
+
   function checkIfAddSetPossible(
     bedNumber,
     month,
     period,
     varietyId,
-    startColum,
+    startColum0,
     cultureDurationIntern,
     rowDistance
   ) {
+    // console.log(
+    //   'checkIfAddSetPossible ',
+    //   bedNumber,
+    //   month,
+    //   period,
+    //   varietyId,
+    //   startColum0,
+    //   cultureDurationIntern,
+    //   rowDistance
+    // )
     const start = translateTime(month, period)
     const end = start + cultureDurationIntern
 
     let addSetIsPossible = false
 
+    let variety = varietyId
+    // let variety = ''
+    // if (getVariety(varietyId)) {
+    //   variety = variety.name + ' (' + variety.species + ') '
+    // } else {
+    //   variety = varietyId
+    // }
+
     //alle relevanten Beete berechnen
     // const relevantBeds = []
-    for (let i = start; i < end + 1; i++) {
+    for (let i = start; i < end; i++) {
       //todo: prüfen: mit +1 richtig?
-      const relevantBed = calculateBedState(
-        bedNumber,
-        translateTimeBack(i).month,
-        translateTimeBack(i).period
-      )[0]
-      if (isSpaceInBedForSet(relevantBed, startColum, translateRowDistance(rowDistance))) {
+      const month = translateTimeBack(i).month
+      const period = translateTimeBack(i).period
+
+      const relevantBed = calculateBedState(bedNumber, month, period)[0]
+
+      const isSpace = isSpaceInBedForSet(
+        relevantBed,
+        startColum0,
+        translateRowDistance(rowDistance)
+      )
+
+      if (isSpace.value) {
         //es ist von Aussaat bis Ernte Platz im Beet
         addSetIsPossible = true
       } else {
         addSetIsPossible = false
-        return addSetIsPossible
+        // console.log('variery: ', variety)
+        // console.log('isSpace: ', isSpace)
+        const time = translateTimeBack(i)
+
+        //todo: message gibt falsche zeit zurück und leider keine Spalten und andere Daten
+        let message =
+          'Leider kann die Sorte ' +
+          variety +
+          'nicht eingepflanzt / versetzt werden, weil ' +
+          i +
+          time.period +
+          time.month +
+          ' in Spalte ' +
+          isSpace.colum +
+          ' schon eine andere Sorte (' +
+          isSpace.otherVariety +
+          ') steht.'
+        // console.log('checkIfAddSetPossible', addSetIsPossible, message)
+        return { value: addSetIsPossible, type: 'error', message: message }
       }
     }
 
-    return addSetIsPossible
+    return { value: addSetIsPossible, type: 'ok', message: '' }
   }
 
-  function isSpaceInBedForSet(bedArray, startColum, neededColums) {
+  function isSpaceInBedForSet(bedArray, startColum0, neededColums) {
     let isSpace = false
 
-    for (let i = startColum; i < neededColums + 1; i++) {
+    for (let i = startColum0; i < startColum0 + neededColums; i++) {
       //todo: prüfen: +1 richtig??
       if (bedArray[i] === 'frei') {
         isSpace = true
       } else {
         isSpace = false
-        return isSpace
+        // console.log('isSpaceInBedForSet', bedArray, startColum0, neededColums)
+        // console.log('isSpaceInBedForSet', isSpace, i, bedArray[i])
+        return { value: isSpace, colum: i, otherVariety: bedArray[i] }
       }
     }
-    return isSpace
+    return { value: isSpace, colum: '', otherVariety: '' }
   }
 
-  function addSet(bedNumber, month, period, varietyId, startColum, cultureDuration, rowDistance) {
+  function addSet(bedNumber, month, period, varietyId, startColum0, cultureDuration, rowDistance) {
     const bed = state.currentBedplan.beds.filter((bedItem) => bedItem.bedNumber === bedNumber)[0]
 
     const newSet = {
       id: nanoid(),
       plantvarietiesId: varietyId,
-      startColum: startColum,
+      startColum: startColum0,
       startTime: translateTime(month, period),
       cultureDuration: cultureDuration,
       neededColums: translateRowDistance(rowDistance)
     }
-    console.log('newSet: ', newSet)
+
     bed.sets.push(newSet)
     //todo: an API updaten
   }
@@ -310,16 +360,26 @@ export const usePlantBedsStore = defineStore('beds', () => {
           i,
           cultureDurationIntern,
           rowDistance
-        )
+        ).value
       ) {
         startColums.push(i)
       }
     }
-
+    // console.log(
+    //   'calculateStartColumsInBed',
+    //   bedNumber,
+    //   month,
+    //   period,
+    //   varietyId,
+    //   cultureDurationIntern,
+    //   rowDistance
+    // )
+    // console.log(startColums)
     return startColums
   }
 
   function deleteSet(setId, bedNumber) {
+    //löscht das Set komplett aus dem Beetplan
     for (let i = 0; i < state.currentBedplan.beds[bedNumber - 1].sets.length; i++) {
       if (state.currentBedplan.beds[bedNumber - 1].sets[i].id === setId) {
         state.currentBedplan.beds[bedNumber - 1].sets.splice(i, 1)
@@ -328,6 +388,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
   }
 
   function harvestSet(setId, bedNumber) {
+    //löscht das Set ab dem ausgewählten Zeitpunkt aus dem Beetplan = verkürzt die Zeit im Beet
     for (let i = 0; i < state.currentBedplan.beds[bedNumber - 1].sets.length; i++) {
       if (state.currentBedplan.beds[bedNumber - 1].sets[i].id === setId) {
         const newCultureDuration =
@@ -353,6 +414,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
     calculateStartColumsInBed,
     getRandomInt, //todo: später löschen,
     deleteSet,
-    harvestSet
+    harvestSet,
+    getVariety
   }
 })

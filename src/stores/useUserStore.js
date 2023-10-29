@@ -18,7 +18,7 @@ export const useUserStore = defineStore('user', () => {
     })
     const data = await resp.json()
     let newId = data.id
-    console.log('neue User ID', newId)
+
     localStorage.setItem('edenSketchUserId', newId)
     return newId
   }
