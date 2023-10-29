@@ -13,17 +13,15 @@
       <p>noch freie Spalten: {{ plantBedsStore.spaceLeftInCurrentBed[0] }}</p>
       <AddSetToBed :bedNumber="1"></AddSetToBed>
 
-      <div class="test">
-        <pre>{{
+      <!-- <pre>{{
           plantBedsStore.calculateBedState(
             1,
             plantBedsStore.state.currentMonth,
             plantBedsStore.state.currentPeriod
           )
-        }}</pre>
+        }}</pre> -->
 
-        <PlantBed :bedNumber="1" />
-      </div>
+      <PlantBed :bedNumber="1" />
     </section>
   </main>
   <nav class="view__nav">
@@ -51,8 +49,4 @@ onBeforeMount(async () => {
 })
 </script>
 
-<style scoped>
-.test {
-  display: flex;
-}
-</style>
+<style scoped></style>

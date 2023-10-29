@@ -10,18 +10,19 @@
       class="set"
       :style="`--neededColums: ${set.neededColums}; --startColum:${set.startColum + 1}`"
     >
-      <!-- <q-tooltip class="bg-secondary text-black" anchor="center middle" self="center middle">
+      <q-tooltip class="bg-secondary text-black" anchor="center middle" self="center middle">
         <p>{{ plantsStore.getVariety(set.plantvarietiesId)[0].name }}</p>
-        <p></p>
-      </q-tooltip> -->
+        <p>{{ plantsStore.getVariety(set.plantvarietiesId)[0].species }}</p>
+      </q-tooltip>
 
       <div class="set-content-wrapper">
-        <div class="set-image">
+        <div class="image-wrapper">
           <img
             class="variety-image"
             :src="loadImage(plantsStore.getVariety(set.plantvarietiesId)[0].imagename)"
           />
         </div>
+
         <button class="todo-btn btn">
           <q-icon class="todo-icon" name="svguse:/icons.svg#gloves"></q-icon>
         </button>
@@ -41,11 +42,11 @@
             @click="plantBedsStore.deleteSet(set.id, props.bedNumber)"
           ></q-icon>
         </button>
-        <span
+        <!-- <span
           >start: {{ set.startColum }},<br />
           Ende: {{ set.startColum + set.neededColums }},<br />
           Spalten: {{ set.neededColums }}
-        </span>
+        </span> -->
       </div>
       <!-- <p>{{ set.plantvarietiesId }}</p> -->
       <!-- <p>
@@ -80,8 +81,8 @@ function loadImage(imageName) {
 <style scoped>
 .bed {
   margin: 0 auto;
-  width: 600px; /*200px;*/
-  /* aspect-ratio: 1.2/2.5; */
+  width: 200px;
+  aspect-ratio: 1.2/2.5;
   background-color: var(--clr-dark);
   border-radius: 5px;
   padding: 0.5rem;
@@ -108,7 +109,7 @@ function loadImage(imageName) {
   gap: 4rem;
   height: 100%;
 }
-.set-image {
+.image-wrapper {
   width: 100%;
   aspect-ratio: 1;
   border-radius: 50%;
@@ -118,7 +119,6 @@ function loadImage(imageName) {
 }
 .variety-image {
   object-fit: contain;
-  width: 2rem;
 }
 
 .todo-icon,

@@ -87,11 +87,8 @@
     </q-card>
   </q-dialog>
 
-  <InfoModal
-    :open="state.feedback.open"
-    :message="state.feedback.message"
-    :type="warning"
-  ></InfoModal>
+  <InfoModal :open="state.feedback.open" :message="state.feedback.message"></InfoModal>
+  <!-- :type="warning" -->
 </template>
 
 <script setup>
@@ -124,7 +121,7 @@ const state = reactive({
   rows: [],
 
   feedback: {
-    open: true,
+    open: false,
     variety: '',
     message: ''
   }
@@ -177,14 +174,16 @@ function addVarietyToBed() {
     if (startColum.length === 0) {
       console.log('kein platz mehr im Beet')
       state.feedback.variety = state.feedback.message =
-        'Der Satz den du einpflanzen möchtest hat leider keinen Platz im Beet bis zur Ernte. ' +
-        newSets[i].varietyId +
-        ' ' +
+        'Der Satz "' +
         newSets[i].name +
-        ' ' +
-        newSets[i]
+        '" (' +
+        newSets[i].varietyId +
+        ') den du einpflanzen möchtest hat leider keinen Platz im Beet bis zur Ernte. '
 
       state.feedback.open = true
+      setTimeout(() => {
+        state.feedback.open = false
+      }, 3000)
       break
     }
 

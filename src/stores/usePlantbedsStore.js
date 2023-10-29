@@ -310,8 +310,8 @@ export const usePlantBedsStore = defineStore('beds', () => {
         isSpace = true
       } else {
         isSpace = false
-        console.log('isSpaceInBedForSet', bedArray, startColum0, neededColums)
-        console.log('isSpaceInBedForSet', isSpace, i, bedArray[i])
+        // console.log('isSpaceInBedForSet', bedArray, startColum0, neededColums)
+        // console.log('isSpaceInBedForSet', isSpace, i, bedArray[i])
         return { value: isSpace, colum: i, otherVariety: bedArray[i] }
       }
     }
