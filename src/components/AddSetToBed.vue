@@ -86,12 +86,19 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
+
+  <InfoModal
+    :open="state.feedback.open"
+    :message="state.feedback.message"
+    :type="warning"
+  ></InfoModal>
 </template>
 
 <script setup>
 import { reactive, onUpdated } from 'vue'
 // import { usePlantsStore } from '@/stores/usePlantsStore'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
+import InfoModal from '@/components/InfoModal.vue'
 
 const plantBedsStore = usePlantBedsStore()
 // const plantsStore = usePlantsStore()
@@ -114,7 +121,13 @@ const state = reactive({
     // { name: 'goodNeighbors', label: 'gute Nachbarn', field: 'goodNeighbors' },
     // { name: 'badNeighbors', label: 'schlechte Nachbarn', field: 'badNeighbors' }
   ],
-  rows: []
+  rows: [],
+
+  feedback: {
+    open: true,
+    variety: '',
+    message: ''
+  }
 })
 
 async function mapTableContent() {
@@ -163,6 +176,15 @@ function addVarietyToBed() {
 
     if (startColum.length === 0) {
       console.log('kein platz mehr im Beet')
+      state.feedback.variety = state.feedback.message =
+        'Der Satz den du einpflanzen möchtest hat leider keinen Platz im Beet bis zur Ernte. ' +
+        newSets[i].varietyId +
+        ' ' +
+        newSets[i].name +
+        ' ' +
+        newSets[i]
+
+      state.feedback.open = true
       break
     }
 

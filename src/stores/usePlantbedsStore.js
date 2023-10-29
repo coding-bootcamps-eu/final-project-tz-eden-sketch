@@ -233,16 +233,16 @@ export const usePlantBedsStore = defineStore('beds', () => {
     cultureDurationIntern,
     rowDistance
   ) {
-    console.log(
-      'checkIfAddSetPossible ',
-      bedNumber,
-      month,
-      period,
-      varietyId,
-      startColum0,
-      cultureDurationIntern,
-      rowDistance
-    )
+    // console.log(
+    //   'checkIfAddSetPossible ',
+    //   bedNumber,
+    //   month,
+    //   period,
+    //   varietyId,
+    //   startColum0,
+    //   cultureDurationIntern,
+    //   rowDistance
+    // )
     const start = translateTime(month, period)
     const end = start + cultureDurationIntern
 
@@ -280,7 +280,6 @@ export const usePlantBedsStore = defineStore('beds', () => {
         // console.log('isSpace: ', isSpace)
         const time = translateTimeBack(i)
 
-        console.log(startColum0)
         //todo: message gibt falsche zeit zurück und leider keine Spalten und andere Daten
         let message =
           'Leider kann die Sorte ' +
@@ -294,7 +293,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
           ' schon eine andere Sorte (' +
           isSpace.otherVariety +
           ') steht.'
-        console.log('checkIfAddSetPossible', addSetIsPossible)
+        // console.log('checkIfAddSetPossible', addSetIsPossible, message)
         return { value: addSetIsPossible, type: 'error', message: message }
       }
     }
@@ -312,6 +311,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
       } else {
         isSpace = false
         console.log('isSpaceInBedForSet', bedArray, startColum0, neededColums)
+        console.log('isSpaceInBedForSet', isSpace, i, bedArray[i])
         return { value: isSpace, colum: i, otherVariety: bedArray[i] }
       }
     }
@@ -365,16 +365,16 @@ export const usePlantBedsStore = defineStore('beds', () => {
         startColums.push(i)
       }
     }
-    console.log(
-      'calculateStartColumsInBed',
-      bedNumber,
-      month,
-      period,
-      varietyId,
-      cultureDurationIntern,
-      rowDistance
-    )
-    console.log(startColums)
+    // console.log(
+    //   'calculateStartColumsInBed',
+    //   bedNumber,
+    //   month,
+    //   period,
+    //   varietyId,
+    //   cultureDurationIntern,
+    //   rowDistance
+    // )
+    // console.log(startColums)
     return startColums
   }
 

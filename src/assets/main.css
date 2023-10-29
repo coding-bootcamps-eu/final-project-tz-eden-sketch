@@ -216,6 +216,9 @@
   --clr-negative: #f57251;
   --clr-info: #f3e2b9;
   --clr-warning: #ba2d0b;
+
+  --clr-warning-bg: #f89e88; /* 60% lighter */
+  --clr-primary-bg: #afcbb4; /* 60% lighter */
 }
 
 *,
