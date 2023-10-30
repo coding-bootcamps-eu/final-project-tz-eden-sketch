@@ -6,9 +6,11 @@
         plantBedsStore.state.currentMonth,
         plantBedsStore.state.currentPeriod
       )[1]"
-      :key="set.plantvarietiesId"
+      :key="set.id"
       class="set"
+      :class="{ active: state.activeSetId === set.id }"
       :style="`--neededColums: ${set.neededColums}; --startColum:${set.startColum + 1}`"
+      @click="setActiveSet(set)"
     >
       <q-tooltip class="bg-secondary text-black" anchor="center middle" self="center middle">
         <p>{{ plantsStore.getVariety(set.plantvarietiesId)[0].name }}</p>
@@ -58,12 +60,16 @@
 </template>
 
 <script setup>
-// import { computed } from 'vue'
+import { reactive } from 'vue'
 import { usePlantsStore } from '@/stores/usePlantsStore'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 
 const plantBedsStore = usePlantBedsStore()
 const plantsStore = usePlantsStore()
+
+const state = reactive({
+  activeSetId: ''
+})
 
 const props = defineProps({
   bedNumber: Number
@@ -71,6 +77,16 @@ const props = defineProps({
 
 function loadImage(imageName) {
   return new URL(`/src/assets/images/${imageName}`, import.meta.url).href
+}
+
+function setActiveSet(set) {
+  //finde Beet in activeSets Array
+  const currentBed = plantBedsStore.state.activeSets.find(
+    (bedItem) => bedItem['bedNumber'] === props.bedNumber
+  )
+  //setzte actives Set für dieses Beet
+  currentBed.set = set
+  state.activeSetId = set.id
 }
 
 // const imageUrl = computed((imageName) => {
@@ -100,8 +116,13 @@ function loadImage(imageName) {
   grid-row-start: 1;
   border-radius: 5px;
 }
+
+.active {
+  border: 2px solid red;
+}
 .set-content-wrapper {
-  padding-block: 0.5rem;
+  padding-block: 1rem;
+  /*padding-inline: 0.5rem;*/
   display: flex;
   flex-direction: column;
   justify-content: end;

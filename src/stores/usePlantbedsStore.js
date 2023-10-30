@@ -8,7 +8,10 @@ export const usePlantBedsStore = defineStore('beds', () => {
     currentPeriod: 'anfang',
 
     currentBedplan: { beds: [] }, //leeres Object
-    freeColumsLeft: []
+    freeColumsLeft: [], //wird nicht mehr genutzt??
+
+    moveSetModusIsActive: false,
+    activeSets: [] // [{bednumber: 1, set:{...}}, ...]
   })
 
   async function loadBedplan(bedId) {
@@ -412,6 +415,17 @@ export const usePlantBedsStore = defineStore('beds', () => {
     updateBedplan()
   }
 
+  function updatePositionInBed(bedNumber, setId, newStartColum0) {
+    const currentBed = state.currentBedplan.beds.find(
+      (bedItem) => bedItem['bedNumber'] === bedNumber
+    )
+    const currentSet = currentBed.sets.find((setItem) => setItem['id'] === setId)
+
+    currentSet.startColum = newStartColum0
+
+    updateBedplan()
+  }
+
   return {
     state,
     loadBedplan,
@@ -430,6 +444,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
     //getRandomInt, //todo: später löschen,
     deleteSet,
     harvestSet,
-    getVariety
+    getVariety,
+    updatePositionInBed
   }
 })

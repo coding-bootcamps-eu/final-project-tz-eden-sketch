@@ -187,6 +187,8 @@ function addVarietyToBed() {
       break
     }
 
+    //todo: Funktion checkIfAddSetPossible wird auch schon in calculateStartColumsInBed aufgerufen
+    //todo: Aufruf daher hier notwendig????
     const checkAddSetPossible = plantBedsStore.checkIfAddSetPossible(
       props.bedNumber,
       plantBedsStore.state.currentMonth,

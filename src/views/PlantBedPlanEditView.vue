@@ -12,6 +12,7 @@
       <h2>Beet 1</h2>
       <p>noch freie Spalten: {{ plantBedsStore.spaceLeftInCurrentBed[0] }}</p>
       <AddSetToBed :bedNumber="1"></AddSetToBed>
+      <MoveSetInBed :bedNumber="1"></MoveSetInBed>
 
       <!-- <pre>{{
           plantBedsStore.calculateBedState(
@@ -37,6 +38,7 @@ import { onBeforeMount } from 'vue'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 import PlantBed from '@/components/PlantBed.vue'
 import AddSetToBed from '@/components/AddSetToBed.vue'
+import MoveSetInBed from '@/components/MoveSetInBed.vue'
 
 import { useRoute } from 'vue-router'
 const route = useRoute()
