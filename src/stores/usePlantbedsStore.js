@@ -2,6 +2,7 @@ import { reactive, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { nanoid } from 'nanoid'
 
+// changed filename
 export const usePlantBedsStore = defineStore('beds', () => {
   const state = reactive({
     currentMonth: 'januar',
