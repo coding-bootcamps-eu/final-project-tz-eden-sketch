@@ -244,8 +244,8 @@ const state = reactive({
     { name: 'plantfamily', label: 'Pflanzenfamilie', field: 'plantfamily', sortable: true },
     { name: 'plantvariety', label: 'Sorte', field: 'plantvariety' },
     { name: 'nutrition', label: 'Nährstoffbedarf', field: 'nutrition' },
-    { name: 'rowDistance', label: 'Reihenabstand', field: 'rowDistance' },
-    { name: 'cultureDurationIntern', label: 'Kulturdauer INTERN', field: 'cultureDurationIntern' } //todo: später durch cultureDuration ersetzen
+    { name: 'rowDistance', label: 'Reihenabstand (in cm)', field: 'rowDistance' },
+    { name: 'cultureDuration', label: 'Kulturdauer (in Tagen)', field: 'cultureDuration' }
   ],
   userVarieties: [],
   rows: [],
@@ -279,20 +279,12 @@ async function checkVarietyOption() {
   }
 }
 async function addNewBedplan() {
-  // if (toggleChooseUserVarieties.value === true) {
-  //   state.selectVarieties = true
-  //   console.log('select varieties chosen')
-  //   console.log(state.selectVarieties)
-  //   // chooseAllVarieties()
-  // } else {
-  //   const userVarieties = chooseAllVarieties()
   const newBedId = await plantBedsStore.addBedplan(
     userStore.state.currentUser.id,
     form.value.title,
     form.value.description,
     state.userVarieties
   )
-
   resetForm()
   router.push({ name: 'plantbed-edit', params: { bedId: newBedId } })
 }
@@ -345,33 +337,16 @@ onBeforeMount(async () => {
 
 function addVarietyToUserList() {
   state.userVarieties = []
-  // plantBedsStore.state.currentUserVarieties = []
-
   for (let i = 0; i < plantsStore.state.plantVarieties.length; i++) {
     for (let j = 0; j < state.selected.length; j++) {
-      console.log(plantsStore.state.plantVarieties[i].id)
-      console.log(state.selected[j].varietyId)
       if (plantsStore.state.plantVarieties[i].id === state.selected[j].varietyId) {
         state.userVarieties.push(plantsStore.state.plantVarieties[i].id)
-        // plantBedsStore.state.currentUserVarieties.push(plantsStore.state.plantVarieties[i].id)
       }
     }
   }
-  // console.log(plantBedsStore.state.currentUserVarieties)
   addNewBedplan()
   resetForm()
 }
-
-// async function addNewBedplanCustomVarieties() {
-//   const newBedId = await plantBedsStore.addBedplan(
-//     userStore.state.currentUser.id,
-//     form.value.title,
-//     form.value.description,
-//     plantBedsStore.state.currentUserVarieties
-//   )
-
-//   router.push({ name: 'plantbed-edit', params: { bedId: newBedId } })
-// }
 </script>
 
 <style scoped>

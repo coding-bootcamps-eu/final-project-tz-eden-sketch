@@ -7,7 +7,6 @@ export const usePlantBedsStore = defineStore('beds', () => {
     currentMonth: 'januar',
     currentPeriod: 'anfang',
 
-    
     currentBedplan: { beds: [] }, //leeres Object
     freeColumsLeft: [],
     currentUserVarieties: [],
