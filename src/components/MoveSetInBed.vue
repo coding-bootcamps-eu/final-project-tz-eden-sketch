@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import { reactive, watch } from 'vue'
+import { onUpdated, reactive, watch } from 'vue'
 import InfoModal from '@/components/InfoModal.vue'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 
@@ -52,20 +52,39 @@ const props = defineProps({
 
 function moveSet(direction) {
   //finde actives set
-  const activeSet = plantBedsStore.state.activeSets.find(
-    (bedItem) => bedItem['bedNumber'] === props.bedNumber
-  )
-  state.activeSet = activeSet
+  //   const activeSet = plantBedsStore.state.activeSets.find(
+  //     (bedItem) => bedItem['bedNumber'] === props.bedNumber
+  //   )
 
-  if (activeSet === undefined) {
+  state.activeSet = plantBedsStore.state.activeSet
+
+  console.log(
+    'params für startcolum: ',
+    props.bedNumber,
+    plantBedsStore.state.currentMonth,
+    plantBedsStore.state.currentPeriod,
+    state.activeSet.varietyId,
+    state.activeSet.cultureDurationIntern,
+    state.activeSet.rowDistance
+  )
+  state.startColums = plantBedsStore.calculateStartColumsInBed(
+    props.bedNumber,
+    plantBedsStore.state.currentMonth,
+    plantBedsStore.state.currentPeriod,
+    state.activeSet.varietyId,
+    state.activeSet.cultureDurationIntern,
+    state.activeSet.rowDistance
+  )
+
+  if (state.activeSet === undefined) {
     state.feedback.message =
       'Bitte wähle einen Satz aus, den du verschieben möchtest. Dazu auf den Satz tippen/klicken.'
     state.feedback.open = true
   }
 
-  if (activeSet.startTime < plantBedsStore.currentTime) {
-    const startMonth = plantBedsStore.translateTimeBack(activeSet.startTime).month
-    const startPeriod = plantBedsStore.translateTimeBack(activeSet.startTime).period
+  if (state.activeSet.startTime < plantBedsStore.currentTime) {
+    const startMonth = plantBedsStore.translateTimeBack(state.activeSet.startTime).month
+    const startPeriod = plantBedsStore.translateTimeBack(state.activeSet.startTime).period
 
     state.feedback.message =
       'Ein Satz kann nur im Pflanzzeitraum im Beet verschoben werden. Gehe zu ' +
@@ -76,17 +95,10 @@ function moveSet(direction) {
     state.feedback.open = true
   }
 
-  state.startColums = plantBedsStore.calculateStartColumsInBed(
-    props.bedNumber,
-    plantBedsStore.state.currentMonth,
-    plantBedsStore.state.currentPeriod,
-    activeSet.varietyId,
-    activeSet.cultureDurationIntern,
-    activeSet.rowDistance
-  )
-
-  state.currentPosition = state.startColums.indexOf(activeSet.startColum)
-
+  console.log('startcolums: ', state.startColums)
+  console.log(state.activeSet.startColum)
+  state.currentPosition = state.startColums.indexOf(state.activeSet.startColum)
+  console.log(state.currentPosition)
   if (
     state.startColums.length === 0 ||
     (direction === 'left' && state.currentPosition === 0) ||
@@ -105,7 +117,7 @@ function moveSet(direction) {
     newStartColum = state.startColums[state.currentPosition + 1]
   }
 
-  plantBedsStore.updatePositionInBed(props.bedNumber, activeSet.id, newStartColum)
+  plantBedsStore.updatePositionInBed(props.bedNumber, state.activeSet.id, newStartColum)
 }
 
 watch(plantBedsStore.state.moveSetModusIsActive, async () => {
@@ -114,6 +126,17 @@ watch(plantBedsStore.state.moveSetModusIsActive, async () => {
       state.feedback.open = false
     }, 2000)
   }
+})
+
+onUpdated(async () => {
+  //   state.startColums = plantBedsStore.calculateStartColumsInBed(
+  //     props.bedNumber,
+  //     plantBedsStore.state.currentMonth,
+  //     plantBedsStore.state.currentPeriod,
+  //     state.activeSet.varietyId,
+  //     state.activeSet.cultureDurationIntern,
+  //     state.activeSet.rowDistance
+  //   )
 })
 </script>
 

@@ -11,7 +11,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
     freeColumsLeft: [], //wird nicht mehr genutzt??
 
     moveSetModusIsActive: false,
-    activeSets: [] // [{bednumber: 1, set:{...}}, ...]
+    activeSet: {} // [{bednumber: 1, set:{...}}, ...]
   })
 
   async function loadBedplan(bedId) {
@@ -363,6 +363,9 @@ export const usePlantBedsStore = defineStore('beds', () => {
     cultureDurationIntern,
     rowDistance
   ) {
+    console.log('Bed-Nr ' + bedNumber)
+    console.log('variety-id ' + varietyId)
+    console.log('row-distance ' + rowDistance)
     const startColums = []
 
     for (let i = 0; i < 24; i++) {

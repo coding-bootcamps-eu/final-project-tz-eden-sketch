@@ -19,10 +19,8 @@
 
       <div class="set-content-wrapper">
         <div class="image-wrapper">
-          <img
-            class="variety-image"
-            :src="loadImage(plantsStore.getVariety(set.plantvarietiesId)[0].imagename)"
-          />
+          <img class="variety-image" />
+          <!-- :src="loadImage(plantsStore.getVariety(set.plantvarietiesId)[0].imagename)" -->
         </div>
 
         <button class="todo-btn btn">
@@ -75,22 +73,26 @@ const props = defineProps({
   bedNumber: Number
 })
 
-function loadImage(imageName) {
-  return new URL(`/src/assets/images/${imageName}`, import.meta.url).href
-}
+// function loadImage(imageName) {
+//   return new URL(`/src/assets/images/${imageName}`, import.meta.url).href
+// }
 
 function setActiveSet(set) {
-  //finde Beet in activeSets Array
-  const currentBed = plantBedsStore.state.activeSets.find(
-    (bedItem) => bedItem['bedNumber'] === props.bedNumber
-  )
+  // const currentBed = plantBedsStore.state.activeSets.find(
+  //   (bedItem) => bedItem['bedNumber'] === props.bedNumber
+  // )
   //setzte actives Set für dieses Beet
-  currentBed.set = set
+  // currentBed.set = set
+  plantBedsStore.state.activeSet = set
   state.activeSetId = set.id
 }
 
 // const imageUrl = computed((imageName) => {
 //   return new URL(`/src/assets/images/${imageName}`, import.meta.url).href
+// })
+
+// onUpdated(async () => {
+
 // })
 </script>
 
