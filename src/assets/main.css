@@ -231,10 +231,22 @@
 
 * {
   font-family: 'Ubuntu';
+  font-size: 12px; /*todo: schrift in px festlegen?? oder gibts bessere Lösungen?*/
 }
 
+@media screen and (min-width: 600px) {
+  * {
+    font-size: 15px;
+  }
+}
+@media screen and (min-width: 1000px) {
+  * {
+    font-size: 17px;
+  }
+}
 .headline-main {
   font-family: 'Vollkorn';
+  font-size: 3rem;
 }
 
 .headline-sub {
