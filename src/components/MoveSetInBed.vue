@@ -1,29 +1,40 @@
 <template>
-  <q-btn
+  <!-- <q-btn
     class="btn"
     color="primary"
     label="< >"
     @click="plantBedsStore.state.moveSetModusIsActive = true"
   >
-  </q-btn>
+  </q-btn> -->
+  <div class="toolbar-move-switch">
+    <q-toggle
+      v-model="plantBedsStore.state.moveSetModusIsActive[props.bedNumber - 1]"
+      color="primary"
+      label="Set verschieben"
+      right-label
+    >
+    </q-toggle>
 
-  <q-btn
-    class="btn left"
-    color="primary"
-    label="<"
-    v-if="plantBedsStore.state.moveSetModusIsActive"
-    @click="moveSet('left')"
-  >
-  </q-btn>
+    <div class="move-buttons">
+      <q-btn
+        class="btn left"
+        color="primary"
+        label="<"
+        v-if="plantBedsStore.state.moveSetModusIsActive[props.bedNumber - 1]"
+        @click="moveSet('left')"
+      >
+      </q-btn>
 
-  <q-btn
-    class="btn right"
-    color="primary"
-    label=">"
-    v-if="plantBedsStore.state.moveSetModusIsActive"
-    @click="moveSet('right')"
-  >
-  </q-btn>
+      <q-btn
+        class="btn right"
+        color="primary"
+        label=">"
+        v-if="plantBedsStore.state.moveSetModusIsActive[props.bedNumber - 1]"
+        @click="moveSet('right')"
+      >
+      </q-btn>
+    </div>
+  </div>
 
   <InfoModal :open="state.feedback.open" :message="state.feedback.message"></InfoModal>
 </template>
@@ -120,8 +131,8 @@ function moveSet(direction) {
   plantBedsStore.updatePositionInBed(props.bedNumber, state.activeSet.id, newStartColum)
 }
 
-watch(plantBedsStore.state.moveSetModusIsActive, async () => {
-  if (plantBedsStore.state.moveSetModusIsActive) {
+watch(state.feedback.open, async () => {
+  if (state.feedback.open) {
     setTimeout(() => {
       state.feedback.open = false
     }, 2000)
@@ -140,4 +151,16 @@ onUpdated(async () => {
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.toolbar-move-switch {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+}
+.move-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+</style>

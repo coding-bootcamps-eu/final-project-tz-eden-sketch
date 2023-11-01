@@ -10,7 +10,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
     currentBedplan: { beds: [] }, //leeres Object
     freeColumsLeft: [], //wird nicht mehr genutzt??
 
-    moveSetModusIsActive: false,
+    moveSetModusIsActive: [false, false, false, false, false, false],
     activeSet: {} // [{bednumber: 1, set:{...}}, ...]
   })
 

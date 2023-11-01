@@ -232,6 +232,5 @@ onUpdated(async () => {
 }
 
 .btn-add {
-  margin-left: 3rem;
 }
 </style>

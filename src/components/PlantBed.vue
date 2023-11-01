@@ -19,8 +19,12 @@
 
       <div class="set-content-wrapper">
         <div class="image-wrapper">
-          <img class="variety-image" />
-          <!-- :src="loadImage(plantsStore.getVariety(set.plantvarietiesId)[0].imagename)" -->
+          <div v-if="plantsStore.getVariety(set.plantvarietiesId).length === 0">...</div>
+          <img
+            v-else
+            class="variety-image"
+            :src="loadImage(plantsStore.getVariety(set.plantvarietiesId)[0].imagename)"
+          />
         </div>
 
         <button class="todo-btn btn">
@@ -73,9 +77,9 @@ const props = defineProps({
   bedNumber: Number
 })
 
-// function loadImage(imageName) {
-//   return new URL(`/src/assets/images/${imageName}`, import.meta.url).href
-// }
+function loadImage(imageName) {
+  return new URL(`/src/assets/images/${imageName}`, import.meta.url).href
+}
 
 function setActiveSet(set) {
   // const currentBed = plantBedsStore.state.activeSets.find(
@@ -87,10 +91,6 @@ function setActiveSet(set) {
   state.activeSetId = set.id
 }
 
-// const imageUrl = computed((imageName) => {
-//   return new URL(`/src/assets/images/${imageName}`, import.meta.url).href
-// })
-
 // onUpdated(async () => {
 
 // })
@@ -99,7 +99,7 @@ function setActiveSet(set) {
 <style scoped>
 .bed {
   margin: 0 auto;
-  width: 200px;
+  width: 300px;
   aspect-ratio: 1.2/2.5;
   background-color: var(--clr-dark);
   border-radius: 5px;
@@ -120,14 +120,13 @@ function setActiveSet(set) {
 }
 
 .active {
-  border: 2px solid red;
+  border: 2px solid var(--clr-secondary);
 }
 .set-content-wrapper {
   padding-block: 1rem;
   /*padding-inline: 0.5rem;*/
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
+  display: grid;
+  /* justify-content: end; */
   align-items: center;
   gap: 4rem;
   height: 100%;
@@ -142,6 +141,7 @@ function setActiveSet(set) {
 }
 .variety-image {
   object-fit: contain;
+  width: 100%;
 }
 
 .todo-icon,
