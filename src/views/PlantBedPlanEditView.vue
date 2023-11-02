@@ -3,7 +3,7 @@
     <PlantBedNavigation></PlantBedNavigation>
   </header>
 
-  <main class="grid-colums">
+  <main class="main grid-colums">
     <!-- <p><pre>
       Beetplan: {{ plantBedsStore.state.currentBedplan.beds }}
     </pre></p> -->
@@ -60,6 +60,7 @@ onBeforeMount(async () => {
 }
 
 main {
+  margin-top: 5rem;
   padding-inline: 1rem;
   padding-block: 1rem;
 
