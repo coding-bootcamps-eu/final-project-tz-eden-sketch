@@ -13,8 +13,11 @@
       @click="setActiveSet(set)"
     >
       <q-tooltip class="bg-secondary text-black" anchor="center middle" self="center middle">
-        <p>{{ plantsStore.getVariety(set.plantvarietiesId).name }}</p>
-        <p>{{ plantsStore.getVariety(set.plantvarietiesId).species }}</p>
+        <div v-if="!plantsStore.getVariety(set.plantvarietiesId)">...</div>
+        <div v-else>
+          <p>{{ plantsStore.getVariety(set.plantvarietiesId).name }}</p>
+          <p>{{ plantsStore.getVariety(set.plantvarietiesId).species }}</p>
+        </div>
       </q-tooltip>
 
       <div class="set-content-wrapper">
@@ -62,6 +65,7 @@
 </template>
 
 <script setup>
+// import {}
 import { reactive } from 'vue'
 import { usePlantsStore } from '@/stores/usePlantsStore'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
@@ -82,13 +86,27 @@ function loadImage(imageName) {
 }
 
 function setActiveSet(set) {
-  // const currentBed = plantBedsStore.state.activeSets.find(
-  //   (bedItem) => bedItem['bedNumber'] === props.bedNumber
-  // )
-  //setzte actives Set für dieses Beet
-  // currentBed.set = set
-  plantBedsStore.state.activeSet = set
-  state.activeSetId = set.id
+  // plantBedsStore.state.activeSets= [{bednumber: 1, setId:{id vom set}}, ...]
+
+  const currentBed = plantBedsStore.state.activeSets.find(
+    (bedItem) => bedItem['bedNumber'] === props.bedNumber
+  )
+
+  if (currentBed) {
+    //es gibt schon ein active Set für dieses Beet
+    //setzte neues actives Set für dieses Beet
+    currentBed.setId = set.id
+    state.activeSetId = set.id
+  } else {
+    //es gibt noch kein activeSet für dieses Beet
+    //neu anlegen
+    const bed = { bednumber: props.bedNumber, setId: set.id }
+    plantBedsStore.state.activeSets.push(bed)
+    state.activeSetId = set.id
+  }
+
+  console.log('state.activeSetId: ', state.activeSetId)
+  console.log('plantBedsStore.state.activeSets: ', plantBedsStore.state.activeSets)
 }
 
 // onUpdated(async () => {
