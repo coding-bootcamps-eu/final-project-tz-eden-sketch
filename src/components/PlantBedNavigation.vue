@@ -52,7 +52,10 @@ const timePeriods = ref(['Anfang', 'Mitte', 'Ende'])
 
 <style scoped>
 .navigation-wrapper {
-  /* position: fixed; */
-  /* z-index: 1; */
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 </style>
