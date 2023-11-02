@@ -36,11 +36,11 @@
     </div>
   </div>
 
-  <InfoModal :open="state.feedback.open" :message="state.feedback.message"></InfoModal>
+  <InfoModal :open="feedbackOpen" :message="state.feedback.message"></InfoModal>
 </template>
 
 <script setup>
-import { onUpdated, reactive, watch } from 'vue'
+import { onUpdated, reactive, watch, ref } from 'vue'
 import InfoModal from '@/components/InfoModal.vue'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 
@@ -52,10 +52,11 @@ const state = reactive({
   currentPosition: null, //Index in startColums-Array
 
   feedback: {
-    open: false,
+    // open: false,
     message: ''
   }
 })
+const feedbackOpen = ref(false)
 
 const props = defineProps({
   bedNumber: Number
@@ -68,11 +69,12 @@ function moveSet(direction) {
   //   )
 
   state.activeSet = plantBedsStore.state.activeSet
+  console.log('active set', state.activeSet)
 
-  if (plantBedsStore.state.activeSet === undefined) {
+  if (state.activeSet === null) {
     state.feedback.message =
       'Bitte wähle einen Satz aus, den du verschieben möchtest. Dazu auf den Satz tippen/klicken.'
-    state.feedback.open = true
+    feedbackOpen.value = true
     return
   }
 
@@ -81,17 +83,17 @@ function moveSet(direction) {
     props.bedNumber,
     plantBedsStore.state.currentMonth,
     plantBedsStore.state.currentPeriod,
-    state.activeSet.varietyId,
-    state.activeSet.cultureDurationIntern,
-    state.activeSet.rowDistance
+    state.activeSet.plantvarietiesId,
+    state.activeSet.cultureDuration,
+    state.activeSet.neededColums * 5
   )
   state.startColums = plantBedsStore.calculateStartColumsInBed(
     props.bedNumber,
     plantBedsStore.state.currentMonth,
     plantBedsStore.state.currentPeriod,
-    state.activeSet.varietyId,
-    state.activeSet.cultureDurationIntern,
-    state.activeSet.rowDistance
+    state.activeSet.plantvarietiesId,
+    state.activeSet.cultureDuration,
+    state.activeSet.neededColums * 5
   )
 
   if (state.activeSet.startTime < plantBedsStore.currentTime) {
@@ -104,7 +106,7 @@ function moveSet(direction) {
       ' ' +
       startMonth +
       ' um den Satz im Beet zu verschieben oder wähle einen anderen Satz aus.'
-    state.feedback.open = true
+    feedbackOpen.value = true
   }
 
   console.log('startcolums: ', state.startColums)
@@ -119,7 +121,7 @@ function moveSet(direction) {
     state.feedback.message =
       'Es gibt leider keine Möglichkeiten diesen Satz zu verschieben, da andere Sätze zum aktuellen Zeitpunkt oder später dies blockieren.'
 
-    state.feedback.open = true
+    feedbackOpen.value = true
   }
 
   let newStartColum = null
@@ -132,10 +134,10 @@ function moveSet(direction) {
   plantBedsStore.updatePositionInBed(props.bedNumber, state.activeSet.id, newStartColum)
 }
 
-watch(state.feedback.open, async () => {
-  if (state.feedback.open) {
+watch(feedbackOpen, async () => {
+  if (feedbackOpen.value) {
     setTimeout(() => {
-      state.feedback.open = false
+      feedbackOpen.value = false
     }, 2000)
   }
 })

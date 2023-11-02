@@ -133,7 +133,7 @@ async function mapTableContent() {
   for (let i = 0; i < plantBedsStore.state.currentBedplan.userVarieties.length; i++) {
     const currentUserVarietyId = plantBedsStore.state.currentBedplan.userVarieties[i]
     const currentUserVariety = plantsStore.getVariety(currentUserVarietyId)
-    console.log(currentUserVariety)
+    // console.log(currentUserVariety)
 
     // const URL = `http://localhost:3000/plantvarieties/${currentUserVarietyId}?_embed=plantspeciesId` //todo: besser aus userStore holen??
     // const resp = await fetch(URL)

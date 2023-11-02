@@ -11,7 +11,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
     freeColumsLeft: [], //wird nicht mehr genutzt??
 
     moveSetModusIsActive: [false, false, false, false, false, false],
-    activeSet: {} // [{bednumber: 1, set:{...}}, ...]
+    activeSet: null // [{bednumber: 1, set:{...}}, ...]
   })
 
   async function loadBedplan(bedId) {
