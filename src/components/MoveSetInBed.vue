@@ -69,6 +69,13 @@ function moveSet(direction) {
 
   state.activeSet = plantBedsStore.state.activeSet
 
+  if (plantBedsStore.state.activeSet === undefined) {
+    state.feedback.message =
+      'Bitte wähle einen Satz aus, den du verschieben möchtest. Dazu auf den Satz tippen/klicken.'
+    state.feedback.open = true
+    return
+  }
+
   console.log(
     'params für startcolum: ',
     props.bedNumber,
@@ -86,12 +93,6 @@ function moveSet(direction) {
     state.activeSet.cultureDurationIntern,
     state.activeSet.rowDistance
   )
-
-  if (state.activeSet === undefined) {
-    state.feedback.message =
-      'Bitte wähle einen Satz aus, den du verschieben möchtest. Dazu auf den Satz tippen/klicken.'
-    state.feedback.open = true
-  }
 
   if (state.activeSet.startTime < plantBedsStore.currentTime) {
     const startMonth = plantBedsStore.translateTimeBack(state.activeSet.startTime).month

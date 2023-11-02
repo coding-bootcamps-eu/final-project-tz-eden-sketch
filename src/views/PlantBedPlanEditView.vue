@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="navigation">
     <PlantBedNavigation></PlantBedNavigation>
   </header>
 
@@ -55,6 +55,10 @@ onBeforeMount(async () => {
 </script>
 
 <style scoped>
+.navigation {
+  /* position: fixed; */
+}
+
 main {
   padding-inline: 1rem;
   padding-block: 1rem;
@@ -95,7 +99,7 @@ main {
   border: 1px solid red;
 }
 .bed-headline {
-  font-size: 3rem;
+  font-size: 2rem;
   border: 1px solid green;
 }
 .bed-toolbar {

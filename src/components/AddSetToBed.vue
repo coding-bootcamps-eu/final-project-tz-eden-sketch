@@ -1,5 +1,5 @@
 <template>
-  <q-btn class="btn-add" color="primary" icon="add" @click="state.openAddPlant = true" />
+  <q-btn class="btn-add" color="primary" icon="add" @click="state.openAddPlant = true" dense />
 
   <q-dialog maximized class="popup-plant add-plants__card" v-model="state.openAddPlant">
     <!-- 'full-width' für desktop, 'maximized' für mobile-->
