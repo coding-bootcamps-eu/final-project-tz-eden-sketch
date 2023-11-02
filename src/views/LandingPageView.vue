@@ -1,9 +1,45 @@
 <template>
   <div class="landingpage">
-    Hier kommt eine tolle Landing Page hin.
-    <br /><br />
-    <q-btn label="Login" @click="login"></q-btn>
-    <button @click="calc()">test</button>
+    <q-btn label="Login" @click="login" class="btn-login"></q-btn>
+    <h1 class="headline-main">EdenSketch</h1>
+    <h2 class="headline-sub">Dein Werkzeug um deinen Gemüsegarten zu planen</h2>
+    <p>
+      Mit EdenSketch kannst du deinen Gemüsegarten jetzt detailliert planen. Lege einen Beetplan an
+      und plane deine Gemüsekulturen auf den verschiedenen Beeten über den Jahresverlauf. Die App
+      unterstützt dich dabei die Fruchtfolge und Mischkultur bei deiner Planung mit zu bedenken.
+    </p>
+
+    <img
+      class="image image-house"
+      src="../assets/images/house-with-garden_1500px.svg"
+      alt="house with garden"
+    />
+    <img class="image image-animation-bed" src="../assets/images/beete_animation.svg" alt="" />
+    <h3 class="headline-sub">Beeteinteilung</h3>
+    <p>
+      Teile deine Beetfläche in 6 gleich große Flächen. Idealerweise mit einer Breite von 1,2 m und
+      einer Länge von 2,5 m. Zwischen den Beeten gibt es Wege. Die Breite von 1,2m sind so ausgelegt
+      dass du von beiden Seiten gut an das Gemüse heran kommst. Wenn du mehr Platz hast, kannst du
+      auch Beete anlegen, die länger als 2,5m sind.
+    </p>
+
+    <h3 class="headline-sub">Fruchtfolge</h3>
+    <p>
+      Werden Gemüse derselben Pflanzenfamilie immer wieder auf derselben Stelle im Beet angebaut,
+      kann dies dazu führen dass Schädlinge ein leichteres Spiel haben. Außerdem haben verschiedene
+      Gemüse einen unterschiedlichen Nährstoffbedarf. Für die Beete gibt es daher eine Empfehlung
+      welche Pflanzenfamilien in dem Beet stehen können. Im nächsten Jahr rotieren die Beete dann
+      einen Platz weiter. Beet 2 wird zu Beet 1 und Beet 1 zu Beet 6 usw..
+    </p>
+
+    <h3 class="headline-sub">Mischkultur</h3>
+    <p>
+      Einige Pflanzen unterstützen sich gegenseitig darin Schädlinge fern zu halten oder passen gut
+      zusammen aufgrund der Fläche die sie benötigen. Andere hingegen passen nicht gut zusammen weil
+      sie sich gegenseitigim Wachstum hemmen. Daher kannst du die Sätze im Beet verschieben.
+    </p>
+
+    <!-- <button @click="calc()">test</button> -->
 
     <!-- <svg viewBox="0 0 390 390">
       <path
@@ -210,7 +246,9 @@ function calc() {
 <style scoped>
 .landingpage {
   border: solid red 1px;
-  max-height: 100vh;
+  background-image: url('../src/assets/images/backgroung_watercolor-green.svg');
+  background-repeat: no-repeat;
+  /* max-height: 100vh; */
   /* min-height: 100vh; */
   /* display: flex;
   flex-direction: column;
@@ -218,6 +256,17 @@ function calc() {
   align-content: center;
   justify-content: center; */
   /* background-color: hsl(282deg 24% 39%); */
+}
+
+.btn-login {
+}
+
+.image-house {
+  width: 600px;
+}
+
+.image-animation-bed {
+  width: 600px;
 }
 
 .watercan {
