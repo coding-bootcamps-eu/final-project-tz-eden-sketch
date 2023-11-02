@@ -13,17 +13,17 @@
       @click="setActiveSet(set)"
     >
       <q-tooltip class="bg-secondary text-black" anchor="center middle" self="center middle">
-        <p>{{ plantsStore.getVariety(set.plantvarietiesId)[0].name }}</p>
-        <p>{{ plantsStore.getVariety(set.plantvarietiesId)[0].species }}</p>
+        <p>{{ plantsStore.getVariety(set.plantvarietiesId).name }}</p>
+        <p>{{ plantsStore.getVariety(set.plantvarietiesId).species }}</p>
       </q-tooltip>
 
       <div class="set-content-wrapper">
         <div class="image-wrapper">
-          <div v-if="plantsStore.getVariety(set.plantvarietiesId).length === 0">...</div>
+          <div v-if="!plantsStore.getVariety(set.plantvarietiesId)">...</div>
           <img
             v-else
             class="variety-image"
-            :src="loadImage(plantsStore.getVariety(set.plantvarietiesId)[0].imagename)"
+            :src="loadImage(plantsStore.getVariety(set.plantvarietiesId).imagename)"
           />
         </div>
 

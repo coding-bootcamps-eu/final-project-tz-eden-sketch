@@ -333,7 +333,15 @@ export const usePlantBedsStore = defineStore('beds', () => {
     return { value: isSpace, colum: '', otherVariety: '' }
   }
 
-  function addSet(bedNumber, month, period, varietyId, startColum0, cultureDuration, rowDistance) {
+  async function addSet(
+    bedNumber,
+    month,
+    period,
+    varietyId,
+    startColum0,
+    cultureDuration,
+    rowDistance
+  ) {
     const bed = state.currentBedplan.beds.filter((bedItem) => bedItem.bedNumber === bedNumber)[0]
 
     const newSet = {
@@ -346,7 +354,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
     }
 
     bed.sets.push(newSet)
-    updateBedplan()
+    await updateBedplan()
   }
 
   // function getRandomInt(min, max) {
