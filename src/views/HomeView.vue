@@ -1,7 +1,7 @@
 <script setup>
 import SeparatorElement from '@/components/SeparatorElement.vue'
 import CardComponent from '@/components/CardComponent.vue'
-import SiteNavigation from '@/components/SiteNavigation.vue'
+// import SiteNavigation from '@/components/SiteNavigation.vue'
 import { onBeforeMount, reactive } from 'vue'
 import { useUserStore } from '@/stores/useUserStore'
 import { useRouter } from 'vue-router'
