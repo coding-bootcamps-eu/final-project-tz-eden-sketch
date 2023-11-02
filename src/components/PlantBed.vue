@@ -88,11 +88,22 @@ function loadImage(imageName) {
 function setActiveSet(set) {
   // plantBedsStore.state.activeSets= [{bednumber: 1, setId:{id vom set}}, ...]
 
-  const currentBed = plantBedsStore.state.activeSets.find(
-    (bedItem) => bedItem['bedNumber'] === props.bedNumber
-  )
+  // const currentBed = plantBedsStore.state.activeSets.find(
+  //   (bedItem) => bedItem['bedNumber'] === props.bedNumber
+  // )
+  let currentBed = null
+  for (let i = 0; i < plantBedsStore.state.activeSets.length; i++) {
+    console.log('active-set bedNumber ' + plantBedsStore.state.activeSets[i].bedNumber)
+    console.log('props.bedNumber ' + props.bedNumber)
+    if (plantBedsStore.state.activeSets[i].bedNumber === props.bedNumber) {
+      currentBed = plantBedsStore.state.activeSets[i]
+      // return
+    }
+  }
+  console.log('currentBed: ', currentBed)
 
-  if (currentBed) {
+  if (currentBed !== null) {
+    console.log('A')
     //es gibt schon ein active Set für dieses Beet
     //setzte neues actives Set für dieses Beet
     currentBed.setId = set.id
@@ -100,7 +111,8 @@ function setActiveSet(set) {
   } else {
     //es gibt noch kein activeSet für dieses Beet
     //neu anlegen
-    const bed = { bednumber: props.bedNumber, setId: set.id }
+    console.log('B')
+    const bed = { bedNumber: props.bedNumber, setId: set.id }
     plantBedsStore.state.activeSets.push(bed)
     state.activeSetId = set.id
   }
