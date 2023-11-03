@@ -53,6 +53,44 @@ export const usePlantBedsStore = defineStore('beds', () => {
     return countArray
   })
 
+  function newStartColumns(bedNumber, currentMonth, currentPeriod, currentPlantSet) {
+    const startColumns = []
+    const currentTime = translateTime(currentMonth, currentPeriod)
+
+    for (let i = currentTime; i < currentTime + currentPlantSet.cultureDuration; i++) {
+      const calculatedTime = translateTimeBack(currentTime)
+      const currentBedArray = calculateBedState(
+        bedNumber,
+        calculatedTime.month,
+        calculatedTime.period
+      )[2]
+
+      for (let k = 0; k < currentBedArray.length; k++) {
+        let currentStartColumn = k
+        let count = 0
+        for (let j = k; j < currentBedArray.length; j++) {
+          if (currentBedArray[j] !== 'frei' && currentBedArray[j] !== currentPlantSet.id) {
+            count = 0
+
+            break
+          } else if (currentBedArray[j] === 'frei' || currentBedArray[j] === currentPlantSet.id) {
+            count++
+            if (count < currentPlantSet.neededColums) {
+              continue
+            } else if (count === currentPlantSet.neededColums) {
+              startColumns.push(currentStartColumn)
+              count = 0
+              break
+            }
+          }
+        }
+      }
+      return startColumns
+    }
+
+    // for every period from now + culture duration
+    //
+  }
   function translateTime(month, period) {
     let translation = 0
     const timeDictionary = {
@@ -133,8 +171,10 @@ export const usePlantBedsStore = defineStore('beds', () => {
 
     //preparing empty bed
     const currentBed = [] //24 colums = 120cm in reality
+    const currentBedWithSetIds = []
     for (let i = 0; i < 24; i++) {
       currentBed[i] = 'frei'
+      currentBedWithSetIds[i] = 'frei'
     }
 
     //check each set in bed
@@ -154,10 +194,11 @@ export const usePlantBedsStore = defineStore('beds', () => {
         //set im Beet eintragen
         for (let i = 0; i < currentSet.neededColums; i++) {
           currentBed[currentSet.startColum + i] = currentSet.plantvarietiesId
+          currentBedWithSetIds[currentSet.startColum + i] = currentSet.id
         }
       }
     }
-    return [currentBed, relevantSets]
+    return [currentBed, relevantSets, currentBedWithSetIds]
   }
 
   async function addBedplan(userId, title, description, userVarieties) {
@@ -318,6 +359,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
 
   function isSpaceInBedForSet(bedArray, startColum0, neededColums) {
     let isSpace = false
+    // console.log('isSpaceInBedForSet :' + bedArray, startColum0, neededColums)
 
     for (let i = startColum0; i < startColum0 + neededColums; i++) {
       //todo: prüfen: +1 richtig??
@@ -456,6 +498,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
     deleteSet,
     harvestSet,
     getVariety,
-    updatePositionInBed
+    updatePositionInBed,
+    newStartColumns
   }
 })

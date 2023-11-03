@@ -83,6 +83,17 @@ function moveSet(direction) {
     state.activeSet = currentSet
   }
 
+  console.log('***********************************')
+  console.log(
+    plantBedsStore.newStartColumns(
+      props.bedNumber,
+      plantBedsStore.state.currentMonth,
+      plantBedsStore.state.currentPeriod,
+      state.activeSet
+    )
+  )
+  console.log('***********************************')
+
   console.log(
     'params für startcolum: ',
     props.bedNumber,
@@ -92,15 +103,23 @@ function moveSet(direction) {
     state.activeSet.cultureDuration,
     state.activeSet.neededColums * 5
   )
-  state.startColums = plantBedsStore.calculateStartColumsInBed(
+  // state.startColums = plantBedsStore.calculateStartColumsInBed(
+  //   props.bedNumber,
+  //   plantBedsStore.state.currentMonth,
+  //   plantBedsStore.state.currentPeriod,
+  //   state.activeSet.plantvarietiesId,
+  //   state.activeSet.cultureDuration,
+  //   state.activeSet.neededColums * 5
+  // )
+
+  state.startColums = plantBedsStore.newStartColumns(
     props.bedNumber,
     plantBedsStore.state.currentMonth,
     plantBedsStore.state.currentPeriod,
-    state.activeSet.plantvarietiesId,
-    state.activeSet.cultureDuration,
-    state.activeSet.neededColums * 5
+    state.activeSet
   )
 
+  console.log('culture duration: ' + state.activeSet.cultureDuration)
   // console.log(
   //   'state.activeSet.startTime < plantBedsStore.currentTime: ',
   //   state.activeSet.startTime < plantBedsStore.currentTime
@@ -116,6 +135,7 @@ function moveSet(direction) {
       startMonth +
       ' um den Satz im Beet zu verschieben oder wähle einen anderen Satz aus.'
     feedbackOpen.value = true
+    return
   }
 
   // console.log('startcolums: ', state.startColums)
@@ -123,13 +143,15 @@ function moveSet(direction) {
 
   if (
     state.startColums.length === 0 ||
-    (direction === 'left' && state.activeSet.startColum === 0) ||
-    (direction === 'right' && state.activeSet.startColum === 24 - state.activeSet.neededColums)
+    (direction === 'left' && state.activeSet.startColum <= 0) ||
+    (direction === 'right' && state.activeSet.startColum >= 24 - state.activeSet.neededColums)
   ) {
+    console.log('rechts angekommen: ', state.activeSet.startColum)
     state.feedback.message =
       'Es gibt leider keine Möglichkeiten diesen Satz zu verschieben, da andere Sätze zum aktuellen Zeitpunkt oder später dies blockieren.'
 
     feedbackOpen.value = true
+    return
   }
 
   //das Array mit den startColums beeinhaltet nicht die aktuelle startColum
@@ -137,13 +159,13 @@ function moveSet(direction) {
   console.log('startColumns alt: ', state.startColums)
   console.log('state.activeSet.startColum: ', state.activeSet.startColum)
   console.log('--------------------')
-  state.startColums.push(state.activeSet.startColum)
+  // state.startColums.push(state.activeSet.startColum)
   // state.startColums.push(1000)
 
   //array sortieren
   // const sorted = state.startColums.sort((a, b) => a - b)
   // console.log('sorted ', sorted)
-  console.log('startcolumns nach push:', state.startColums)
+  //console.log('startcolumns nach push:', state.startColums)
   state.startColums = state.startColums.sort((a, b) => a - b)
   console.log('sortierte startcolumns nach push:', state.startColums)
   console.log('##################')
