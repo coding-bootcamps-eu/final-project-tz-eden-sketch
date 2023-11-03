@@ -64,7 +64,8 @@ export const usePlantBedsStore = defineStore('beds', () => {
         calculatedTime.month,
         calculatedTime.period
       )[2]
-
+      console.log('currentBedArray: ', currentBedArray)
+      console.log('needed columns: ', currentPlantSet.neededColums)
       for (let k = 0; k < currentBedArray.length; k++) {
         let currentStartColumn = k
         let count = 0

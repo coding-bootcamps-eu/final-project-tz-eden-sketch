@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
-import { onUpdated, reactive, watch, ref } from 'vue'
+import { reactive, watch, ref } from 'vue'
 import InfoModal from '@/components/InfoModal.vue'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 
@@ -158,6 +158,8 @@ function moveSet(direction) {
   //aktuelle startcolum ergänzen
   console.log('startColumns alt: ', state.startColums)
   console.log('state.activeSet.startColum: ', state.activeSet.startColum)
+
+  console.log('needed columns: ', state.activeSet.neededColums)
   console.log('--------------------')
   // state.startColums.push(state.activeSet.startColum)
   // state.startColums.push(1000)
@@ -181,6 +183,15 @@ function moveSet(direction) {
     newStartColum = state.startColums[state.currentPosition + 1]
   }
 
+  // fix für "kollidierende" sets
+  if (newStartColum === undefined) {
+    state.feedback.message =
+      'Es gibt leider keine Möglichkeiten diesen Satz zu verschieben, da andere Sätze zum aktuellen Zeitpunkt oder später dies blockieren.'
+
+    feedbackOpen.value = true
+    return
+  }
+
   plantBedsStore.updatePositionInBed(props.bedNumber, state.activeSet.id, newStartColum)
 }
 
@@ -192,16 +203,16 @@ watch(feedbackOpen, async () => {
   }
 })
 
-onUpdated(async () => {
-  //   state.startColums = plantBedsStore.calculateStartColumsInBed(
-  //     props.bedNumber,
-  //     plantBedsStore.state.currentMonth,
-  //     plantBedsStore.state.currentPeriod,
-  //     state.activeSet.varietyId,
-  //     state.activeSet.cultureDurationIntern,
-  //     state.activeSet.rowDistance
-  //   )
-})
+// onUpdated(async () => {
+//   //   state.startColums = plantBedsStore.calculateStartColumsInBed(
+//   //     props.bedNumber,
+//   //     plantBedsStore.state.currentMonth,
+//   //     plantBedsStore.state.currentPeriod,
+//   //     state.activeSet.varietyId,
+//   //     state.activeSet.cultureDurationIntern,
+//   //     state.activeSet.rowDistance
+//   //   )
+// })
 </script>
 
 <style scoped>
