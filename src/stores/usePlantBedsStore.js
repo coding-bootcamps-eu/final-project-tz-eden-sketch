@@ -8,8 +8,10 @@ export const usePlantBedsStore = defineStore('beds', () => {
     currentPeriod: 'anfang',
 
     currentBedplan: { beds: [] }, //leeres Object
-    freeColumsLeft: [],
-    currentUserVarieties: []
+    freeColumsLeft: [], //wird nicht mehr genutzt??
+
+    moveSetModusIsActive: [false, false, false, false, false, false],
+    activeSets: [] // [{bednumber: 1, set:{...}}, ...]
   })
 
   async function loadBedplan(bedId) {
@@ -21,6 +23,18 @@ export const usePlantBedsStore = defineStore('beds', () => {
   const currentTime = computed(() => {
     return translateTime(state.currentMonth, state.currentPeriod)
   })
+
+  async function updateBedplan() {
+    // async function putTodo(id, todoLi) {
+    const resp = await fetch('http://localhost:3000/bedplans/' + state.currentBedplan.id, {
+      method: 'PUT',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify(state.currentBedplan)
+    })
+
+    const data = await resp.json()
+    return data
+  }
 
   const spaceLeftInCurrentBed = computed(() => {
     const countArray = []
@@ -319,7 +333,15 @@ export const usePlantBedsStore = defineStore('beds', () => {
     return { value: isSpace, colum: '', otherVariety: '' }
   }
 
-  function addSet(bedNumber, month, period, varietyId, startColum0, cultureDuration, rowDistance) {
+  async function addSet(
+    bedNumber,
+    month,
+    period,
+    varietyId,
+    startColum0,
+    cultureDuration,
+    rowDistance
+  ) {
     const bed = state.currentBedplan.beds.filter((bedItem) => bedItem.bedNumber === bedNumber)[0]
 
     const newSet = {
@@ -332,14 +354,14 @@ export const usePlantBedsStore = defineStore('beds', () => {
     }
 
     bed.sets.push(newSet)
-    //todo: an API updaten
+    await updateBedplan()
   }
 
-  function getRandomInt(min, max) {
-    min = Math.ceil(min)
-    max = Math.floor(max)
-    return Math.floor(Math.random() * (max - min) + min) // The maximum is exclusive and the minimum is inclusive
-  }
+  // function getRandomInt(min, max) {
+  //   min = Math.ceil(min)
+  //   max = Math.floor(max)
+  //   return Math.floor(Math.random() * (max - min) + min) // The maximum is exclusive and the minimum is inclusive
+  // }
 
   function calculateStartColumsInBed(
     bedNumber,
@@ -348,7 +370,11 @@ export const usePlantBedsStore = defineStore('beds', () => {
     varietyId,
     cultureDurationIntern,
     rowDistance
+    // setId=null !!!!!! muss in die folgenden Funktionen mitgeschleppt werden
   ) {
+    // console.log('Bed-Nr ' + bedNumber)
+    // console.log('variety-id ' + varietyId)
+    // console.log('row-distance ' + rowDistance)
     const startColums = []
 
     for (let i = 0; i < 24; i++) {
@@ -386,6 +412,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
         state.currentBedplan.beds[bedNumber - 1].sets.splice(i, 1)
       }
     }
+    updateBedplan()
   }
 
   function harvestSet(setId, bedNumber) {
@@ -397,11 +424,24 @@ export const usePlantBedsStore = defineStore('beds', () => {
         state.currentBedplan.beds[bedNumber - 1].sets[i].cultureDuration = newCultureDuration - 1
       }
     }
+    updateBedplan()
+  }
+
+  function updatePositionInBed(bedNumber, setId, newStartColum0) {
+    const currentBed = state.currentBedplan.beds.find(
+      (bedItem) => bedItem['bedNumber'] === bedNumber
+    )
+    const currentSet = currentBed.sets.find((setItem) => setItem['id'] === setId)
+
+    currentSet.startColum = newStartColum0
+
+    updateBedplan()
   }
 
   return {
     state,
     loadBedplan,
+    updateBedplan,
     spaceLeftInCurrentBed,
     currentTime,
     translateTimeBack,
@@ -413,9 +453,10 @@ export const usePlantBedsStore = defineStore('beds', () => {
     addSet,
     isSpaceInBedForSet,
     calculateStartColumsInBed,
-    getRandomInt, //todo: später löschen,
+    //getRandomInt, //todo: später löschen,
     deleteSet,
     harvestSet,
-    getVariety
+    getVariety,
+    updatePositionInBed
   }
 })
