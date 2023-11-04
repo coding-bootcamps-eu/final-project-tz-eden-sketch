@@ -9,7 +9,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
 
     currentBedplan: { beds: [] }, //leeres Object
     freeColumsLeft: [],
-    currentUserVarieties: [],
+    currentUserVarieties: []
   })
 
   async function loadBedplan(bedId) {

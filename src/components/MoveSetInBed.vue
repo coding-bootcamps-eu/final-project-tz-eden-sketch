@@ -1,0 +1,210 @@
+<template>
+  <!-- <q-btn
+    class="btn"
+    color="primary"
+    label="< >"
+    @click="plantBedsStore.state.moveSetModusIsActive = true"
+  >
+  </q-btn> -->
+  <div class="toolbar-move-switch">
+    <q-toggle
+      v-model="plantBedsStore.state.moveSetModusIsActive[props.bedNumber - 1]"
+      color="primary"
+      label="Set verschieben"
+      right-label
+    >
+    </q-toggle>
+
+    <div class="move-buttons">
+      <q-btn
+        class="btn left"
+        color="primary"
+        label="<"
+        v-if="plantBedsStore.state.moveSetModusIsActive[props.bedNumber - 1]"
+        @click="moveSet('left')"
+      >
+      </q-btn>
+
+      <q-btn
+        class="btn right"
+        color="primary"
+        label=">"
+        v-if="plantBedsStore.state.moveSetModusIsActive[props.bedNumber - 1]"
+        @click="moveSet('right')"
+      >
+      </q-btn>
+    </div>
+  </div>
+
+  <InfoModal :open="feedbackOpen" :message="state.feedback.message"></InfoModal>
+</template>
+
+<script setup>
+import { reactive, watch, ref } from 'vue'
+import InfoModal from '@/components/InfoModal.vue'
+import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
+
+const plantBedsStore = usePlantBedsStore()
+console.log(plantBedsStore)
+
+const state = reactive({
+  activeSet: {},
+  startColums: [],
+  currentPosition: null, //Index in startColums-Array
+
+  feedback: {
+    message: ''
+  }
+})
+const feedbackOpen = ref(false)
+
+const props = defineProps({
+  bedNumber: Number
+})
+
+function moveSet(direction) {
+  //finde actives set
+  let activeSetId = null
+  activeSetId = plantBedsStore.state.activeSets.find(
+    (bedItem) => bedItem.bedNumber === props.bedNumber
+  ).setId
+
+  if (activeSetId === null) {
+    state.feedback.message =
+      'Bitte wähle einen Satz aus, den du verschieben möchtest. Dazu auf den Satz tippen/klicken.'
+    feedbackOpen.value = true
+    return
+  } else {
+    const currentBed = plantBedsStore.state.currentBedplan.beds.find(
+      (bedItem) => bedItem.bedNumber === props.bedNumber
+    )
+
+    const currentSet = currentBed.sets.find((setItem) => setItem.id === activeSetId)
+    state.activeSet = currentSet
+  }
+
+  // console.log(
+  //   'params für startcolum: ',
+  //   props.bedNumber,
+  //   plantBedsStore.state.currentMonth,
+  //   plantBedsStore.state.currentPeriod,
+  //   state.activeSet.plantvarietiesId,
+  //   state.activeSet.cultureDuration,
+  //   state.activeSet.neededColums * 5
+  // )
+  state.startColums = plantBedsStore.calculateStartColumsInBed(
+    props.bedNumber,
+    plantBedsStore.state.currentMonth,
+    plantBedsStore.state.currentPeriod,
+    state.activeSet.plantvarietiesId,
+    state.activeSet.cultureDuration,
+    state.activeSet.neededColums * 5
+  )
+
+  if (state.activeSet.startTime < plantBedsStore.currentTime) {
+    const startMonth = plantBedsStore.translateTimeBack(state.activeSet.startTime).month
+    const startPeriod = plantBedsStore.translateTimeBack(state.activeSet.startTime).period
+
+    state.feedback.message =
+      'Ein Satz kann nur im Pflanzzeitraum im Beet verschoben werden. Gehe zu ' +
+      startPeriod +
+      ' ' +
+      startMonth +
+      ' um den Satz im Beet zu verschieben oder wähle einen anderen Satz aus.'
+    feedbackOpen.value = true
+    return
+  }
+
+  if (
+    state.startColums.length === 0 ||
+    (direction === 'left' && state.activeSet.startColum === 0) ||
+    (direction === 'right' && state.activeSet.startColum === 24 - state.activeSet.neededColums)
+  ) {
+    state.feedback.message =
+      'Es gibt leider keine Möglichkeiten diesen Satz zu verschieben, da andere Sätze zum aktuellen Zeitpunkt oder später dies blockieren.'
+
+    feedbackOpen.value = true
+    return
+  }
+
+  //das Array mit den startColums beeinhaltet NICHT
+  //die aktuelle startColum und die Spalten die gerade durch das set selbst belegt sind
+  //--> startColum des activen sets ergänzen
+  console.log('startColumns alt: ', state.startColums)
+  console.log('state.activeSet.startColum: ', state.activeSet.startColum)
+  console.log('--------------------')
+
+  state.startColums.push(state.activeSet.startColum)
+  //bei den restlichen Spalten, die das set belegt prüfen, ob diese auch ergänzt werden können
+
+  ////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // Achtung Baustelle !!!!!!!!!!!!!!!!!!!!!!!!!!
+  const startColum = state.activeSet.startColum + 1 //aktuelle Startspalte wurde schon ergänzt
+  const lastColum = startColum + state.activeSet.neededColums
+
+  console.log('params ', plantBedsStore.currentMonth, plantBedsStore.currentPeriod)
+
+  // for (let i = startColum; i < lastColum; i++) {
+  //   if (
+  //     plantBedsStore.checkIfAddSetPossible(
+  //       props.bedNumber,
+  //       plantBedsStore.state.currentMonth,
+  //       plantBedsStore.state.currentPeriod,
+  //       state.activeSet.plantvarietiesId,
+  //       i,
+  //       state.activeSet.cultureDuration,
+  //       state.activeSet.neededColums * 5
+  //     ).value
+  //   ) {
+  //     state.startColums.push(i)
+  //   }
+  // }
+
+  //array sortieren
+  // const sorted = state.startColums.sort((a, b) => a - b)
+  // console.log('sorted ', sorted)
+  console.log('startcolumns nach push:', state.startColums)
+  state.startColums = state.startColums.sort((a, b) => a - b)
+  console.log('sortierte startcolumns nach push:', state.startColums)
+  console.log('##################')
+
+  //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // Achtung Baustelle !!!!!!!!!!!!!!!!!!!!!!!!!!
+
+  //aktuellen Index ermitteln
+  state.currentPosition = state.startColums.indexOf(state.activeSet.startColum)
+
+  //neue Position setzen
+  let newStartColum = null
+  if (direction === 'left') {
+    newStartColum = state.startColums[state.currentPosition - 1]
+  } else {
+    newStartColum = state.startColums[state.currentPosition + 1]
+  }
+
+  plantBedsStore.updatePositionInBed(props.bedNumber, state.activeSet.id, newStartColum)
+}
+
+watch(feedbackOpen, async () => {
+  if (feedbackOpen.value) {
+    setTimeout(() => {
+      feedbackOpen.value = false
+    }, 2000)
+  }
+})
+</script>
+
+<style scoped>
+.toolbar-move-switch {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+}
+.move-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+</style>
