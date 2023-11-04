@@ -413,10 +413,11 @@ export const usePlantBedsStore = defineStore('beds', () => {
     varietyId,
     cultureDurationIntern,
     rowDistance
+    // setId=null !!!!!! muss in die folgenden Funktionen mitgeschleppt werden
   ) {
-    console.log('Bed-Nr ' + bedNumber)
-    console.log('variety-id ' + varietyId)
-    console.log('row-distance ' + rowDistance)
+    // console.log('Bed-Nr ' + bedNumber)
+    // console.log('variety-id ' + varietyId)
+    // console.log('row-distance ' + rowDistance)
     const startColums = []
 
     for (let i = 0; i < 24; i++) {

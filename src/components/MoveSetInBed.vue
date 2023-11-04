@@ -45,6 +45,7 @@ import InfoModal from '@/components/InfoModal.vue'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 
 const plantBedsStore = usePlantBedsStore()
+console.log(plantBedsStore)
 
 const state = reactive({
   activeSet: {},
@@ -52,7 +53,6 @@ const state = reactive({
   currentPosition: null, //Index in startColums-Array
 
   feedback: {
-    // open: false,
     message: ''
   }
 })
@@ -94,24 +94,6 @@ function moveSet(direction) {
   )
   console.log('***********************************')
 
-  console.log(
-    'params für startcolum: ',
-    props.bedNumber,
-    plantBedsStore.state.currentMonth,
-    plantBedsStore.state.currentPeriod,
-    state.activeSet.plantvarietiesId,
-    state.activeSet.cultureDuration,
-    state.activeSet.neededColums * 5
-  )
-  // state.startColums = plantBedsStore.calculateStartColumsInBed(
-  //   props.bedNumber,
-  //   plantBedsStore.state.currentMonth,
-  //   plantBedsStore.state.currentPeriod,
-  //   state.activeSet.plantvarietiesId,
-  //   state.activeSet.cultureDuration,
-  //   state.activeSet.neededColums * 5
-  // )
-
   state.startColums = plantBedsStore.newStartColumns(
     props.bedNumber,
     plantBedsStore.state.currentMonth,
@@ -119,11 +101,6 @@ function moveSet(direction) {
     state.activeSet
   )
 
-  console.log('culture duration: ' + state.activeSet.cultureDuration)
-  // console.log(
-  //   'state.activeSet.startTime < plantBedsStore.currentTime: ',
-  //   state.activeSet.startTime < plantBedsStore.currentTime
-  // )
   if (state.activeSet.startTime < plantBedsStore.currentTime) {
     const startMonth = plantBedsStore.translateTimeBack(state.activeSet.startTime).month
     const startPeriod = plantBedsStore.translateTimeBack(state.activeSet.startTime).period
@@ -138,9 +115,6 @@ function moveSet(direction) {
     return
   }
 
-  // console.log('startcolums: ', state.startColums)
-  // console.log('state.activeSet.startColum: ', state.activeSet.startColum)
-
   if (
     state.startColums.length === 0 ||
     (direction === 'left' && state.activeSet.startColum <= 0) ||
@@ -154,14 +128,15 @@ function moveSet(direction) {
     return
   }
 
-  //das Array mit den startColums beeinhaltet nicht die aktuelle startColum
-  //aktuelle startcolum ergänzen
+  //das Array mit den startColums beeinhaltet NICHT
+  //die aktuelle startColum und die Spalten die gerade durch das set selbst belegt sind
+  //--> startColum des activen sets ergänzen
   console.log('startColumns alt: ', state.startColums)
   console.log('state.activeSet.startColum: ', state.activeSet.startColum)
 
   console.log('needed columns: ', state.activeSet.neededColums)
   console.log('--------------------')
-  // state.startColums.push(state.activeSet.startColum)
+
   // state.startColums.push(1000)
 
   //array sortieren
@@ -171,6 +146,10 @@ function moveSet(direction) {
   state.startColums = state.startColums.sort((a, b) => a - b)
   console.log('sortierte startcolumns nach push:', state.startColums)
   console.log('##################')
+
+  //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // Achtung Baustelle !!!!!!!!!!!!!!!!!!!!!!!!!!
 
   //aktuellen Index ermitteln
   state.currentPosition = state.startColums.indexOf(state.activeSet.startColum)
@@ -202,17 +181,6 @@ watch(feedbackOpen, async () => {
     }, 2000)
   }
 })
-
-// onUpdated(async () => {
-//   //   state.startColums = plantBedsStore.calculateStartColumsInBed(
-//   //     props.bedNumber,
-//   //     plantBedsStore.state.currentMonth,
-//   //     plantBedsStore.state.currentPeriod,
-//   //     state.activeSet.varietyId,
-//   //     state.activeSet.cultureDurationIntern,
-//   //     state.activeSet.rowDistance
-//   //   )
-// })
 </script>
 
 <style scoped>

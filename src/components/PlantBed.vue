@@ -168,6 +168,7 @@ function setActiveSet(set) {
   display: flex;
   justify-content: center;
   margin-bottom: auto;
+  height: 20%;
 }
 .variety-image {
   object-fit: contain;

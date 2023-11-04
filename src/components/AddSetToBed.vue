@@ -29,6 +29,7 @@
           :filter="state.filter"
           rows-per-page-label="Sorten pro Seite"
           :rows-per-page-options="[0, 5, 10, 25, 50]"
+          :grid="$q.screen.lt.md"
         >
           <!-- grid
             hide-header-->
