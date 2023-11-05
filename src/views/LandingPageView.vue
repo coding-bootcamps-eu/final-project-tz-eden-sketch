@@ -179,7 +179,7 @@
       </div> -->
       <!-- <img class="scaling-svg" src="../assets/images/beete_animation.svg" alt="" /> -->
 
-      <!-- <article class="article bed">
+      <article class="article bed">
         <h3 class="headline-sub">Beeteinteilung</h3>
         <p>
           Teile deine Beetfläche in 6 gleich große Flächen. Idealerweise mit einer Breite von 1,2 m
@@ -187,9 +187,9 @@
           ausgelegt dass du von beiden Seiten gut an das Gemüse heran kommst. Wenn du mehr Platz
           hast, kannst du auch Beete anlegen, die länger als 2,5m sind.
         </p>
-      </article> -->
+      </article>
 
-      <!-- <article class="article fruchtfolge">
+      <article class="article fruchtfolge">
         <h3 class="headline-sub">Fruchtfolge</h3>
         <p>
           Werden Gemüse derselben Pflanzenfamilie immer wieder auf derselben Stelle im Beet
@@ -199,9 +199,9 @@
           rotieren die Beete dann einen Platz weiter. Beet 2 wird zu Beet 1 und Beet 1 zu Beet 6
           usw..
         </p>
-      </article> -->
+      </article>
 
-      <!-- <article class="article mischkultur">
+      <article class="article mischkultur">
         <h3 class="headline-sub">Mischkultur</h3>
         <p>
           Einige Pflanzen unterstützen sich gegenseitig darin Schädlinge fern zu halten oder passen
@@ -209,17 +209,13 @@
           zusammen weil sie sich gegenseitigim Wachstum hemmen. Daher kannst du die Sätze im Beet
           verschieben.
         </p>
-      </article> -->
+      </article>
 
       <svg
+        class="bed-animation"
         width="100%"
         height="100%"
         viewBox="0 0 5610 4780"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        xml:space="preserve"
-        xmlns:serif="http://www.serif.com/"
         style="
           fill-rule: evenodd;
           clip-rule: evenodd;
@@ -228,7 +224,7 @@
           stroke-miterlimit: 1.5;
         "
       >
-        <g id="before">
+        <!-- <g id="before">
           <g id="Beet-hinten">
             <g id="Beetumrandung">
               <rect
@@ -739,7 +735,7 @@
               "
             />
           </g>
-        </g>
+        </g> -->
         <g id="after">
           <g id="Beet-hinten1" serif:id="Beet-hinten">
             <g id="Beetumrandung2" serif:id="Beetumrandung">
@@ -1007,6 +1003,7 @@
           </g>
           <g id="water1" serif:id="water">
             <path
+              class="water path28"
               d="M3237.83,1456.95c0,-0 -839.394,-118.583 -1283.22,902.814"
               style="
                 fill: none;
@@ -1016,6 +1013,7 @@
               "
             />
             <path
+              class="water path29"
               d="M3279.3,1654c-0,-0 -390.149,234.666 -391.707,750.266"
               style="
                 fill: none;
@@ -1025,6 +1023,7 @@
               "
             />
             <path
+              class="water path30"
               d="M3279.3,1600.05c-0,0 -404.892,196.064 -515.467,759.716"
               style="
                 fill: none;
@@ -1034,6 +1033,7 @@
               "
             />
             <path
+              class="water path31"
               d="M3279.3,1554.32c-0,-0 -468.619,192.222 -657.379,849.946"
               style="
                 fill: none;
@@ -1043,6 +1043,7 @@
               "
             />
             <path
+              class="water path32"
               d="M3279.3,1517.8c-0,-0 -776.381,-222.551 -1262.26,1009.4"
               style="
                 fill: none;
@@ -1052,6 +1053,7 @@
               "
             />
             <path
+              class="water path33"
               d="M3222.21,1554.32c0,-0 -525.409,-155.627 -948.598,849.946"
               style="
                 fill: none;
@@ -1061,6 +1063,7 @@
               "
             />
             <path
+              class="water path34"
               d="M3226.8,1560.26c-0,0 -513.812,65.348 -864.098,943.812"
               style="
                 fill: none;
@@ -1336,7 +1339,7 @@ function login() {
 }
 
 // function calc() {
-//   for (let i = 1; i < 28; i++) {
+//   for (let i = 28; i < 35; i++) {
 //     let path = document.querySelector('.path' + i)
 //     let length = path.getTotalLength()
 //     // console.log('path', i, ': ', length)
@@ -1434,6 +1437,13 @@ function login() {
   grid-column-end: 6;
 }
 
+.bed-animation {
+  grid-row-start: 5;
+  grid-column-start: 1;
+  grid-row-end: 8;
+  grid-column-end: 4;
+}
+
 /* #watercan {
   position: absolute;
   top: 0;
@@ -1442,7 +1452,7 @@ function login() {
 
 .path {
   /* animation: dash 15s alternate infinite; */
-  /* animation: dash 7s linear forwards; */
+  animation: dash 7s linear forwards;
 }
 
 .scaling-svg-container {
@@ -1574,4 +1584,66 @@ function login() {
   stroke-dasharray: 860.891845703125;
   stroke-dashoffset: 860.891845703125;
 }
+
+/* Beet Animation */
+@keyframes rotate {
+  40% {
+    transform: rotate(25deg);
+  }
+}
+
+@keyframes waterdash {
+  50% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.water {
+  animation: waterdash alternate infinite;
+  animation-duration: 5s; /* the length of the animation */
+  animation-delay: 4s;
+  transition-property: opacity;
+}
+
+#watercan1 {
+  transform-origin: center;
+  animation-name: rotate; /* the name of the animation keyframes */
+  animation-duration: 4s; /* the length of the animation */
+  animation-delay: 0s; /* the time before the animation starts */
+  animation-iteration-count: infinite; /* how many times the animation will play*/
+  animation-direction: normal; /* which direction it will run it*/
+  animation-play-state: running; /* playing or paused*/
+  animation-fill-mode: none; /* what effect the animation styles will have on the element outside of the animation*/
+  animation-timing-function: ease; /* the ease of the animation*/
+}
+
+.path28 {
+  stroke-dasharray: 1678.6876220703125;
+  stroke-dashoffset: 1678.6876220703125;
+}
+.path29 {
+  stroke-dasharray: 880.99853515625;
+  stroke-dashoffset: 880.99853515625;
+}
+.path30 {
+  stroke-dasharray: 947.1255493164062;
+  stroke-dashoffset: 947.1255493164062;
+}
+.path31 {
+  stroke-dasharray: 1106.0677490234375;
+  stroke-dashoffset: 1106.0677490234375;
+}
+.path32 {
+  stroke-dasharray: 1756.816650390625;
+  stroke-dashoffset: 1756.816650390625;
+}
+.path33 {
+  stroke-dasharray: 1368.3585205078125;
+  stroke-dashoffset: 1368.3585205078125;
+}
+.path34 {
+  stroke-dasharray: 1327.5054931640625;
+  stroke-dashoffset: 1327.5054931640625;
+}
+/* Beet Animation */
 </style>
