@@ -190,6 +190,7 @@ watch(feedbackOpen, async () => {
   justify-content: start;
   align-items: center;
 }
+
 .move-buttons {
   display: flex;
   justify-content: space-between;
