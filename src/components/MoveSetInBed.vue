@@ -7,32 +7,35 @@
   >
   </q-btn> -->
   <div class="toolbar-move-switch">
-    <q-toggle
-      v-model="plantBedsStore.state.moveSetModusIsActive[props.bedNumber - 1]"
-      color="primary"
-      label="Set verschieben"
-      right-label
-    >
-    </q-toggle>
-
-    <div class="move-buttons">
-      <q-btn
-        class="btn left"
+    <div class="toolbar-wrapper">
+      <q-toggle
+        class="toggle-slider"
+        v-model="plantBedsStore.state.moveSetModusIsActive[props.bedNumber - 1]"
         color="primary"
-        label="<"
-        v-if="plantBedsStore.state.moveSetModusIsActive[props.bedNumber - 1]"
-        @click="moveSet('left')"
+        label="Set verschieben"
+        right-label
       >
-      </q-btn>
+      </q-toggle>
 
-      <q-btn
-        class="btn right"
-        color="primary"
-        label=">"
-        v-if="plantBedsStore.state.moveSetModusIsActive[props.bedNumber - 1]"
-        @click="moveSet('right')"
-      >
-      </q-btn>
+      <div class="move-buttons">
+        <q-btn
+          class="btn left"
+          color="primary"
+          label="<"
+          v-if="plantBedsStore.state.moveSetModusIsActive[props.bedNumber - 1]"
+          @click="moveSet('left')"
+        >
+        </q-btn>
+
+        <q-btn
+          class="btn right"
+          color="primary"
+          label=">"
+          v-if="plantBedsStore.state.moveSetModusIsActive[props.bedNumber - 1]"
+          @click="moveSet('right')"
+        >
+        </q-btn>
+      </div>
     </div>
   </div>
 
@@ -186,14 +189,35 @@ watch(feedbackOpen, async () => {
 <style scoped>
 .toolbar-move-switch {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: start;
   align-items: center;
+  height: 7rem;
+  align-items: flex-start;
+  margin-right: 0.5rem;
 }
-
+.toolbar-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+.toggle-slider {
+  justify-self: start !important;
+}
 .move-buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   gap: 0.5rem;
+}
+
+@media screen and (min-width: 600px) {
+  .toolbar-move-switch {
+    height: 6rem;
+  }
+}
+@media screen and (min-width: 1000px) {
+  .toolbar-move-switch {
+    height: 5.5rem;
+  }
 }
 </style>

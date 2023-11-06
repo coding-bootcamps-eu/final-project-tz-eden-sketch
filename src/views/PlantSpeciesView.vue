@@ -126,16 +126,17 @@ h3 {
 }
 
 .header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 9rem 1fr;
   justify-content: start;
   align-items: center;
-  gap: 0.5rem;
+  gap: 3rem;
   padding-block: 0.5rem;
   padding-right: 0.5rem;
 }
 
 .image-container {
-  max-width: 200px;
+  width: 100%;
 }
 .image {
   width: 100%;

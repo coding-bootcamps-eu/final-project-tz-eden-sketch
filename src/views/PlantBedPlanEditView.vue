@@ -100,11 +100,11 @@ main {
 
   /* display: flex;
   justify-content: space-between; */
-  border: 1px solid red;
 }
 .bed-headline {
+  font-weight: 500;
   font-size: 2rem;
-  border: 1px solid green;
+  padding-left: 0.5rem;
 }
 .bed-toolbar {
   /* position: absolute;

@@ -235,5 +235,9 @@ onUpdated(async () => {
 }
 
 .btn-add {
+  height: 3rem;
+  width: 3rem;
+  align-self: center;
+  margin-right: 2rem;
 }
 </style>
