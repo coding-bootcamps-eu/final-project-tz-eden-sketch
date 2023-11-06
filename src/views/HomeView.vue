@@ -161,12 +161,12 @@ onBeforeMount(async () => {
 .headline {
   color: var(--clr-primary);
   font-family: 'Caveat';
+  font-size: 5rem;
 }
 
 .card-wrapper {
   display: grid;
-  gap: 1rem;
-
+  gap: 2rem;
   grid-template-columns: 1fr;
 }
 .username {
@@ -176,8 +176,6 @@ onBeforeMount(async () => {
 @media screen and (min-width: 600px) {
   .card-wrapper {
     display: grid;
-    gap: 1rem;
-
     grid-template-columns: 1fr 1fr 1fr;
   }
 }
@@ -185,8 +183,6 @@ onBeforeMount(async () => {
 @media screen and (min-width: 1000px) {
   .card-wrapper {
     display: grid;
-    gap: 1rem;
-
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 }

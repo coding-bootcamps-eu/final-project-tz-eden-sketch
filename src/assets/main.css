@@ -230,15 +230,23 @@
   margin: 0;
   font-weight: normal;
 }
+*::selection {
+  background-color: var(--clr-primary);
+  color: var(--clr-info);
+}
 
 * {
   font-family: 'Ubuntu';
 }
 
 :root {
-  font-size: 12px;
+  font-size: 13px;
 }
 
+a {
+  color: black;
+  text-underline-offset: 2px;
+}
 .headline-main {
   font-family: 'Vollkorn';
   font-size: 3rem;

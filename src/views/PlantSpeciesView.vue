@@ -140,6 +140,7 @@ h3 {
 }
 .image {
   width: 100%;
+  max-height: 20rem;
   object-fit: contain;
 }
 
