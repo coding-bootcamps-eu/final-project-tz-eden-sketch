@@ -1,5 +1,5 @@
 <template>
-  <q-btn class="btn-add" color="primary" icon="add" @click="state.openAddPlant = true" />
+  <q-btn class="btn-add" color="primary" icon="add" @click="state.openAddPlant = true" dense />
 
   <q-dialog maximized class="popup-plant add-plants__card" v-model="state.openAddPlant">
     <!-- 'full-width' für desktop, 'maximized' für mobile-->
@@ -29,6 +29,7 @@
           :filter="state.filter"
           rows-per-page-label="Sorten pro Seite"
           :rows-per-page-options="[0, 5, 10, 25, 50]"
+          :grid="$q.screen.lt.md"
         >
           <!-- grid
             hide-header-->
@@ -93,12 +94,12 @@
 
 <script setup>
 import { reactive, onUpdated } from 'vue'
-// import { usePlantsStore } from '@/stores/usePlantsStore'
+import { usePlantsStore } from '@/stores/usePlantsStore'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 import InfoModal from '@/components/InfoModal.vue'
 
 const plantBedsStore = usePlantBedsStore()
-// const plantsStore = usePlantsStore()
+const plantsStore = usePlantsStore()
 
 const props = defineProps({
   bedNumber: Number
@@ -132,10 +133,12 @@ async function mapTableContent() {
 
   for (let i = 0; i < plantBedsStore.state.currentBedplan.userVarieties.length; i++) {
     const currentUserVarietyId = plantBedsStore.state.currentBedplan.userVarieties[i]
+    const currentUserVariety = plantsStore.getVariety(currentUserVarietyId)
+    // console.log(currentUserVariety)
 
-    const URL = `http://localhost:3000/plantvarieties/${currentUserVarietyId}?_embed=plantspeciesId` //todo: besser aus userStore holen??
-    const resp = await fetch(URL)
-    const currentUserVariety = await resp.json()
+    // const URL = `http://localhost:3000/plantvarieties/${currentUserVarietyId}?_embed=plantspeciesId` //todo: besser aus userStore holen??
+    // const resp = await fetch(URL)
+    // const currentUserVariety = await resp.json()
 
     const row = {}
     row.name = currentUserVariety.name
@@ -158,7 +161,7 @@ async function mapTableContent() {
   return rows
 }
 
-function addVarietyToBed() {
+async function addVarietyToBed() {
   let newSets = state.selected
   for (let i = 0; i < newSets.length; i++) {
     //wähle erste verfügbare Position um Set in Beet einzupflanzen
@@ -187,6 +190,8 @@ function addVarietyToBed() {
       break
     }
 
+    //todo: Funktion checkIfAddSetPossible wird auch schon in calculateStartColumsInBed aufgerufen
+    //todo: Aufruf daher hier notwendig????
     const checkAddSetPossible = plantBedsStore.checkIfAddSetPossible(
       props.bedNumber,
       plantBedsStore.state.currentMonth,
@@ -200,7 +205,7 @@ function addVarietyToBed() {
     if (checkAddSetPossible.value) {
       //Satz kann ins Beet eingepflanzt werden
 
-      plantBedsStore.addSet(
+      await plantBedsStore.addSet(
         props.bedNumber,
         plantBedsStore.state.currentMonth,
         plantBedsStore.state.currentPeriod,
@@ -230,6 +235,5 @@ onUpdated(async () => {
 }
 
 .btn-add {
-  margin-left: 3rem;
 }
 </style>

@@ -8,7 +8,10 @@ export const usePlantBedsStore = defineStore('beds', () => {
     currentPeriod: 'anfang',
 
     currentBedplan: { beds: [] }, //leeres Object
-    freeColumsLeft: []
+    freeColumsLeft: [], //wird nicht mehr genutzt??
+
+    moveSetModusIsActive: [false, false, false, false, false, false],
+    activeSets: [] // [{bednumber: 1, set:{...}}, ...]
   })
 
   async function loadBedplan(bedId) {
@@ -20,6 +23,18 @@ export const usePlantBedsStore = defineStore('beds', () => {
   const currentTime = computed(() => {
     return translateTime(state.currentMonth, state.currentPeriod)
   })
+
+  async function updateBedplan() {
+    // async function putTodo(id, todoLi) {
+    const resp = await fetch('http://localhost:3000/bedplans/' + state.currentBedplan.id, {
+      method: 'PUT',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify(state.currentBedplan)
+    })
+
+    const data = await resp.json()
+    return data
+  }
 
   const spaceLeftInCurrentBed = computed(() => {
     const countArray = []
@@ -38,6 +53,45 @@ export const usePlantBedsStore = defineStore('beds', () => {
     return countArray
   })
 
+  function newStartColumns(bedNumber, currentMonth, currentPeriod, currentPlantSet) {
+    const startColumns = []
+    const currentTime = translateTime(currentMonth, currentPeriod)
+
+    for (let i = currentTime; i < currentTime + currentPlantSet.cultureDuration; i++) {
+      const calculatedTime = translateTimeBack(currentTime)
+      const currentBedArray = calculateBedState(
+        bedNumber,
+        calculatedTime.month,
+        calculatedTime.period
+      )[2]
+      console.log('currentBedArray: ', currentBedArray)
+      console.log('needed columns: ', currentPlantSet.neededColums)
+      for (let k = 0; k < currentBedArray.length; k++) {
+        let currentStartColumn = k
+        let count = 0
+        for (let j = k; j < currentBedArray.length; j++) {
+          if (currentBedArray[j] !== 'frei' && currentBedArray[j] !== currentPlantSet.id) {
+            count = 0
+
+            break
+          } else if (currentBedArray[j] === 'frei' || currentBedArray[j] === currentPlantSet.id) {
+            count++
+            if (count < currentPlantSet.neededColums) {
+              continue
+            } else if (count === currentPlantSet.neededColums) {
+              startColumns.push(currentStartColumn)
+              count = 0
+              break
+            }
+          }
+        }
+      }
+      return startColumns
+    }
+
+    // for every period from now + culture duration
+    //
+  }
   function translateTime(month, period) {
     let translation = 0
     const timeDictionary = {
@@ -118,8 +172,10 @@ export const usePlantBedsStore = defineStore('beds', () => {
 
     //preparing empty bed
     const currentBed = [] //24 colums = 120cm in reality
+    const currentBedWithSetIds = []
     for (let i = 0; i < 24; i++) {
       currentBed[i] = 'frei'
+      currentBedWithSetIds[i] = 'frei'
     }
 
     //check each set in bed
@@ -139,10 +195,11 @@ export const usePlantBedsStore = defineStore('beds', () => {
         //set im Beet eintragen
         for (let i = 0; i < currentSet.neededColums; i++) {
           currentBed[currentSet.startColum + i] = currentSet.plantvarietiesId
+          currentBedWithSetIds[currentSet.startColum + i] = currentSet.id
         }
       }
     }
-    return [currentBed, relevantSets]
+    return [currentBed, relevantSets, currentBedWithSetIds]
   }
 
   async function addBedplan(userId, title, description, userVarieties) {
@@ -303,6 +360,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
 
   function isSpaceInBedForSet(bedArray, startColum0, neededColums) {
     let isSpace = false
+    // console.log('isSpaceInBedForSet :' + bedArray, startColum0, neededColums)
 
     for (let i = startColum0; i < startColum0 + neededColums; i++) {
       //todo: prüfen: +1 richtig??
@@ -318,7 +376,15 @@ export const usePlantBedsStore = defineStore('beds', () => {
     return { value: isSpace, colum: '', otherVariety: '' }
   }
 
-  function addSet(bedNumber, month, period, varietyId, startColum0, cultureDuration, rowDistance) {
+  async function addSet(
+    bedNumber,
+    month,
+    period,
+    varietyId,
+    startColum0,
+    cultureDuration,
+    rowDistance
+  ) {
     const bed = state.currentBedplan.beds.filter((bedItem) => bedItem.bedNumber === bedNumber)[0]
 
     const newSet = {
@@ -331,14 +397,14 @@ export const usePlantBedsStore = defineStore('beds', () => {
     }
 
     bed.sets.push(newSet)
-    //todo: an API updaten
+    await updateBedplan()
   }
 
-  function getRandomInt(min, max) {
-    min = Math.ceil(min)
-    max = Math.floor(max)
-    return Math.floor(Math.random() * (max - min) + min) // The maximum is exclusive and the minimum is inclusive
-  }
+  // function getRandomInt(min, max) {
+  //   min = Math.ceil(min)
+  //   max = Math.floor(max)
+  //   return Math.floor(Math.random() * (max - min) + min) // The maximum is exclusive and the minimum is inclusive
+  // }
 
   function calculateStartColumsInBed(
     bedNumber,
@@ -347,7 +413,11 @@ export const usePlantBedsStore = defineStore('beds', () => {
     varietyId,
     cultureDurationIntern,
     rowDistance
+    // setId=null !!!!!! muss in die folgenden Funktionen mitgeschleppt werden
   ) {
+    // console.log('Bed-Nr ' + bedNumber)
+    // console.log('variety-id ' + varietyId)
+    // console.log('row-distance ' + rowDistance)
     const startColums = []
 
     for (let i = 0; i < 24; i++) {
@@ -385,6 +455,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
         state.currentBedplan.beds[bedNumber - 1].sets.splice(i, 1)
       }
     }
+    updateBedplan()
   }
 
   function harvestSet(setId, bedNumber) {
@@ -396,11 +467,24 @@ export const usePlantBedsStore = defineStore('beds', () => {
         state.currentBedplan.beds[bedNumber - 1].sets[i].cultureDuration = newCultureDuration - 1
       }
     }
+    updateBedplan()
+  }
+
+  function updatePositionInBed(bedNumber, setId, newStartColum0) {
+    const currentBed = state.currentBedplan.beds.find(
+      (bedItem) => bedItem['bedNumber'] === bedNumber
+    )
+    const currentSet = currentBed.sets.find((setItem) => setItem['id'] === setId)
+
+    currentSet.startColum = newStartColum0
+
+    updateBedplan()
   }
 
   return {
     state,
     loadBedplan,
+    updateBedplan,
     spaceLeftInCurrentBed,
     currentTime,
     translateTimeBack,
@@ -412,9 +496,11 @@ export const usePlantBedsStore = defineStore('beds', () => {
     addSet,
     isSpaceInBedForSet,
     calculateStartColumsInBed,
-    getRandomInt, //todo: später löschen,
+    //getRandomInt, //todo: später löschen,
     deleteSet,
     harvestSet,
-    getVariety
+    getVariety,
+    updatePositionInBed,
+    newStartColumns
   }
 })

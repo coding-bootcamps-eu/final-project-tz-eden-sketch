@@ -6,20 +6,27 @@
         plantBedsStore.state.currentMonth,
         plantBedsStore.state.currentPeriod
       )[1]"
-      :key="set.plantvarietiesId"
+      :key="set.id"
       class="set"
+      :class="{ active: state.activeSetId === set.id }"
       :style="`--neededColums: ${set.neededColums}; --startColum:${set.startColum + 1}`"
+      @click="setActiveSet(set)"
     >
       <q-tooltip class="bg-secondary text-black" anchor="center middle" self="center middle">
-        <p>{{ plantsStore.getVariety(set.plantvarietiesId)[0].name }}</p>
-        <p>{{ plantsStore.getVariety(set.plantvarietiesId)[0].species }}</p>
+        <div v-if="!plantsStore.getVariety(set.plantvarietiesId)">...</div>
+        <div v-else>
+          <p>{{ plantsStore.getVariety(set.plantvarietiesId).name }}</p>
+          <p>{{ plantsStore.getVariety(set.plantvarietiesId).species }}</p>
+        </div>
       </q-tooltip>
 
       <div class="set-content-wrapper">
         <div class="image-wrapper">
+          <div v-if="!plantsStore.getVariety(set.plantvarietiesId)">...</div>
           <img
+            v-else
             class="variety-image"
-            :src="loadImage(plantsStore.getVariety(set.plantvarietiesId)[0].imagename)"
+            :src="loadImage(plantsStore.getVariety(set.plantvarietiesId).imagename)"
           />
         </div>
 
@@ -58,12 +65,17 @@
 </template>
 
 <script setup>
-// import { computed } from 'vue'
+// import {}
+import { reactive } from 'vue'
 import { usePlantsStore } from '@/stores/usePlantsStore'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 
 const plantBedsStore = usePlantBedsStore()
 const plantsStore = usePlantsStore()
+
+const state = reactive({
+  activeSetId: ''
+})
 
 const props = defineProps({
   bedNumber: Number
@@ -73,15 +85,51 @@ function loadImage(imageName) {
   return new URL(`/src/assets/images/${imageName}`, import.meta.url).href
 }
 
-// const imageUrl = computed((imageName) => {
-//   return new URL(`/src/assets/images/${imageName}`, import.meta.url).href
+function setActiveSet(set) {
+  // plantBedsStore.state.activeSets= [{bednumber: 1, setId:{id vom set}}, ...]
+
+  // const currentBed = plantBedsStore.state.activeSets.find(
+  //   (bedItem) => bedItem['bedNumber'] === props.bedNumber
+  // )
+  let currentBed = null
+  for (let i = 0; i < plantBedsStore.state.activeSets.length; i++) {
+    console.log('active-set bedNumber ' + plantBedsStore.state.activeSets[i].bedNumber)
+    console.log('props.bedNumber ' + props.bedNumber)
+    if (plantBedsStore.state.activeSets[i].bedNumber === props.bedNumber) {
+      currentBed = plantBedsStore.state.activeSets[i]
+      // return
+    }
+  }
+  console.log('currentBed: ', currentBed)
+
+  if (currentBed !== null) {
+    console.log('A')
+    //es gibt schon ein active Set für dieses Beet
+    //setzte neues actives Set für dieses Beet
+    currentBed.setId = set.id
+    state.activeSetId = set.id
+  } else {
+    //es gibt noch kein activeSet für dieses Beet
+    //neu anlegen
+    console.log('B')
+    const bed = { bedNumber: props.bedNumber, setId: set.id }
+    plantBedsStore.state.activeSets.push(bed)
+    state.activeSetId = set.id
+  }
+
+  console.log('state.activeSetId: ', state.activeSetId)
+  console.log('plantBedsStore.state.activeSets: ', plantBedsStore.state.activeSets)
+}
+
+// onUpdated(async () => {
+
 // })
 </script>
 
 <style scoped>
 .bed {
   margin: 0 auto;
-  width: 200px;
+  width: 300px;
   aspect-ratio: 1.2/2.5;
   background-color: var(--clr-dark);
   border-radius: 5px;
@@ -100,11 +148,15 @@ function loadImage(imageName) {
   grid-row-start: 1;
   border-radius: 5px;
 }
+
+.active {
+  border: 2px solid var(--clr-secondary);
+}
 .set-content-wrapper {
-  padding-block: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
+  padding-block: 1rem;
+  /*padding-inline: 0.5rem;*/
+  display: grid;
+  /* justify-content: end; */
   align-items: center;
   gap: 4rem;
   height: 100%;
