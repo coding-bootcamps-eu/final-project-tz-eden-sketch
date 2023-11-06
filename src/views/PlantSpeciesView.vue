@@ -67,7 +67,7 @@ onBeforeMount(async () => {
     <h2>Beschreibung</h2>
     <p>{{ state.species.description }}</p>
     <SeparatorElement />
-
+    <div class="mischkultur-container"></div>
     <h2>Mischkultur</h2>
     <h3>
       <q-icon name="bi-suit-heart-fill"></q-icon>
@@ -113,7 +113,7 @@ main {
   padding-inline: 1.5rem;
 }
 h2 {
-  font-size: large;
+  font-size: 2rem;
   font-weight: bold;
   color: var(--clr-primary);
   margin: 0;
@@ -127,7 +127,7 @@ h3 {
 
 .header {
   display: grid;
-  grid-template-columns: 9rem 1fr;
+  grid-template-columns: 9rem auto;
   justify-content: start;
   align-items: center;
   gap: 3rem;
@@ -153,10 +153,11 @@ h3 {
 .headline-plantname {
   margin: 0;
   margin-bottom: 0.5rem;
+  word-break: break-word;
 }
 
 .botanical-name {
-  font-size: x-large;
+  font-size: 1.5rem;
 }
 
 .separator {
