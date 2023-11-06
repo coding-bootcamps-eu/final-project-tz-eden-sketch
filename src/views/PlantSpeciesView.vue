@@ -4,6 +4,7 @@ import SiteNavigation from '@/components/SiteNavigation.vue'
 import { onBeforeMount, computed, reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import { usePlantsStore } from '@/stores/usePlantsStore'
+import { RouterLink } from 'vue-router'
 
 const route = useRoute()
 const plantsStore = usePlantsStore()
@@ -87,15 +88,15 @@ onBeforeMount(async () => {
 
     <h2>Sorten</h2>
     <ol class="list">
-      <routerLink
+      <RouterLink
         v-for="variety in state.varieties"
         :key="variety.id"
         :to="{ name: 'plantvarietyview', params: { plantvariety: variety.id } }"
       >
-        <li>
+        <li class="list-varieties">
           {{ variety.name }}
         </li>
-      </routerLink>
+      </RouterLink>
     </ol>
   </main>
 
@@ -167,5 +168,8 @@ h3 {
 }
 .list {
   list-style: disc;
+}
+.list:last-child {
+  padding-bottom: 7rem;
 }
 </style>

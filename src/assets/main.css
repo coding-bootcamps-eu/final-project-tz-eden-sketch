@@ -254,8 +254,9 @@
 }
 
 body {
-  padding-bottom: 100rem;
+  padding-bottom: 6rem;
 }
+
 @media screen and (min-width: 600px) {
   :root {
     font-size: 15px;
