@@ -132,7 +132,7 @@ function setActiveSet(set) {
   width: 300px;
   aspect-ratio: 1.2/2.5;
   background-color: var(--clr-dark);
-  border-radius: 5px;
+  border-radius: 10px !important; /*is overwritten by q-card styling if not !important*/
   padding: 0.5rem;
   display: grid;
   grid-template-columns: repeat(24, 1fr);
@@ -150,27 +150,31 @@ function setActiveSet(set) {
 }
 
 .active {
-  border: 2px solid var(--clr-secondary);
+  /* border: 2px solid var(--clr-secondary); */
+  box-shadow: 0 0 6px 5px var(--clr-dark-darker);
+  background-color: var(--clr-info-lighter);
 }
 .set-content-wrapper {
   padding-block: 1rem;
   /*padding-inline: 0.5rem;*/
   display: grid;
-  /* justify-content: end; */
-  align-items: center;
+  grid-template-rows: 3fr 1fr 1fr 1fr;
+  justify-content: center;
+  align-content: center;
   gap: 4rem;
   height: 100%;
 }
 .image-wrapper {
+  margin-top: 0.5rem;
   width: 100%;
-  aspect-ratio: 1;
-  border-radius: 50%;
+  /* border-radius: 50%; */
   display: flex;
   justify-content: center;
   margin-bottom: auto;
-  height: 20%;
+  height: 30%;
 }
 .variety-image {
+  aspect-ratio: 1;
   object-fit: contain;
   width: 100%;
 }

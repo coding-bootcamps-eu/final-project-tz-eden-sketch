@@ -27,6 +27,7 @@ const plantsStore = usePlantsStore()
 <style scoped>
 main {
   padding-inline: 2rem;
+  margin: 0 auto;
 }
 .headline {
   color: var(--clr-primary);
@@ -34,25 +35,19 @@ main {
 
 .card-wrapper {
   display: grid;
-  gap: 1rem;
-
+  gap: 1.5rem;
   grid-template-columns: 1fr;
+  justify-items: center;
 }
 
 @media screen and (min-width: 600px) {
   .card-wrapper {
-    display: grid;
-    gap: 1rem;
-
     grid-template-columns: 1fr 1fr 1fr;
   }
 }
 
 @media screen and (min-width: 1000px) {
   .card-wrapper {
-    display: grid;
-    gap: 1rem;
-
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 }

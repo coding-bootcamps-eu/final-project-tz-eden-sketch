@@ -215,7 +215,9 @@
   --clr-positive: #8fb796;
   --clr-negative: #f57251;
   --clr-info: #f3e2b9;
+  --clr-info-lighter: #fff3d7;
   --clr-warning: #ba2d0b;
+  --clr-dark-darker: #533d09;
 
   --clr-warning-bg: #f89e88; /* 60% lighter */
   --clr-primary-bg: #afcbb4; /* 60% lighter */
@@ -228,13 +230,26 @@
   margin: 0;
   font-weight: normal;
 }
+*::selection {
+  background-color: var(--clr-primary);
+  color: var(--clr-info);
+}
 
 * {
   font-family: 'Ubuntu';
 }
 
+:root {
+  font-size: 13px;
+}
+
+a {
+  color: black;
+  text-underline-offset: 2px;
+}
 .headline-main {
   font-family: 'Vollkorn';
+  font-size: 3rem;
 }
 
 .headline-sub {
@@ -249,5 +264,16 @@
 }
 
 body {
-  padding-bottom: 100rem;
+  padding-bottom: 6rem;
+}
+
+@media screen and (min-width: 600px) {
+  :root {
+    font-size: 15px;
+  }
+}
+@media screen and (min-width: 1000px) {
+  :root {
+    font-size: 17px;
+  }
 }

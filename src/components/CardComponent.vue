@@ -37,14 +37,20 @@ const imageUrl = computed(() => {
 
 <style scoped>
 .card {
+  width: 100%;
   overflow: hidden;
   background: var(--clr-info);
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 7px 1px rgba(0, 0, 0, 0.2);
   position: relative;
-
   max-width: 50ch;
+  transition: all 200ms ease;
+  border-radius: 8px;
+  padding: 0.5rem;
 }
-
+.card:hover {
+  background-color: var(--clr-info-lighter);
+  box-shadow: 0 0 7px 1px rgba(0, 0, 0, 0.3);
+}
 .image-wrapper {
   aspect-ratio: 1;
   width: 100%;
@@ -52,12 +58,15 @@ const imageUrl = computed(() => {
 .card-image {
   width: 100%;
   height: 100%;
+  min-width: 100%;
   object-fit: contain;
 }
-
+.card-infos {
+  font-family: 'Ubuntu';
+}
 .card-title {
-  font-size: 1rem;
-  font-weight: bold;
+  font-size: 1.25rem;
+  font-weight: 500;
   margin: 0;
 }
 

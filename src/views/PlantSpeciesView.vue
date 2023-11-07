@@ -4,6 +4,7 @@ import SiteNavigation from '@/components/SiteNavigation.vue'
 import { onBeforeMount, computed, reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import { usePlantsStore } from '@/stores/usePlantsStore'
+import { RouterLink } from 'vue-router'
 
 const route = useRoute()
 const plantsStore = usePlantsStore()
@@ -66,7 +67,7 @@ onBeforeMount(async () => {
     <h2>Beschreibung</h2>
     <p>{{ state.species.description }}</p>
     <SeparatorElement />
-
+    <div class="mischkultur-container"></div>
     <h2>Mischkultur</h2>
     <h3>
       <q-icon name="bi-suit-heart-fill"></q-icon>
@@ -87,15 +88,15 @@ onBeforeMount(async () => {
 
     <h2>Sorten</h2>
     <ol class="list">
-      <routerLink
+      <RouterLink
         v-for="variety in state.varieties"
         :key="variety.id"
         :to="{ name: 'plantvarietyview', params: { plantvariety: variety.id } }"
       >
-        <li>
+        <li class="list-varieties">
           {{ variety.name }}
         </li>
-      </routerLink>
+      </RouterLink>
     </ol>
   </main>
 
@@ -112,7 +113,7 @@ main {
   padding-inline: 1.5rem;
 }
 h2 {
-  font-size: large;
+  font-size: 2rem;
   font-weight: bold;
   color: var(--clr-primary);
   margin: 0;
@@ -125,19 +126,21 @@ h3 {
 }
 
 .header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 9rem auto;
   justify-content: start;
   align-items: center;
-  gap: 0.5rem;
+  gap: 3rem;
   padding-block: 0.5rem;
   padding-right: 0.5rem;
 }
 
 .image-container {
-  max-width: 200px;
+  width: 100%;
 }
 .image {
   width: 100%;
+  max-height: 20rem;
   object-fit: contain;
 }
 
@@ -150,10 +153,11 @@ h3 {
 .headline-plantname {
   margin: 0;
   margin-bottom: 0.5rem;
+  word-break: break-word;
 }
 
 .botanical-name {
-  font-size: x-large;
+  font-size: 1.5rem;
 }
 
 .separator {
@@ -167,5 +171,8 @@ h3 {
 }
 .list {
   list-style: disc;
+}
+.list:last-child {
+  padding-bottom: 7rem;
 }
 </style>
