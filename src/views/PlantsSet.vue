@@ -214,7 +214,7 @@ const species = [
   {
     name: 'Kartoffel',
     botanicname: 'Solanum tuberosum',
-    imagename: 'potatoe.webp',
+    imagename: 'potato.webp',
     plantfamily: 'Nachtschattengewächse',
     nutrition: 'Starkzehrer',
     goodNeighbors: 'Bohne, Meerrettich, Pfefferminze, Baldrian, Kohlrabi, Kapuzinerkresse, Mais',
@@ -502,7 +502,7 @@ const species = [
   {
     name: 'Süßkartoffel',
     botanicname: 'Ipomoea batatas (L.) Lam.',
-    imagename: 'sweetpotatoe.webp',
+    imagename: 'sweetpotato.webp',
     plantfamily: 'Windengewächse',
     nutrition: 'Starkzehrer',
     goodNeighbors: 'Salat, Radieschen, Spinat',
