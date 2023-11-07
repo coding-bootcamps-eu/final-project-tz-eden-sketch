@@ -720,35 +720,66 @@
       </svg>
 
       <article class="article bed">
-        <h3 class="headline-sub">Beeteinteilung</h3>
-        <p>
-          Teile deine Beetfläche in 6 gleich große Flächen. Idealerweise mit einer Breite von 1,2 m
-          und einer Länge von 2,5 m. Zwischen den Beeten gibt es Wege. Die Breite von 1,2m sind so
-          ausgelegt dass du von beiden Seiten gut an das Gemüse heran kommst. Wenn du mehr Platz
-          hast, kannst du auch Beete anlegen, die länger als 2,5m sind.
-        </p>
+        <div class="atricle-text-wrapper">
+          <h3 class="headline-sub">Beeteinteilung</h3>
+          <p>
+            Teile deine Beetfläche in 6 gleich große Flächen. Idealerweise mit einer Breite von 1,2
+            m und einer Länge von 2,5 m. Zwischen den Beeten gibt es Wege. Die Breite von 1,2m sind
+            so ausgelegt dass du von beiden Seiten gut an das Gemüse heran kommst. Wenn du mehr
+            Platz hast, kannst du auch Beete anlegen, die länger als 2,5m sind.
+          </p>
+        </div>
+
+        <div class="scaling-svg-container">
+          <img
+            class="scaling-svg"
+            src="../assets/images/info-grafic-Beeteinteilung.svg"
+            alt="Beeteinteilung"
+          />
+        </div>
       </article>
 
       <article class="article fruchtfolge">
-        <h3 class="headline-sub">Fruchtfolge</h3>
-        <p>
-          Werden Gemüse derselben Pflanzenfamilie immer wieder auf derselben Stelle im Beet
-          angebaut, kann dies dazu führen dass Schädlinge ein leichteres Spiel haben. Außerdem haben
-          verschiedene Gemüse einen unterschiedlichen Nährstoffbedarf. Für die Beete gibt es daher
-          eine Empfehlung welche Pflanzenfamilien in dem Beet stehen können. Im nächsten Jahr
-          rotieren die Beete dann einen Platz weiter. Beet 2 wird zu Beet 1 und Beet 1 zu Beet 6
-          usw..
-        </p>
+        <div class="atricle-text-wrapper">
+          <h3 class="headline-sub">Fruchtfolge</h3>
+          <p>
+            Werden Gemüse derselben Pflanzenfamilie immer wieder auf derselben Stelle im Beet
+            angebaut, kann dies dazu führen dass Schädlinge ein leichteres Spiel haben. Außerdem
+            haben verschiedene Gemüse einen unterschiedlichen Nährstoffbedarf. Für die Beete gibt es
+            daher eine Empfehlung welche Pflanzenfamilien in dem Beet stehen können. Im nächsten
+            Jahr rotieren die Beete dann einen Platz weiter. Beet 2 wird zu Beet 1 und Beet 1 zu
+            Beet 6 usw..
+          </p>
+        </div>
+
+        <div class="scaling-svg-container">
+          <img
+            class="scaling-svg"
+            src="../assets/images/info-grafic-Fruchtfolge.svg"
+            alt="Fruchtfolge"
+          />
+        </div>
       </article>
 
       <article class="article mischkultur">
-        <h3 class="headline-sub">Mischkultur</h3>
-        <p>
-          Einige Pflanzen unterstützen sich gegenseitig darin Schädlinge fern zu halten oder passen
-          gut zusammen aufgrund der Fläche die sie benötigen. Andere hingegen passen nicht gut
-          zusammen weil sie sich gegenseitigim Wachstum hemmen. Daher kannst du die Sätze im Beet
-          verschieben.
-        </p>
+        <div class="atricle-text-wrapper">
+          <h3 class="headline-sub">Mischkultur</h3>
+          <p>
+            Einige Pflanzen unterstützen sich gegenseitig darin Schädlinge fern zu halten oder
+            passen gut zusammen aufgrund der Fläche die sie benötigen. Andere hingegen passen nicht
+            gut zusammen weil sie sich gegenseitig zum Beispiel im Wachstum hemmen. Daher kannst du
+            die Sätze im Beet verschieben, sodass du eventuell eine bessere Anordnung der
+            Gemüsenachbarn findest.
+          </p>
+        </div>
+
+        <div class="scaling-svg-container">
+          <img
+            class="scaling-svg"
+            src="../assets/images/info-grafic-Mischukultur.svg"
+            alt="Mischkultur"
+          />
+        </div>
       </article>
     </div>
 
@@ -885,7 +916,7 @@ function login() {
 }
 
 .article {
-  grid-column: span 3;
+  grid-column: span 5;
 }
 
 /* Stroke Animation Watercan */
