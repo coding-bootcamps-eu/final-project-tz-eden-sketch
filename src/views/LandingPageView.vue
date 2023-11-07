@@ -3,8 +3,8 @@
     <div class="content-wrapper">
       <q-btn label="Login" @click="login" class="btn-login bg-primary text-white"></q-btn>
 
-      <!-- <h1 class="headline-main title">EdenSketch</h1>
-      <h2 class="headline-sub subtitle">Dein Werkzeug um deinen Gemüsegarten zu planen</h2> -->
+      <h1 class="headline-main title">EdenSketch</h1>
+      <h2 class="headline-sub subtitle">Dein Werkzeug um deinen Gemüsegarten zu planen</h2>
 
       <div class="scaling-svg-container watercan-stroke" id="watercan-stroke">
         <svg
@@ -160,26 +160,26 @@
         </svg>
       </div>
 
-      <!-- <p class="text-intro">
+      <p class="text-intro">
         Mit EdenSketch kannst du deinen Gemüsegarten jetzt detailliert planen. Lege einen Beetplan
         an und plane deine Gemüsekulturen auf den verschiedenen Beeten über den Jahresverlauf. Die
         App unterstützt dich dabei die Fruchtfolge und Mischkultur bei deiner Planung mit zu
         bedenken.
-      </p> -->
+      </p>
 
-      <!-- <div class="scaling-svg-container image-house">
+      <div class="scaling-svg-container image-house">
         <img
           class="scaling-svg"
           src="../assets/images/house-with-garden.svg"
           alt="house with garden"
         />
-      </div> -->
+      </div>
 
       <!-- <div class="scaling-svg-container image-animation-bed">
       </div> -->
       <!-- <img class="scaling-svg" src="../assets/images/beete_animation.svg" alt="" /> -->
-
-      <!-- <article class="article bed">
+      <!-- 
+     <article class="article bed">
         <h3 class="headline-sub">Beeteinteilung</h3>
         <p>
           Teile deine Beetfläche in 6 gleich große Flächen. Idealerweise mit einer Breite von 1,2 m
@@ -189,7 +189,7 @@
         </p>
       </article> -->
 
-      <!-- <article class="article fruchtfolge">
+      <article class="article fruchtfolge">
         <h3 class="headline-sub">Fruchtfolge</h3>
         <p>
           Werden Gemüse derselben Pflanzenfamilie immer wieder auf derselben Stelle im Beet
@@ -199,9 +199,9 @@
           rotieren die Beete dann einen Platz weiter. Beet 2 wird zu Beet 1 und Beet 1 zu Beet 6
           usw..
         </p>
-      </article> -->
+      </article>
 
-      <!-- <article class="article mischkultur">
+      <article class="article mischkultur">
         <h3 class="headline-sub">Mischkultur</h3>
         <p>
           Einige Pflanzen unterstützen sich gegenseitig darin Schädlinge fern zu halten oder passen
@@ -209,7 +209,7 @@
           zusammen weil sie sich gegenseitigim Wachstum hemmen. Daher kannst du die Sätze im Beet
           verschieben.
         </p>
-      </article> -->
+      </article>
 
       <!--Alte version-->
       <!-- <svg 
@@ -2491,23 +2491,36 @@ svg {
 }
 
 @keyframes rotate-to-bed {
-  100% {
+  0% {
+    transform: translateX(0) translateY(0) rotate(0);
+  }
+
+  40% {
     transform: translateX(150px) translateY(2100px) rotate(-40deg);
+  }
+  60% {
+    transform: translateX(150px) translateY(2100px) rotate(-40deg);
+  }
+  100% {
+    transform: translateX(0) translateY(0) rotate(0);
   }
 }
 
-@keyframes rotate-to-start {
+/* @keyframes rotate-to-start {
   100% {
     transform: translateX(-150px) translateY(-2100px) rotate(40deg);
-    /* opacity: 0; */
+
   }
-}
+} */
 
 @keyframes waterdash {
   0% {
     opacity: 0;
   }
-  50% {
+  40% {
+    opacity: 1;
+  }
+  60% {
     opacity: 1;
   }
   100% {
@@ -2519,7 +2532,7 @@ svg {
 .water {
   animation: waterdash linear forwards;
   animation-duration: 5s; /* the length of the animation */
-  animation-delay: 4s;
+  animation-delay: 0s;
   animation-iteration-count: 1;
   transition-property: opacity;
   opacity: 0;
@@ -2528,7 +2541,7 @@ svg {
 #watercan-aside {
   transform-origin: center;
   animation-name: rotate-to-bed;
-  animation-duration: 4s;
+  animation-duration: 5s;
   animation-delay: 0s;
   animation-iteration-count: 1;
   animation-direction: normal;
@@ -2538,10 +2551,11 @@ svg {
 }
 
 #watercan-watering {
+  display: none;
   border: solid 1px green;
   transform-origin: center;
   transform: translateX(150px) translateY(2100px) rotate(-40deg);
-  animation-name: rotate-to-start;
+  /* animation-name: rotate-to-start; */
   animation-duration: 4s;
   animation-delay: 9s;
   animation-iteration-count: 3;
