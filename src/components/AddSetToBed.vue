@@ -238,6 +238,7 @@ onUpdated(async () => {
   height: 3rem;
   width: 3rem;
   align-self: center;
-  margin-right: 2rem;
+  margin-right: 1rem;
+  margin-left: 3rem;
 }
 </style>

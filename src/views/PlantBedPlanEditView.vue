@@ -17,8 +17,8 @@
       <q-toolbar class="bed-header bg-secondary">
         <h2 class="headline-main bed-headline">Beet {{ bed.bedNumber }}</h2>
         <div class="bed-toolbar">
-          <AddSetToBed :bedNumber="bed.bedNumber"></AddSetToBed>
           <MoveSetInBed :bedNumber="bed.bedNumber"></MoveSetInBed>
+          <AddSetToBed :bedNumber="bed.bedNumber"></AddSetToBed>
 
           <!-- <AddSetToBed :bedNumber="bed.bedNumber" class="btn btn-add"></AddSetToBed>
           <MoveSetInBed :bedNumber="bed.bedNumber" class="btn btn-move"></MoveSetInBed> -->
