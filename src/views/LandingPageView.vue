@@ -888,6 +888,7 @@ function login() {
   grid-column: span 3;
 }
 
+/* Stroke Animation Watercan */
 .watercan-stroke {
   width: 100%;
   translate: -80px 50px;
@@ -898,16 +899,10 @@ function login() {
   grid-column-end: 6;
 }
 
-.bed-animation {
-  grid-row-start: 5;
-  grid-column-start: 1;
-  grid-row-end: 8;
-  grid-column-end: 4;
-}
-
 .path {
-  /* animation: dash 15s alternate infinite; */
-  animation: dash 7s linear forwards;
+  /* animation: dash 7s alternate infinite; */
+  animation: dash 7s alternate forwards;
+  animation-iteration-count: 5;
 }
 
 .scaling-svg-container {
@@ -915,7 +910,6 @@ function login() {
   height: 0;
   padding: 0;
   padding-bottom: 100%;
-  /* override this inline for aspect ratio other than square */
 }
 .scaling-svg {
   position: absolute;
@@ -1039,9 +1033,17 @@ function login() {
   stroke-dasharray: 860.891845703125;
   stroke-dashoffset: 860.891845703125;
 }
+/* ^^^^^^^^^^^^^^^^^^^^^^  Stroke Animation Watercan  ^^^^^^^^^^^^^^^^^^^^^^*/
 
 /* Beet Animation */
-svg {
+.bed-animation {
+  grid-row-start: 5;
+  grid-column-start: 1;
+  grid-row-end: 8;
+  grid-column-end: 4;
+
+  padding: 2rem;
+
   overflow: visible;
 }
 
@@ -1093,8 +1095,6 @@ svg {
   animation-delay: 0s;
   animation-iteration-count: 1;
   animation-direction: normal;
-  /*animation-play-state: paused, running; /* playing or paused*/
-  /*animation-fill-mode: none; /* what effect the animation styles will have on the element outside of the animation*/
   animation-timing-function: ease;
 }
 
