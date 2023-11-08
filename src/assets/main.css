@@ -215,12 +215,16 @@
   --clr-positive: #8fb796;
   --clr-negative: #f57251;
   --clr-info: #f3e2b9;
-  --clr-info-lighter: #fff3d7;
+  --clr-info-lighter: hsl(42, 71%, 93%);
   --clr-warning: #ba2d0b;
-  --clr-dark-darker: #533d09;
+  --clr-dark-darker: hsl(42, 71%, 17%);
 
   --clr-warning-bg: #f89e88; /* 60% lighter */
   --clr-primary-bg: #afcbb4; /* 60% lighter */
+
+  --clr-secondary-lighter: hsl(80, 36%, 70%);
+  --clr-primary-darker: hsl(131, 35%, 15%);
+  --clr-primary-lighter: rgb(225, 238, 205);
 }
 
 *,

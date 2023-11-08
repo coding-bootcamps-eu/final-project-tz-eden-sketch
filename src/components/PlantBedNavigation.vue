@@ -4,8 +4,9 @@
       v-model="plantBedsStore.state.currentMonth"
       inline-label
       mobile-arrows
-      class="bg-primary text-accent shadow-2"
+      class="nav-month bg-primary shadow-2"
       dense
+      indicator-color="accent"
     >
       <q-tab v-for="month in monthArray" :name="month.toLowerCase()" :label="month" :key="month" />
     </q-tabs>
@@ -13,8 +14,9 @@
     <q-tabs
       v-model="plantBedsStore.state.currentPeriod"
       inline-label
-      class="bg-secondary text-white shadow-2"
+      class="nav-period bg-secondary shadow-2"
       dense
+      indicator-color="accent"
     >
       <q-tab v-for="part in timePeriods" :name="part.toLowerCase()" :label="part" :key="part" />
     </q-tabs>
@@ -57,5 +59,12 @@ const timePeriods = ref(['Anfang', 'Mitte', 'Ende'])
   top: 0;
   left: 0;
   right: 0;
+}
+
+.nav-month {
+  color: var(--clr-info-lighter);
+}
+.nav-period {
+  color: var(--clr-primary-darker);
 }
 </style>

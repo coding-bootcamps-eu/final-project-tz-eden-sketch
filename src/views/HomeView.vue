@@ -116,10 +116,6 @@ onBeforeMount(async () => {
     </q-dialog>
   </q-bar>
   <div class="overview">
-    <!-- <q-icon name="fa-brands fa-rebel" />
-    <q-icon name="svguse:/icons.svg#seedling" />
-    <q-icon name="svguse:/icons.svg#sprout" /> -->
-
     <header>
       <h1 class="headline-main headline">Eden Sketch</h1>
     </header>
@@ -139,8 +135,8 @@ onBeforeMount(async () => {
       <CardComponent card-title="Wissen" card-link="/blog" card-image="book.svg" />
     </main>
     <SeparatorElement />
-    <footer class="bg-info text-primary shadow-2">
-      <a class="impressum text-primary" href="/impressum">Impressum</a>
+    <footer class="shadow-2">
+      <a class="impressum" href="/impressum">Impressum</a>
     </footer>
   </div>
 
@@ -190,15 +186,17 @@ onBeforeMount(async () => {
 footer {
   padding: 0.5rem;
   text-align: center;
-  height: 3rem;
-  background-color: red;
-  overflow: hidden;
+  height: 5vh;
+  background-color: var(--clr-secondary-lighter);
+
   position: fixed;
   bottom: 0px;
   width: 100%;
   border-top: 1px solid var(--clr-secondary);
+  margin: 0;
 }
 .impressum {
+  color: var(--clr-primary-darker);
   font-weight: 500;
   text-underline-offset: 2px;
 }

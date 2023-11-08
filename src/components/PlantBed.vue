@@ -13,7 +13,7 @@
       @click="setActiveSet(set)"
     >
       <q-card
-        class="bg-secondary text-black tooltip"
+        class="tooltip"
         anchor="center middle"
         self="center middle"
         max-height="50vh"
@@ -254,7 +254,7 @@ function setActiveSet(set) {
 }
 
 .tooltip {
-  padding: 1rem;
+  padding: 1.5rem;
   width: max-content;
   height: max-content;
   position: absolute;
@@ -265,6 +265,8 @@ function setActiveSet(set) {
   visibility: hidden;
   z-index: 1;
   font-size: 1rem;
+  background-color: var(--clr-info-lighter);
+  border-radius: 10px;
 }
 .tooltip-content {
   display: flex;
@@ -275,9 +277,11 @@ function setActiveSet(set) {
 }
 .tooltip-content * {
   margin: 0;
+  color: var(--clr-primary-darker);
 }
 .info-text {
   font-weight: 600;
+  padding-left: 0.2rem;
 }
 .plant-time {
   display: inline-block;

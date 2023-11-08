@@ -1,11 +1,12 @@
 <template>
   <nav>
+    <div class="upper-border"></div>
     <q-tabs
       v-model="tab"
       no-caps
       outside-arrows
       mobile-arrows
-      class="site-navigation bg-info text-primary shadow-2"
+      class="site-navigation shadow-1"
       indicator-color="primary"
     >
       <q-route-tab name="home" label="Übersicht" icon="bi-house" :to="{ name: 'home' }" />
@@ -33,7 +34,11 @@ const tab = ref('')
 </script>
 
 <style scoped>
-.site-navigation {
-  border-top: 1px solid var(--clr-secondary);
+.upper-border {
+  height: 5px;
+}
+nav {
+  background-color: var(--clr-secondary-lighter);
+  color: var(--clr-primary-darker);
 }
 </style>
