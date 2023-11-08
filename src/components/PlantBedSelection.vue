@@ -291,7 +291,7 @@ async function addNewBedplan() {
 
 async function loadPlantbeds() {
   const userId = localStorage.getItem('edenSketchUserId')
-  const URL = `http://localhost:3000/users/${userId}?_embed=bedplans` //todo: besser aus userStore holen??
+  const URL = `${import.meta.env.VITE_EDENSKETCH_API_URL}/users/${userId}?_embed=bedplans` //todo: besser aus userStore holen??
   const resp = await fetch(URL)
   const data = await resp.json()
   return data.bedplans

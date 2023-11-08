@@ -136,7 +136,7 @@ async function mapTableContent() {
     const currentUserVariety = plantsStore.getVariety(currentUserVarietyId)
     // console.log(currentUserVariety)
 
-    // const URL = `http://localhost:3000/plantvarieties/${currentUserVarietyId}?_embed=plantspeciesId` //todo: besser aus userStore holen??
+    // const URL = `${import.meta.env.VITE_EDENSKETCH_API_URL}/plantvarieties/${currentUserVarietyId}?_embed=plantspeciesId` //todo: besser aus userStore holen??
     // const resp = await fetch(URL)
     // const currentUserVariety = await resp.json()
 
