@@ -30,6 +30,7 @@
           <div>
             Sorte:
             <RouterLink
+              class="info-text"
               :to="{
                 name: 'plantvarietyview',
                 params: { plantvariety: plantsStore.getVariety(set.plantvarietiesId).id }
@@ -41,24 +42,41 @@
           </div>
 
           <!-- <p>{{ plantsStore.getVariety(set.plantvarietiesId).name }}</p> -->
-          <p>Art: {{ plantsStore.getVariety(set.plantvarietiesId).species }}</p>
           <p>
-            Eingepflanzt:
-            <span class="plant-time">
+            Art:
+
+            <RouterLink
+              class="info-text"
+              :to="{
+                name: 'plantspeciesview',
+                params: {
+                  plantspecies: plantsStore.getSpeciesIdFromName(
+                    plantsStore.getVariety(set.plantvarietiesId).species
+                  )
+                }
+              }"
+              target="_blank"
+            >
+              {{ plantsStore.getVariety(set.plantvarietiesId).species }}
+            </RouterLink>
+          </p>
+          <p>
+            Gepflanzt:
+            <span class="plant-time info-text">
               {{ plantBedsStore.translateTimeBack(set.startTime).period }}</span
             >
-            <span class="plant-time">
+            <span class="plant-time info-text">
               {{ plantBedsStore.translateTimeBack(set.startTime).month }}</span
             >
           </p>
           <p>
             Ernte:
-            <span class="plant-time">
+            <span class="plant-time info-text">
               {{
                 plantBedsStore.translateTimeBack(set.startTime + set.cultureDuration).period
               }}</span
             >
-            <span class="plant-time">
+            <span class="plant-time info-text">
               {{
                 plantBedsStore.translateTimeBack(set.startTime + set.cultureDuration).month
               }}</span
@@ -186,6 +204,7 @@ function setActiveSet(set) {
   grid-template-columns: repeat(24, 1fr);
   grid-template-rows: 1fr;
   gap: 0.25rem;
+  position: relative;
 }
 .set {
   --neededColums: 0;
@@ -195,9 +214,16 @@ function setActiveSet(set) {
   grid-column: var(--startColum) / span var(--neededColums);
   grid-row-start: 1;
   border-radius: 5px;
-  position: relative;
 }
 
+@media screen and (min-width: 1200px) {
+  .set {
+    position: relative;
+  }
+  .tooltip-content {
+    font-size: 0.9rem;
+  }
+}
 .active {
   /* border: 2px solid var(--clr-secondary); */
   box-shadow: 0 0 6px 5px var(--clr-dark-darker);
@@ -228,8 +254,8 @@ function setActiveSet(set) {
 }
 
 .tooltip {
-  padding: 2rem;
-  width: 10vw;
+  padding: 1rem;
+  width: max-content;
   height: max-content;
   position: absolute;
   top: 50%;
@@ -238,6 +264,7 @@ function setActiveSet(set) {
   offset-anchor: center;
   visibility: hidden;
   z-index: 1;
+  font-size: 1rem;
 }
 .tooltip-content {
   display: flex;
@@ -248,6 +275,9 @@ function setActiveSet(set) {
 }
 .tooltip-content * {
   margin: 0;
+}
+.info-text {
+  font-weight: 600;
 }
 .plant-time {
   display: inline-block;
