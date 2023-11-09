@@ -39,7 +39,7 @@
       <BedAnimation />
 
       <article class="article bed">
-        <div class="atricle-text-wrapper">
+        <div class="article-text-wrapper">
           <h3 class="headline-sub">Beeteinteilung</h3>
           <p>
             Teile deine Beetfläche in 6 gleich große Flächen. Idealerweise mit einer Breite von 1,2
@@ -59,7 +59,7 @@
       </article>
 
       <article class="article fruchtfolge">
-        <div class="atricle-text-wrapper">
+        <div class="article-text-wrapper">
           <h3 class="headline-sub">Fruchtfolge</h3>
           <p>
             Werden Gemüse derselben Pflanzenfamilie immer wieder auf derselben Stelle im Beet
@@ -81,7 +81,7 @@
       </article>
 
       <article class="article mischkultur">
-        <div class="atricle-text-wrapper">
+        <div class="article-text-wrapper">
           <h3 class="headline-sub">Mischkultur</h3>
           <p>
             Einige Pflanzen unterstützen sich gegenseitig darin Schädlinge fern zu halten oder
@@ -247,15 +247,6 @@ function login() {
   grid-column: span 3;
 }
 
-.image-animation-bed {
-  width: 100%;
-  grid-column: span 5;
-  /* grid-row-start: 5;
-  grid-column-start: 1; */
-  /* grid-row-end: 3;
-  grid-column-end: 6; */
-}
-
 .article {
   grid-column: span 5;
   display: grid;
@@ -271,7 +262,7 @@ function login() {
   }
 }
 
-.atricle-text-wrapper {
+.article-text-wrapper {
   grid-column: span 3;
 }
 
