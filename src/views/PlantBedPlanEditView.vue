@@ -58,17 +58,13 @@ onBeforeMount(async () => {
 </script>
 
 <style scoped>
-.navigation {
-  /* position: fixed; */
-}
-
 main {
   margin-top: 5rem;
   padding-inline: 1rem;
-  padding-block: 1rem;
+  /* padding-block: 1rem; */
 
   display: grid;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 .grid-colums {
   grid-template-columns: 1fr;
@@ -87,6 +83,7 @@ main {
 
 .section-bed {
   padding-bottom: 0.5rem;
+  border-radius: 10px;
 }
 /* .section-bed-bar {
   height: 3rem;

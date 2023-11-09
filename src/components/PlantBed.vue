@@ -12,13 +12,78 @@
       :style="`--neededColums: ${set.neededColums}; --startColum:${set.startColum + 1}`"
       @click="setActiveSet(set)"
     >
-      <q-tooltip class="bg-secondary text-black" anchor="center middle" self="center middle">
+      <q-card
+        class="tooltip"
+        anchor="center middle"
+        self="center middle"
+        max-height="50vh"
+        max-width="50vw"
+      >
         <div v-if="!plantsStore.getVariety(set.plantvarietiesId)">...</div>
-        <div v-else>
-          <p>{{ plantsStore.getVariety(set.plantvarietiesId).name }}</p>
-          <p>{{ plantsStore.getVariety(set.plantvarietiesId).species }}</p>
+        <div class="tooltip-content" v-else>
+          <div class="image-wrapper tooltip-img-wrapper">
+            <img
+              class="variety-image"
+              :src="loadImage(plantsStore.getVariety(set.plantvarietiesId).imagename)"
+            />
+          </div>
+          <div>
+            Sorte:
+            <RouterLink
+              class="info-text"
+              :to="{
+                name: 'plantvarietyview',
+                params: { plantvariety: plantsStore.getVariety(set.plantvarietiesId).id }
+              }"
+              target="_blank"
+            >
+              {{ plantsStore.getVariety(set.plantvarietiesId).name }}
+            </RouterLink>
+          </div>
+
+          <!-- <p>{{ plantsStore.getVariety(set.plantvarietiesId).name }}</p> -->
+          <p>
+            Art:
+
+            <RouterLink
+              class="info-text"
+              :to="{
+                name: 'plantspeciesview',
+                params: {
+                  plantspecies: plantsStore.getSpeciesIdFromName(
+                    plantsStore.getVariety(set.plantvarietiesId).species
+                  )
+                }
+              }"
+              target="_blank"
+            >
+              {{ plantsStore.getVariety(set.plantvarietiesId).species }}
+            </RouterLink>
+          </p>
+          <p>
+            Gepflanzt:
+            <span class="plant-time info-text">
+              {{ plantBedsStore.translateTimeBack(set.startTime).period }}</span
+            >
+            <span class="plant-time info-text">
+              {{ plantBedsStore.translateTimeBack(set.startTime).month }}</span
+            >
+          </p>
+          <p>
+            Ernte:
+            <span class="plant-time info-text">
+              {{
+                plantBedsStore.translateTimeBack(set.startTime + set.cultureDuration).period
+              }}</span
+            >
+            <span class="plant-time info-text">
+              {{
+                plantBedsStore.translateTimeBack(set.startTime + set.cultureDuration).month
+              }}</span
+            >
+          </p>
         </div>
-      </q-tooltip>
+      </q-card>
 
       <div class="set-content-wrapper">
         <div class="image-wrapper">
@@ -69,6 +134,7 @@
 import { reactive } from 'vue'
 import { usePlantsStore } from '@/stores/usePlantsStore'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
+import { RouterLink } from 'vue-router'
 
 const plantBedsStore = usePlantBedsStore()
 const plantsStore = usePlantsStore()
@@ -138,6 +204,7 @@ function setActiveSet(set) {
   grid-template-columns: repeat(24, 1fr);
   grid-template-rows: 1fr;
   gap: 0.25rem;
+  position: relative;
 }
 .set {
   --neededColums: 0;
@@ -149,6 +216,14 @@ function setActiveSet(set) {
   border-radius: 5px;
 }
 
+@media screen and (min-width: 1200px) {
+  .set {
+    position: relative;
+  }
+  .tooltip-content {
+    font-size: 0.9rem;
+  }
+}
 .active {
   /* border: 2px solid var(--clr-secondary); */
   box-shadow: 0 0 6px 5px var(--clr-dark-darker);
@@ -172,6 +247,60 @@ function setActiveSet(set) {
   justify-content: center;
   margin-bottom: auto;
   height: 30%;
+}
+
+.tooltip-img-wrapper {
+  height: 8rem;
+}
+
+.tooltip {
+  padding: 1.5rem;
+  width: max-content;
+  height: max-content;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  offset-anchor: center;
+  visibility: hidden;
+  z-index: 1;
+  font-size: 1rem;
+  background-color: var(--clr-info-lighter);
+  border-radius: 10px;
+}
+.tooltip-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+.tooltip-content * {
+  margin: 0;
+  color: var(--clr-primary-darker);
+}
+.info-text {
+  font-weight: 600;
+  padding-left: 0.2rem;
+}
+.plant-time {
+  display: inline-block;
+}
+.plant-time::first-letter {
+  text-transform: uppercase;
+}
+.plant-time + .plant-time {
+  padding-left: 0.25rem;
+}
+.tooltip-content .image-wrapper {
+  padding-bottom: 1rem;
+}
+.set:hover .tooltip {
+  visibility: visible;
+}
+
+.set:hover .tooltip-content {
+  opacity: 100;
 }
 .variety-image {
   aspect-ratio: 1;
