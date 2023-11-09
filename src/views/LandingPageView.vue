@@ -289,7 +289,7 @@ function login() {
   top: 0; */
 }
 
-.info-grafic-Beeteinteilung .info-grafic-Mischkultur .info-grafic-Fruchtfolge {
+.info-grafic-beeteinteilung .info-grafic-mischkultur .info-grafic-fruchtfolge {
   width: 100%;
   border: solid red 1px;
 }
