@@ -126,96 +126,102 @@
           </q-card-actions>
         </q-card>
       </q-dialog>
+      <Suspense>
+        <q-dialog maximized class="popup-plant add-plants__card" v-model="state.selectVarieties">
+          <q-card>
+            <q-toolbar class="bg-primary text-white">
+              <div class="text-h6">Wähle deine Sorten für diesen Beetplan aus:</div>
+              <q-space></q-space>
+              <q-card-actions align="right">
+                <q-btn
+                  flat
+                  label="Sorten auswählen"
+                  color="primary bg-secondary"
+                  v-close-popup
+                  @click="addVarietyToUserList()"
+                />
+                <q-btn flat icon="close" color="white" class="bg-secondary" v-close-popup />
+              </q-card-actions>
+            </q-toolbar>
 
-      <q-dialog maximized class="popup-plant add-plants__card" v-model="state.selectVarieties">
-        <q-card>
-          <q-toolbar class="bg-primary text-white">
-            <div class="text-h6">Wähle deine Sorten für diesen Beetplan aus:</div>
-            <q-space></q-space>
+            <q-card-section class="user-species-list">
+              <q-table
+                :rows="state.rows"
+                :columns="state.columns"
+                row-key="name"
+                selection="multiple"
+                v-model:selected="state.selected"
+                :filter="state.filter"
+                rows-per-page-label="Sorten pro Seite"
+                :rows-per-page-options="[0, 5, 10, 25, 50]"
+                class="table-varieties"
+                :grid="$q.screen.lt.md"
+              >
+                <template v-slot:top-right>
+                  <q-input
+                    borderless
+                    dense
+                    debounce="300"
+                    v-model="state.filter"
+                    placeholder="Suche"
+                  >
+                    <template v-slot:append>
+                      <q-icon name="search" />
+                    </template>
+                  </q-input>
+                </template>
+
+                <template v-slot:item="props">
+                  <div
+                    class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
+                    :style="props.selected ? 'transform: scale(0.95);' : ''"
+                  >
+                    <q-card
+                      bordered
+                      flat
+                      :class="props.selected ? ($q.dark.isActive ? 'bg-grey-9' : 'bg-grey-2') : ''"
+                    >
+                      <q-card-section>
+                        <q-checkbox dense v-model="props.selected" :label="props.row.name" />
+                      </q-card-section>
+                      <q-separator />
+                      <q-list dense>
+                        <q-item
+                          v-for="col in props.cols.filter((col) => col.name !== 'desc')"
+                          :key="col.name"
+                        >
+                          <q-item-section>
+                            <q-item-label>{{ col.label }}</q-item-label>
+                          </q-item-section>
+                          <q-item-section side>
+                            <q-item-label caption>{{ col.value }}</q-item-label>
+                          </q-item-section>
+                        </q-item>
+                      </q-list>
+                    </q-card>
+                  </div>
+                </template>
+              </q-table>
+            </q-card-section>
+
             <q-card-actions align="right">
+              <q-btn flat label="Zurück" color="warning" v-close-popup />
               <q-btn
                 flat
                 label="Sorten auswählen"
-                color="primary bg-secondary"
+                color="primary"
                 v-close-popup
                 @click="addVarietyToUserList()"
               />
-              <q-btn flat icon="close" color="white" class="bg-secondary" v-close-popup />
             </q-card-actions>
-          </q-toolbar>
-
-          <q-card-section class="user-species-list">
-            <q-table
-              :rows="state.rows"
-              :columns="state.columns"
-              row-key="name"
-              selection="multiple"
-              v-model:selected="state.selected"
-              :filter="state.filter"
-              rows-per-page-label="Sorten pro Seite"
-              :rows-per-page-options="[0, 5, 10, 25, 50]"
-              class="table-varieties"
-              :grid="$q.screen.lt.md"
-            >
-              <template v-slot:top-right>
-                <q-input borderless dense debounce="300" v-model="state.filter" placeholder="Suche">
-                  <template v-slot:append>
-                    <q-icon name="search" />
-                  </template>
-                </q-input>
-              </template>
-
-              <template v-slot:item="props">
-                <div
-                  class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
-                  :style="props.selected ? 'transform: scale(0.95);' : ''"
-                >
-                  <q-card
-                    bordered
-                    flat
-                    :class="props.selected ? ($q.dark.isActive ? 'bg-grey-9' : 'bg-grey-2') : ''"
-                  >
-                    <q-card-section>
-                      <q-checkbox dense v-model="props.selected" :label="props.row.name" />
-                    </q-card-section>
-                    <q-separator />
-                    <q-list dense>
-                      <q-item
-                        v-for="col in props.cols.filter((col) => col.name !== 'desc')"
-                        :key="col.name"
-                      >
-                        <q-item-section>
-                          <q-item-label>{{ col.label }}</q-item-label>
-                        </q-item-section>
-                        <q-item-section side>
-                          <q-item-label caption>{{ col.value }}</q-item-label>
-                        </q-item-section>
-                      </q-item>
-                    </q-list>
-                  </q-card>
-                </div>
-              </template>
-            </q-table>
-          </q-card-section>
-
-          <q-card-actions align="right">
-            <q-btn flat label="Zurück" color="warning" v-close-popup />
-            <q-btn
-              flat
-              label="Sorten auswählen"
-              color="primary"
-              v-close-popup
-              @click="addVarietyToUserList()"
-            />
-          </q-card-actions>
-        </q-card>
-      </q-dialog>
+          </q-card> </q-dialog
+      ></Suspense>
     </div>
   </main>
 </template>
 
 <script setup>
-import { ref, onBeforeMount, reactive } from 'vue'
+import { ref, onBeforeMount, onUpdated, reactive } from 'vue'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 import { useUserStore } from '@/stores/useUserStore'
 import { usePlantsStore } from '@/stores/usePlantsStore'
@@ -259,7 +265,6 @@ const state = reactive({
 
 const toggleChooseUserVarieties = ref(false)
 const plantBeds = ref()
-
 const requiredRule = (val) => (val && val.length > 0) || 'Bitte gib einen Namen ein'
 
 function chooseAllVarieties() {
@@ -291,7 +296,7 @@ async function addNewBedplan() {
 
 async function loadPlantbeds() {
   const userId = localStorage.getItem('edenSketchUserId')
-  const URL = `http://localhost:3000/users/${userId}?_embed=bedplans` //todo: besser aus userStore holen??
+  const URL = `${import.meta.env.VITE_EDENSKETCH_API_URL}/users/${userId}?_embed=bedplans` //todo: besser aus userStore holen??
   const resp = await fetch(URL)
   const data = await resp.json()
   return data.bedplans
@@ -308,9 +313,8 @@ async function deleteBedplan(bedplanId) {
   plantBeds.value = await loadPlantbeds()
 }
 
-async function mapTableContent() {
+function mapTableContent() {
   const rows = []
-
   for (let i = 0; i < plantsStore.state.plantVarieties.length; i++) {
     const currentVariety = plantsStore.state.plantVarieties[i]
     const row = {}
@@ -332,7 +336,10 @@ async function mapTableContent() {
 
 onBeforeMount(async () => {
   plantBeds.value = await loadPlantbeds()
-  state.rows = await mapTableContent()
+})
+
+onUpdated(() => {
+  state.rows = mapTableContent()
 })
 
 function addVarietyToUserList() {

@@ -8,14 +8,14 @@ export const usePlantsStore = defineStore('plants', () => {
   })
 
   async function loadPlantSpecies() {
-    fetch('http://localhost:3000/plantspecies').then(async (resp) => {
+    fetch(`${import.meta.env.VITE_EDENSKETCH_API_URL}/plantspecies`).then(async (resp) => {
       const data = await resp.json()
       state.plantSpecies = data
     })
   }
 
   async function loadPlantVarieties() {
-    fetch('http://localhost:3000/plantvarieties').then(async (resp) => {
+    fetch(`${import.meta.env.VITE_EDENSKETCH_API_URL}/plantvarieties`).then(async (resp) => {
       const data = await resp.json()
       state.plantVarieties = data
     })
@@ -59,7 +59,7 @@ export const usePlantsStore = defineStore('plants', () => {
       description: description
     }
 
-    fetch('http://localhost:3000/plantspecies/', {
+    fetch(`${import.meta.env.VITE_EDENSKETCH_API_URL}/plantspecies/`, {
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
       body: JSON.stringify(newSpecies)
@@ -123,7 +123,7 @@ export const usePlantsStore = defineStore('plants', () => {
       imagename: imagename //=== ''  ? getSpecies(speciesInStore)[0].imagename : imagename
     }
 
-    fetch('http://localhost:3000/plantvarieties/', {
+    fetch(`${import.meta.env.VITE_EDENSKETCH_API_URL}/plantvarieties/`, {
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
       body: JSON.stringify(newVariety)

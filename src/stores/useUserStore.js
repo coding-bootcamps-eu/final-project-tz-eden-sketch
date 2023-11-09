@@ -11,7 +11,7 @@ export const useUserStore = defineStore('user', () => {
       name: userName
     }
 
-    const resp = await fetch('http://localhost:3000/users/', {
+    const resp = await fetch(`${import.meta.env.VITE_EDENSKETCH_API_URL}/users/`, {
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
       body: JSON.stringify(newUser)
@@ -25,24 +25,27 @@ export const useUserStore = defineStore('user', () => {
 
   async function loadUser() {
     const userId = localStorage.getItem('edenSketchUserId')
-    const URL = `http://localhost:3000/users/${userId}`
+    const URL = `${import.meta.env.VITE_EDENSKETCH_API_URL}/users/${userId}`
     const resp = await fetch(URL)
     const data = await resp.json()
     state.currentUser = data
   }
 
   async function deleteUser() {
-    const resp = await fetch(`http://localhost:3000/users/${state.currentUser.id}`, {
-      method: 'DELETE',
-      headers: { 'Content-type': 'application/json' }
-    })
+    const resp = await fetch(
+      `${import.meta.env.VITE_EDENSKETCH_API_URL}/users/${state.currentUser.id}`,
+      {
+        method: 'DELETE',
+        headers: { 'Content-type': 'application/json' }
+      }
+    )
     //const data =
     await resp.json()
     localStorage.removeItem('edenSketchUserId')
   }
 
   async function changeName(name) {
-    const URL = `http://localhost:3000/users/${state.currentUser.id}`
+    const URL = `${import.meta.env.VITE_EDENSKETCH_API_URL}/users/${state.currentUser.id}`
     const resp = await fetch(URL, {
       method: 'PUT',
       headers: { 'Content-type': 'application/json' },

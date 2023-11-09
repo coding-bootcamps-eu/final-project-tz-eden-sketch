@@ -19,7 +19,7 @@ const state = reactive({
 })
 
 async function getSpecies() {
-  const URL = `http://localhost:3000/plantspecies/${route.params.plantspecies}`
+  const URL = `${import.meta.env.VITE_EDENSKETCH_API_URL}/plantspecies/${route.params.plantspecies}`
   const resp = await fetch(URL)
   const data = await resp.json()
   return data

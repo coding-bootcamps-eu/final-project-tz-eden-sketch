@@ -15,7 +15,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
   })
 
   async function loadBedplan(bedId) {
-    const response = await fetch('http://localhost:3000/bedplans/' + bedId)
+    const response = await fetch(`${import.meta.env.VITE_EDENSKETCH_API_URL}/bedplans/` + bedId)
     const data = await response.json()
     state.currentBedplan = data
   }
@@ -26,11 +26,14 @@ export const usePlantBedsStore = defineStore('beds', () => {
 
   async function updateBedplan() {
     // async function putTodo(id, todoLi) {
-    const resp = await fetch('http://localhost:3000/bedplans/' + state.currentBedplan.id, {
-      method: 'PUT',
-      headers: { 'Content-type': 'application/json' },
-      body: JSON.stringify(state.currentBedplan)
-    })
+    const resp = await fetch(
+      `${import.meta.env.VITE_EDENSKETCH_API_URL}/bedplans/` + state.currentBedplan.id,
+      {
+        method: 'PUT',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify(state.currentBedplan)
+      }
+    )
 
     const data = await resp.json()
     return data
@@ -254,7 +257,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
       ]
     }
 
-    const resp = await fetch('http://localhost:3000/bedplans/', {
+    const resp = await fetch(`${import.meta.env.VITE_EDENSKETCH_API_URL}/bedplans/`, {
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
       body: JSON.stringify(newBedplan)
@@ -265,7 +268,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
   }
 
   async function deleteBedplan(bedplanId) {
-    const resp = await fetch('http://localhost:3000/bedplans/' + bedplanId, {
+    const resp = await fetch(`${import.meta.env.VITE_EDENSKETCH_API_URL}/bedplans/` + bedplanId, {
       method: 'DELETE',
       headers: { 'Content-type': 'application/json' }
     })
@@ -274,7 +277,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
 
   async function getVariety(id) {
     //nicht außerhalb des stores erreichbar. nur für error message in checkIfAddSetPossible
-    const URL = `http://localhost:3000/plantvarieties/${id}`
+    const URL = `${import.meta.env.VITE_EDENSKETCH_API_URL}/plantvarieties/${id}`
     const resp = await fetch(URL)
     const data = await resp.json()
 
