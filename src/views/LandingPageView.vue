@@ -52,7 +52,7 @@
         <div class="scaling-svg-container info-grafic-beeteinteilung">
           <img
             class="scaling-svg"
-            src="../assets/images/info-grafic-beeteinteilung.svg"
+            src="@/assets/images/info-grafic-beeteinteilung.svg"
             alt="Beeteinteilung"
           />
         </div>
@@ -74,7 +74,7 @@
         <div class="scaling-svg-container info-grafic-fruchtfolge">
           <img
             class="scaling-svg"
-            src="../assets/images/info-grafic-fruchtfolge.svg"
+            src="@/assets/images/info-grafic-fruchtfolge.svg"
             alt="Fruchtfolge"
           />
         </div>
@@ -95,7 +95,7 @@
         <div class="scaling-svg-container info-grafic-mischkultur">
           <img
             class="scaling-svg"
-            src="../assets/images/info-grafic-mischkultur.svg"
+            src="@/assets/images/info-grafic-mischkultur.svg"
             alt="Mischkultur"
           />
         </div>
