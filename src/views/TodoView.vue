@@ -1,8 +1,10 @@
 <template>
-  <main>
-    <h1 class="headline-main">Meine Aufgaben</h1>
-    <h2 class="headline-sub">Hier ist noch Baustelle...</h2>
-  </main>
+  <div class="view-content-wrapper">
+    <main>
+      <h1 class="headline-main">Meine Aufgaben</h1>
+      <h2 class="headline-sub">Hier ist noch Baustelle...</h2>
+    </main>
+  </div>
   <nav class="view__nav">
     <SiteNavigation></SiteNavigation>
   </nav>
@@ -21,6 +23,7 @@ main {
   background-size: 50%;
   background-repeat: no-repeat;
 }
+
 h1 {
   color: var(--clr-primary);
   margin: 0;

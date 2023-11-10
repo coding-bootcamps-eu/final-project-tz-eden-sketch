@@ -1,39 +1,41 @@
 <template>
-  <header class="navigation">
-    <PlantBedNavigation></PlantBedNavigation>
-  </header>
+  <div class="view-content-wrapper">
+    <header class="navigation">
+      <PlantBedNavigation></PlantBedNavigation>
+    </header>
 
-  <main class="main grid-colums">
-    <!-- <p><pre>
+    <main class="main grid-colums">
+      <!-- <p><pre>
       Beetplan: {{ plantBedsStore.state.currentBedplan.beds }}
     </pre></p> -->
 
-    <q-card
-      v-for="bed in plantBedsStore.state.currentBedplan.beds"
-      :key="bed.bedNumber"
-      class="section-bed"
-    >
-      <!-- <q-bar class="section-bed-bar"> </q-bar> -->
-      <q-toolbar class="bed-header bg-secondary">
-        <h2 class="headline-main bed-headline">Beet {{ bed.bedNumber }}</h2>
-        <div class="bed-toolbar">
-          <MoveSetInBed :bedNumber="bed.bedNumber"></MoveSetInBed>
-          <AddSetToBed :bedNumber="bed.bedNumber"></AddSetToBed>
+      <q-card
+        v-for="bed in plantBedsStore.state.currentBedplan.beds"
+        :key="bed.bedNumber"
+        class="section-bed"
+      >
+        <!-- <q-bar class="section-bed-bar"> </q-bar> -->
+        <q-toolbar class="bed-header bg-secondary">
+          <h2 class="headline-main bed-headline">Beet {{ bed.bedNumber }}</h2>
+          <div class="bed-toolbar">
+            <MoveSetInBed :bedNumber="bed.bedNumber"></MoveSetInBed>
+            <AddSetToBed :bedNumber="bed.bedNumber"></AddSetToBed>
 
-          <!-- <AddSetToBed :bedNumber="bed.bedNumber" class="btn btn-add"></AddSetToBed>
+            <!-- <AddSetToBed :bedNumber="bed.bedNumber" class="btn btn-add"></AddSetToBed>
           <MoveSetInBed :bedNumber="bed.bedNumber" class="btn btn-move"></MoveSetInBed> -->
-        </div>
-      </q-toolbar>
-      <p class="bed-info">
-        noch freie Spalten: {{ plantBedsStore.spaceLeftInCurrentBed[bed.bedNumber - 1] }}
-      </p>
+          </div>
+        </q-toolbar>
+        <p class="bed-info">
+          noch freie Spalten: {{ plantBedsStore.spaceLeftInCurrentBed[bed.bedNumber - 1] }}
+        </p>
 
-      <PlantBed :bedNumber="bed.bedNumber" />
-    </q-card>
-  </main>
-  <nav class="view__nav">
-    <SiteNavigation></SiteNavigation>
-  </nav>
+        <PlantBed :bedNumber="bed.bedNumber" />
+      </q-card>
+    </main>
+    <nav class="view__nav">
+      <SiteNavigation></SiteNavigation>
+    </nav>
+  </div>
 </template>
 
 <script setup>
@@ -66,6 +68,7 @@ main {
   display: grid;
   gap: 0.75rem;
 }
+
 .grid-colums {
   grid-template-columns: 1fr;
 }

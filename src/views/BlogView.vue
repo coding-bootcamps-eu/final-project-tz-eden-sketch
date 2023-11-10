@@ -1,8 +1,10 @@
 <template>
-  <main>
-    <h1 class="headline-main">Garten-Wissen</h1>
-    <h2 class="headline-sub">Hier ist noch Baustelle...</h2>
-  </main>
+  <div class="view-content-wrapper">
+    <main>
+      <h1 class="headline-main">Garten-Wissen</h1>
+      <h2 class="headline-sub">Hier ist noch Baustelle...</h2>
+    </main>
+  </div>
   <nav class="view__nav">
     <SiteNavigation></SiteNavigation>
   </nav>
