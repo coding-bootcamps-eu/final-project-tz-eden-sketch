@@ -23,24 +23,47 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
-  position: relative;
-  height: 100vh; /* gibt es eine bessere Lösung? */
+  text-align: center;
+  padding-inline: 2rem;
+
+  height: 85vh; /* gibt es eine bessere Lösung? */
   background-image: var(--imagePath);
-  background-position: left bottom;
-  background-size: 50%;
+  background-position: 10% 85%;
+  background-size: 45%;
   background-repeat: no-repeat;
 }
+
+@media screen and (max-width: 380px) {
+  /* iPhone SE */
+  h1 {
+    margin: 0;
+  }
+  h2 {
+    margin-bottom: 0.5em;
+  }
+  main {
+    background-size: 35%;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  /* Tablet */
+  main {
+    background-size: 55%;
+  }
+}
+@media screen and (min-width: 993px) {
+  /* Desktop */
+  main {
+    background-size: 35%;
+  }
+}
+
 h1 {
   color: var(--clr-primary);
-  margin: 0;
-  margin-top: 2rem;
 }
-.image {
-  position: absolute;
-  max-width: 500px;
-  bottom: 0;
-  left: 0;
-  transform-origin: bottom left;
+
+h2 {
+  font-size: 2em;
 }
 </style>

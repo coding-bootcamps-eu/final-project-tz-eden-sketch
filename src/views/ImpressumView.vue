@@ -54,9 +54,9 @@ main {
   align-items: center;
   padding-inline: 2rem;
 
-  height: 100vh; /* gibt es eine bessere Lösung? */
+  height: 85vh; /* gibt es eine bessere Lösung? */
   background-image: url('/flowers-with-gardening-tools_1000px.svg');
-  background-position: 10% 85%;
+  background-position: left bottom;
   background-size: 35%;
   background-repeat: no-repeat;
 }
