@@ -30,7 +30,6 @@ async function changeUser() {
     state.alert = true
   }
 }
-console.log(import.meta.env.VITE_EDENSKETCH_API_URL)
 
 onBeforeMount(async () => {
   await userStore.loadUser()

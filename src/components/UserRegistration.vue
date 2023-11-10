@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/useUserStore'
 
@@ -51,6 +51,10 @@ const userStore = useUserStore()
 
 const username = ref('')
 const alert = ref(false)
+
+onBeforeMount(() => {
+  checkIfAlreadyLoggedIn()
+})
 
 async function userRegistration() {
   if (userStore.validateUserName(username.value)) {
@@ -61,6 +65,13 @@ async function userRegistration() {
   } else {
     //username is invalid
     alert.value = true
+  }
+}
+
+function checkIfAlreadyLoggedIn() {
+  //check: is known user?
+  if (localStorage.getItem('edenSketchUserId') !== null) {
+    router.push({ name: 'home' })
   }
 }
 </script>
