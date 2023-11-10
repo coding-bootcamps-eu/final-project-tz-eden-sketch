@@ -18,7 +18,7 @@ const imageUrl = computed(() => {
 </script>
 
 <template>
-  <div class="view-content-wrapper">
+  <div class="view-content-wrapper-padding">
     <main>
       <div>
         <q-breadcrumbs color="primary" class="breadcrum">

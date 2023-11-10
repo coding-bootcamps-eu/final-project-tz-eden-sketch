@@ -1,5 +1,5 @@
 <template>
-  <div class="view-content-wrapper">
+  <div class="view-content-wrapper-padding">
     <header class="navigation">
       <PlantBedNavigation></PlantBedNavigation>
     </header>

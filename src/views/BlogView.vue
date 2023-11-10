@@ -1,5 +1,5 @@
 <template>
-  <div class="view-content-wrapper">
+  <div class="view-content-wrapper-padding">
     <main>
       <h1 class="headline-main">Garten-Wissen</h1>
       <h2 class="headline-sub">Hier ist noch Baustelle...</h2>

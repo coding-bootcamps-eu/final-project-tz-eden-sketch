@@ -6,7 +6,7 @@ const plantsStore = usePlantsStore()
 </script>
 
 <template>
-  <div class="view-content-wrapper">
+  <div class="view-content-wrapper-padding">
     <main>
       <h1 class="headline-main headline">Pflanzenarten</h1>
 

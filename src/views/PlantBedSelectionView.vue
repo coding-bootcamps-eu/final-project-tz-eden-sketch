@@ -4,7 +4,7 @@ import PlantBedSelection from '../components/PlantBedSelection.vue'
 </script>
 
 <template>
-  <PlantBedSelection class="view-content-wrapper"></PlantBedSelection>
+  <PlantBedSelection class="view-content-wrapper-padding"></PlantBedSelection>
   <nav class="view__nav">
     <SiteNavigation></SiteNavigation>
   </nav>
