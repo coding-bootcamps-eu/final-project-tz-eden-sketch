@@ -72,7 +72,7 @@
           <q-btn
             no-caps
             icon="bi-plus-circle"
-            label="Erstelle neuen Plan"
+            label="Erstelle einen neuen Plan"
             class="bg-primary text-white button__card"
             flat
             @click="newBedplan = true"
@@ -108,7 +108,7 @@
                 unchecked-icon="clear"
                 v-model="toggleChooseUserVarieties"
                 color="primary"
-                label="Wähle deine Beet-Sorten selbst aus"
+                label="Wähle die im Beetplan verfügbaren Sorten aus"
                 right-label
               >
               </q-toggle>
