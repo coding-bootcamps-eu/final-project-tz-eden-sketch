@@ -1,14 +1,16 @@
 <template>
   <header>
-    <h1><span>Willkommen bei</span><span>EdenSketch</span></h1>
+    <h1>
+      <span class="headline-sub">Willkommen bei</span><span class="headline-main">EdenSketch</span>
+    </h1>
   </header>
   <main>
     <section class="user-registration__wrapper">
       <section class="intro-text">
-        <p>Gib hier deinen gewünschten Usernamen an und starte durch mit der Beetplanung:</p>
+        <p>Gib hier deinen gewünschten Nutzernamen an und starte durch mit der Beetplanung:</p>
       </section>
 
-      <q-input class="input__username" outlined v-model.trim="username" label="Username">
+      <q-input class="input__username" outlined v-model.trim="username" label="Nutzername">
         <template v-slot:append>
           <q-icon name="las la-user" color="accent" />
         </template>
@@ -16,7 +18,7 @@
       <q-btn
         class="button__user-registration"
         color="secondary"
-        label="Bestätige Namen"
+        label="Konto erstellen"
         @click="userRegistration"
       />
 
@@ -77,7 +79,6 @@ h1 {
 
 h1 > span:nth-child(1) {
   font-size: 2.5rem;
-  font-family: 'Vollkorn';
   letter-spacing: -2px;
 }
 
@@ -85,7 +86,6 @@ h1 > span:nth-child(2) {
   margin-top: 0.5rem;
   font-size: 5rem;
   font-weight: 500;
-  font-family: 'Caveat';
   letter-spacing: -3px;
 }
 main {
