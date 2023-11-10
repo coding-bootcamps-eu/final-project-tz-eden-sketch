@@ -30,6 +30,7 @@
           rows-per-page-label="Sorten pro Seite"
           :rows-per-page-options="[0, 5, 10, 25, 50]"
           :grid="$q.screen.lt.md"
+          @row-click="log"
         >
           <!-- grid
             hide-header-->
@@ -127,6 +128,10 @@ const state = reactive({
     message: ''
   }
 })
+
+function log(e, row) {
+  console.log(row)
+}
 
 async function mapTableContent() {
   const rows = []
