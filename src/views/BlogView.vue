@@ -16,7 +16,7 @@ main {
   gap: 2rem;
   position: relative;
   height: 100vh; /* gibt es eine bessere Lösung? */
-  background-image: url('../src/assets/images/book.svg');
+  background-image: url('/src/assets/images/book.svg');
   background-position: left bottom;
   background-size: 50%;
   background-repeat: no-repeat;
