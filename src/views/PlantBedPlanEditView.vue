@@ -26,7 +26,12 @@
           </div>
         </q-toolbar>
         <p class="bed-info">
-          noch freie Spalten: {{ plantBedsStore.spaceLeftInCurrentBed[bed.bedNumber - 1] }}
+          <span v-if="plantBedsStore.spaceLeftInCurrentBed[bed.bedNumber - 1] === 0">
+            kein Platz mehr</span
+          >
+          <span v-else>
+            noch {{ plantBedsStore.spaceLeftInCurrentBed[bed.bedNumber - 1] * 5 }}cm Platz
+          </span>
         </p>
 
         <PlantBed :bedNumber="bed.bedNumber" />
@@ -128,6 +133,16 @@ main {
 .btn-add {
 }
 .bed-info {
+  margin-left: 0.5rem;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  background-color: var(--clr-secondary-lighter);
+  padding-inline: 1rem;
+  padding-block: 0.4rem;
+  width: max-content;
+  max-width: 10rem;
+  border-radius: 20px;
+  opacity: 90%;
   /* grid-row: 2; */
 }
 </style>
