@@ -14,7 +14,7 @@
         color="primary"
         label="Set verschieben"
         right-label
-        :disable="isSetActive"
+        :disable="!isSetActive"
       >
       </q-toggle>
 
@@ -67,7 +67,7 @@ const props = defineProps({
 })
 
 const isSetActive = computed(() => {
-  return (
+  return !(
     plantBedsStore.state.activeSets.find((bedItem) => bedItem.bedNumber === props.bedNumber) ===
     undefined
   )
