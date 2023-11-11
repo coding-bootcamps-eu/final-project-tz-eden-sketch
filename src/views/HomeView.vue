@@ -157,8 +157,14 @@ onBeforeMount(async () => {
 
 .headline {
   color: var(--clr-primary);
-  font-family: 'Caveat';
   font-size: 5rem;
+}
+
+@media screen and (max-width: 380px) {
+  /* iPhone SE */
+  .headline {
+    font-size: 3rem;
+  }
 }
 
 .card-wrapper {
