@@ -68,7 +68,7 @@ onBeforeMount(async () => {
 main {
   margin-top: 6rem;
   padding-inline: 1rem;
-  /* padding-block: 1rem; */
+  max-width: 100vw;
 
   display: grid;
   gap: 0.75rem;

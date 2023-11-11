@@ -119,7 +119,7 @@ const state = reactive({
     { name: 'plantvariety', label: 'Sorte', field: 'plantvariety' },
     { name: 'nutrition', label: 'Nährstoffbedarf', field: 'nutrition' },
     { name: 'rowDistance', label: 'Reihenabstand', field: 'rowDistance' },
-    { name: 'cultureDurationIntern', label: 'Kulturdauer INTERN', field: 'cultureDurationIntern' } //todo: später durch cultureDuration ersetzen
+    { name: 'cultureDuration', label: 'Kulturdauer (in Tagen)', field: 'cultureDuration' } //todo: später durch cultureDuration ersetzen
     // { name: 'goodNeighbors', label: 'gute Nachbarn', field: 'goodNeighbors' },
     // { name: 'badNeighbors', label: 'schlechte Nachbarn', field: 'badNeighbors' }
   ],

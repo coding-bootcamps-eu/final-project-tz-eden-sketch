@@ -208,6 +208,14 @@ function setActiveSet(set) {
   gap: 0.25rem;
   position: relative;
 }
+@media screen and (max-width: 600px) {
+  .bed {
+    width: 70%;
+    max-width: 100%;
+    max-height: 75vh;
+    aspect-ratio: 1/1.85;
+  }
+}
 .set {
   --neededColums: 0;
   --startColum: 0;
