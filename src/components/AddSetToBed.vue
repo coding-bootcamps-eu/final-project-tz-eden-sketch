@@ -88,7 +88,11 @@
     </q-card>
   </q-dialog>
 
-  <InfoModal :open="state.feedback.open" :message="state.feedback.message"></InfoModal>
+  <InfoModal
+    @closeInfoModal="state.feedback.open = false"
+    :open="state.feedback.open"
+    :message="state.feedback.message"
+  ></InfoModal>
   <!-- :type="warning" -->
 </template>
 
@@ -179,14 +183,12 @@ async function addVarietyToBed() {
       state.feedback.variety = state.feedback.message =
         'Der Satz "' +
         newSets[i].name +
-        '" (' +
-        newSets[i].varietyId +
-        ') den du einpflanzen möchtest hat leider keinen Platz im Beet bis zur Ernte. '
+        '", den du einpflanzen möchtest, hat leider keinen Platz im Beet bis zur Ernte. '
 
       state.feedback.open = true
       setTimeout(() => {
         state.feedback.open = false
-      }, 3000)
+      }, 6000)
       break
     }
 
