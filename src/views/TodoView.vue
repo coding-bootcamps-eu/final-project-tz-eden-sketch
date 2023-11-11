@@ -1,43 +1,9 @@
 <template>
-  <div class="view-content-wrapper-padding">
-    <main>
-      <h1 class="headline-main">Meine Aufgaben</h1>
-      <h2 class="headline-sub">Hier ist noch Baustelle...</h2>
-    </main>
-  </div>
-  <nav class="view__nav">
-    <SiteNavigation></SiteNavigation>
-  </nav>
+  <UnderConstruction title="Meine Aufgaben" image="/gloves.svg"></UnderConstruction>
 </template>
 
-<style scoped>
-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-  position: relative;
-  height: 100vh; /* gibt es eine bessere Lösung? */
-  background-image: url('../src/assets/images/gloves.svg');
-  background-position: left bottom;
-  background-size: 50%;
-  background-repeat: no-repeat;
-}
-
-h1 {
-  color: var(--clr-primary);
-  margin: 0;
-  margin-top: 2rem;
-}
-.image {
-  position: absolute;
-  max-width: 500px;
-  bottom: 0;
-  left: 0;
-  transform-origin: bottom left;
-}
-</style>
+<style scoped></style>
 
 <script setup>
-import SiteNavigation from '@/components/SiteNavigation.vue'
+import UnderConstruction from '../components/UnderConstruction.vue'
 </script>
