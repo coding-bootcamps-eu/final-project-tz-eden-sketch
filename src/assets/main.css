@@ -267,10 +267,6 @@ a {
   width: 100%;
 }
 
-body {
-  padding-bottom: 6rem;
-}
-
 @media screen and (min-width: 600px) {
   :root {
     font-size: 15px;
@@ -279,5 +275,21 @@ body {
 @media screen and (min-width: 1000px) {
   :root {
     font-size: 17px;
+  }
+}
+
+.view-content-wrapper-padding {
+  padding-bottom: 6.75rem;
+}
+
+@media screen and (min-width: 1000px) {
+  .view-content-wrapper-padding {
+    padding-bottom: 5.5rem;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .view-content-wrapper-padding {
+    padding-bottom: 5.75rem;
   }
 }

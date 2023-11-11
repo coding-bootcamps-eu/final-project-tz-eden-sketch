@@ -6,19 +6,21 @@ const plantsStore = usePlantsStore()
 </script>
 
 <template>
-  <main>
-    <h1 class="headline-main headline">Pflanzenarten</h1>
+  <div class="view-content-wrapper-padding">
+    <main>
+      <h1 class="headline-main headline">Pflanzenarten</h1>
 
-    <div class="card-wrapper">
-      <CardComponent
-        v-for="species of plantsStore.state.plantSpecies"
-        :key="species.id"
-        :card-image="species.imagename ? species.imagename : 'default_vegetable.webp'"
-        :card-title="species.name"
-        :card-link="`/plantspecies/view/${species.id}`"
-      />
-    </div>
-  </main>
+      <div class="card-wrapper">
+        <CardComponent
+          v-for="species of plantsStore.state.plantSpecies"
+          :key="species.id"
+          :card-image="species.imagename ? species.imagename : 'default_vegetable.webp'"
+          :card-title="species.name"
+          :card-link="`/plantspecies/view/${species.id}`"
+        />
+      </div>
+    </main>
+  </div>
   <nav class="view__nav">
     <SiteNavigation></SiteNavigation>
   </nav>

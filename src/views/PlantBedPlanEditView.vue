@@ -1,39 +1,46 @@
 <template>
-  <header class="navigation">
-    <PlantBedNavigation></PlantBedNavigation>
-  </header>
+  <div class="view-content-wrapper-padding">
+    <header class="navigation">
+      <PlantBedNavigation></PlantBedNavigation>
+    </header>
 
-  <main class="main grid-colums">
-    <!-- <p><pre>
+    <main class="main grid-colums">
+      <!-- <p><pre>
       Beetplan: {{ plantBedsStore.state.currentBedplan.beds }}
     </pre></p> -->
 
-    <q-card
-      v-for="bed in plantBedsStore.state.currentBedplan.beds"
-      :key="bed.bedNumber"
-      class="section-bed"
-    >
-      <!-- <q-bar class="section-bed-bar"> </q-bar> -->
-      <q-toolbar class="bed-header bg-secondary">
-        <h2 class="headline-main bed-headline">Beet {{ bed.bedNumber }}</h2>
-        <div class="bed-toolbar">
-          <MoveSetInBed :bedNumber="bed.bedNumber"></MoveSetInBed>
-          <AddSetToBed :bedNumber="bed.bedNumber"></AddSetToBed>
+      <q-card
+        v-for="bed in plantBedsStore.state.currentBedplan.beds"
+        :key="bed.bedNumber"
+        class="section-bed"
+      >
+        <!-- <q-bar class="section-bed-bar"> </q-bar> -->
+        <q-toolbar class="bed-header bg-secondary">
+          <h2 class="headline-main bed-headline">Beet {{ bed.bedNumber }}</h2>
+          <div class="bed-toolbar">
+            <MoveSetInBed :bedNumber="bed.bedNumber"></MoveSetInBed>
+            <AddSetToBed :bedNumber="bed.bedNumber"></AddSetToBed>
 
-          <!-- <AddSetToBed :bedNumber="bed.bedNumber" class="btn btn-add"></AddSetToBed>
+            <!-- <AddSetToBed :bedNumber="bed.bedNumber" class="btn btn-add"></AddSetToBed>
           <MoveSetInBed :bedNumber="bed.bedNumber" class="btn btn-move"></MoveSetInBed> -->
-        </div>
-      </q-toolbar>
-      <p class="bed-info">
-        noch freie Spalten: {{ plantBedsStore.spaceLeftInCurrentBed[bed.bedNumber - 1] }}
-      </p>
+          </div>
+        </q-toolbar>
+        <p class="bed-info">
+          <span v-if="plantBedsStore.spaceLeftInCurrentBed[bed.bedNumber - 1] === 0">
+            kein Platz mehr</span
+          >
+          <span v-else>
+            noch {{ plantBedsStore.spaceLeftInCurrentBed[bed.bedNumber - 1] * 5 }}cm Platz
+          </span>
+        </p>
 
-      <PlantBed :bedNumber="bed.bedNumber" />
-    </q-card>
-  </main>
-  <nav class="view__nav">
-    <SiteNavigation></SiteNavigation>
-  </nav>
+        <PlantBed :bedNumber="bed.bedNumber" />
+      </q-card>
+    </main>
+    <nav class="view__nav">
+      <SiteNavigation></SiteNavigation>
+    </nav>
+  </div>
 </template>
 
 <script setup>
@@ -66,6 +73,7 @@ main {
   display: grid;
   gap: 0.75rem;
 }
+
 .grid-colums {
   grid-template-columns: 1fr;
 }
@@ -125,6 +133,16 @@ main {
 .btn-add {
 }
 .bed-info {
+  margin-left: 0.5rem;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  background-color: var(--clr-secondary-lighter);
+  padding-inline: 1rem;
+  padding-block: 0.4rem;
+  width: max-content;
+  max-width: 10rem;
+  border-radius: 20px;
+  opacity: 90%;
   /* grid-row: 2; */
 }
 </style>

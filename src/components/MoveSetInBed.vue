@@ -14,6 +14,7 @@
         color="primary"
         label="Set verschieben"
         right-label
+        :disable="!isSetActive"
       >
       </q-toggle>
 
@@ -43,7 +44,7 @@
 </template>
 
 <script setup>
-import { reactive, watch, ref } from 'vue'
+import { reactive, watch, ref, computed } from 'vue'
 import InfoModal from '@/components/InfoModal.vue'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 
@@ -63,6 +64,13 @@ const feedbackOpen = ref(false)
 
 const props = defineProps({
   bedNumber: Number
+})
+
+const isSetActive = computed(() => {
+  return !(
+    plantBedsStore.state.activeSets.find((bedItem) => bedItem.bedNumber === props.bedNumber) ===
+    undefined
+  )
 })
 
 function moveSet(direction) {
