@@ -66,14 +66,18 @@ onBeforeMount(async () => {
 
 <style scoped>
 main {
-  margin-top: 5rem;
+  margin-top: 6rem;
   padding-inline: 1rem;
   /* padding-block: 1rem; */
 
   display: grid;
   gap: 0.75rem;
 }
-
+@media screen and (min-width: 1000px) {
+  main {
+    margin-top: 5rem;
+  }
+}
 .grid-colums {
   grid-template-columns: 1fr;
 }

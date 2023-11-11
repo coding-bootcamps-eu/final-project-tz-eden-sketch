@@ -4,7 +4,7 @@
   <q-dialog maximized class="popup-plant add-plants__card" v-model="state.openAddPlant">
     <!-- 'full-width' für desktop, 'maximized' für mobile-->
     <q-card>
-      <q-toolbar class="bg-primary text-white">
+      <q-toolbar class="bg-primary text-white add-set-toolbar">
         <div class="text-h6">Wähle deine Sorten aus:</div>
         <q-space></q-space>
         <q-card-actions align="right">
@@ -240,5 +240,12 @@ onUpdated(async () => {
   align-self: center;
   margin-right: 1rem;
   margin-left: 3rem;
+}
+
+@media screen and (max-width: 500px) {
+  .add-set-toolbar {
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>

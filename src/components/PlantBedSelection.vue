@@ -129,7 +129,7 @@
       <Suspense>
         <q-dialog maximized class="popup-plant add-plants__card" v-model="state.selectVarieties">
           <q-card>
-            <q-toolbar class="bg-primary text-white">
+            <q-toolbar class="bg-primary text-white add-set-toolbar">
               <div class="text-h6">Wähle deine Sorten für diesen Beetplan aus:</div>
               <q-space></q-space>
               <q-card-actions align="right">
@@ -384,5 +384,12 @@ function addVarietyToUserList() {
 }
 .button__card {
   margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 500px) {
+  .add-set-toolbar {
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>
