@@ -156,12 +156,12 @@
 <style scoped>
 .watercan-stroke {
   width: 100%;
-  translate: -80px 30px;
+  /* translate: -80px 30px;
 
   grid-row-start: 1;
   grid-column-start: 5;
   grid-row-end: 3;
-  grid-column-end: 6;
+  grid-column-end: 6; */
 }
 
 .path {
