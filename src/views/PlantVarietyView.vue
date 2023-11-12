@@ -87,8 +87,7 @@ const imageUrl = computed(() => {
               <li v-if="variety.harvestingStart">
                 Ernte: {{ variety.harvestingStart }} bis {{ variety.harvestingEnd }}
               </li>
-              <br />
-              <br />
+
               <li v-if="variety.cultureDuration">
                 Zeit in Beet / Kulturdauer: {{ variety.cultureDuration }} Tage
               </li>
@@ -102,7 +101,7 @@ const imageUrl = computed(() => {
           </article>
           <SeparatorElement v-if="variety.description" />
 
-          <article>
+          <article class="plantcare">
             <h2>Pflege</h2>
             <ul class="plantcare-details">
               <li class="info-wrapper" v-if="variety.plantingDistance">
@@ -112,12 +111,14 @@ const imageUrl = computed(() => {
                 <p class="info-value">{{ variety.plantingDistance }} cm</p>
               </li>
               <li class="info-wrapper" v-if="variety.rowDistance">
-                <img src="" alt="Reihenabstand" class="info-icon" />
+                <q-icon name="svguse:/icons.svg#arrows-sideways" />
+
                 <p class="info-category">Reihenabstand</p>
                 <p class="info-value">{{ variety.rowDistance }} cm</p>
               </li>
               <li class="info-wrapper" v-if="variety.sowingDepth">
-                <img src="" alt="Saattiefe" class="info-icon" />
+                <q-icon name="svguse:/icons.svg#arrows-down" />
+
                 <p class="info-category">Saattiefe</p>
                 <p class="info-value">{{ variety.sowingDepth }} cm</p>
               </li>
@@ -128,7 +129,7 @@ const imageUrl = computed(() => {
                 <p class="info-value">{{ variety.light }}</p>
               </li>
               <li class="info-wrapper" v-if="variety.nutrition">
-                <img src="" alt="Nährstoffbedarf" class="info-icon" />
+                <q-icon name="svguse:/icons.svg#utensils" />
                 <p class="info-category">Nährstoffbedarf</p>
                 <p class="info-value">{{ variety.nutrition }}</p>
               </li>
@@ -141,22 +142,22 @@ const imageUrl = computed(() => {
               </li>
             </ul>
           </article>
-          <SeparatorElement />
+          <SeparatorElement v-if="variety.cultivationTips" />
 
-          <article v-if="variety.cultivationTips">
+          <article class="cultivation-tips" v-if="variety.cultivationTips">
             <h2>Anbautipps</h2>
             <p>{{ variety.cultivationTips }}</p>
           </article>
-          <SeparatorElement v-if="variety.cultivationTips" />
+          <!-- <SeparatorElement v-if="variety.cultivationTips" /> -->
 
-          <article>
+          <!-- <article>
             <h2>Meine Sätze im Beet</h2>
             <ul>
               <li>Satz #1 in Beet 2 <span>(seit mitte März)</span></li>
               <li>Satz #2 in Beet 2 <span>(seit Ende März)</span></li>
               <li>Satz #3 in Beet 2 <span>(seit mitte April)</span></li>
             </ul>
-          </article>
+          </article> -->
         </main>
       </div>
     </main>
@@ -229,6 +230,10 @@ h3 {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+  padding-left: 0;
+}
+
+@media screen and (max-width: 600px) {
 }
 
 article {
@@ -237,6 +242,7 @@ article {
 article:last-child {
   padding-bottom: 7rem;
 }
+
 .info-wrapper {
   background-color: var(--clr-info);
   display: flex;
@@ -245,7 +251,9 @@ article:last-child {
   gap: 0.5rem;
   border-radius: 0.25rem;
   padding: 1rem;
-  min-width: 50ch;
+  min-width: 30ch;
+  width: 50ch;
+  flex-wrap: wrap;
 }
 .info-category {
   margin-bottom: 0;
