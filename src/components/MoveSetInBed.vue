@@ -40,7 +40,11 @@
     </div>
   </div>
 
-  <InfoModal :open="feedbackOpen" :message="state.feedback.message"></InfoModal>
+  <InfoModal
+    @closeInfoModal="feedbackOpen = false"
+    :open="feedbackOpen"
+    :message="state.feedback.message"
+  ></InfoModal>
 </template>
 
 <script setup>
@@ -94,17 +98,6 @@ function moveSet(direction) {
     state.activeSet = currentSet
   }
 
-  console.log('***********************************')
-  console.log(
-    plantBedsStore.newStartColumns(
-      props.bedNumber,
-      plantBedsStore.state.currentMonth,
-      plantBedsStore.state.currentPeriod,
-      state.activeSet
-    )
-  )
-  console.log('***********************************')
-
   state.startColums = plantBedsStore.newStartColumns(
     props.bedNumber,
     plantBedsStore.state.currentMonth,
@@ -139,30 +132,8 @@ function moveSet(direction) {
     return
   }
 
-  //das Array mit den startColums beeinhaltet NICHT
-  //die aktuelle startColum und die Spalten die gerade durch das set selbst belegt sind
-  //--> startColum des activen sets ergänzen
-  console.log('startColumns alt: ', state.startColums)
-  console.log('state.activeSet.startColum: ', state.activeSet.startColum)
-
-  console.log('needed columns: ', state.activeSet.neededColums)
-  console.log('--------------------')
-
-  // state.startColums.push(1000)
-
-  //array sortieren
-  // const sorted = state.startColums.sort((a, b) => a - b)
-  // console.log('sorted ', sorted)
-  //console.log('startcolumns nach push:', state.startColums)
   state.startColums = state.startColums.sort((a, b) => a - b)
-  console.log('sortierte startcolumns nach push:', state.startColums)
-  console.log('##################')
 
-  //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  ////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  // Achtung Baustelle !!!!!!!!!!!!!!!!!!!!!!!!!!
-
-  //aktuellen Index ermitteln
   state.currentPosition = state.startColums.indexOf(state.activeSet.startColum)
 
   //neue Position setzen
@@ -189,7 +160,7 @@ watch(feedbackOpen, async () => {
   if (feedbackOpen.value) {
     setTimeout(() => {
       feedbackOpen.value = false
-    }, 2000)
+    }, 6000)
   }
 })
 </script>

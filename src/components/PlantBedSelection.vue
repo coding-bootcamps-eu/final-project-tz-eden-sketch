@@ -27,7 +27,6 @@
             flat
             >Gehe zum Plan</q-btn
           >
-          <!-- <router-link :to="'/plantbed-edit/'+bed.id">Gehe zum Plan</router-link> -->
           <q-dialog v-model="confirm" persistent>
             <q-card>
               <q-card-section class="row items-center">
@@ -56,7 +55,7 @@
         </q-card-actions>
       </q-card>
 
-      <q-card class="plantbed-card my-card bg-secondary text-white">
+      <q-card class="plantbed-card new-bedplan-card my-card bg-secondary text-white">
         <q-card-section horizontal>
           <q-item>
             <q-item-section avatar>
@@ -68,7 +67,7 @@
           <div class="text-h6 plantbed-name">Erstelle einen neuen Plan</div>
         </q-card-section>
 
-        <q-card-actions align="around">
+        <q-card-actions class="btn-wrapper-new-bedplan" align="around">
           <q-btn
             no-caps
             icon="bi-plus-circle"
@@ -93,7 +92,10 @@
                 outlined
                 v-model.trim="form.title"
                 label="Name des Beetplans"
-                :rules="[requiredRule]"
+                :rules="[
+                  requiredRule,
+                  (val) => val.length <= 20 || 'Dein Beetplan-Name ist leider zu lang'
+                ]"
               ></q-input>
 
               <q-input
@@ -102,6 +104,7 @@
                 type="textarea"
                 label="Beschreibung"
                 placeholder="Notizen zu deinem Beetplan"
+                :rules="[(val) => val.length <= 300 || 'Deine Beschreibung ist leider zu lang']"
               ></q-input>
               <q-toggle
                 checked-icon="check"
@@ -129,7 +132,7 @@
       <Suspense>
         <q-dialog maximized class="popup-plant add-plants__card" v-model="state.selectVarieties">
           <q-card>
-            <q-toolbar class="bg-primary text-white">
+            <q-toolbar class="bg-primary text-white add-set-toolbar">
               <div class="text-h6">Wähle deine Sorten für diesen Beetplan aus:</div>
               <q-space></q-space>
               <q-card-actions align="right">
@@ -364,12 +367,26 @@ function addVarietyToUserList() {
 .plantbed-cards__wrapper {
   width: 90%;
   margin: 1rem auto;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 1rem;
 }
 .plantbed-card {
-  width: 25rem;
+  min-width: 20rem;
+  max-height: max-content;
+  display: flex;
+  flex-direction: column;
+}
+@media screen and (min-width: 700px) {
+  .plantbed-cards__wrapper {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (min-width: 1100px) {
+  .plantbed-cards__wrapper {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 
 .icon__plantbed {
@@ -379,10 +396,22 @@ function addVarietyToUserList() {
   margin: auto 0;
 }
 .plantbed-description {
+  flex-grow: 1;
   margin-top: 1rem;
   min-height: 2rem;
 }
 .button__card {
   margin-bottom: 1rem;
+  border-radius: 4px;
+  padding-inline: 0.75rem;
+}
+.btn-wrapper-new-bedplan {
+  margin-block: auto;
+}
+@media screen and (max-width: 500px) {
+  .add-set-toolbar {
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>

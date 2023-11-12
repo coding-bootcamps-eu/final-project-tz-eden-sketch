@@ -4,7 +4,7 @@
   <q-dialog maximized class="popup-plant add-plants__card" v-model="state.openAddPlant">
     <!-- 'full-width' für desktop, 'maximized' für mobile-->
     <q-card>
-      <q-toolbar class="bg-primary text-white">
+      <q-toolbar class="bg-primary text-white add-set-toolbar">
         <div class="text-h6">Wähle deine Sorten aus:</div>
         <q-space></q-space>
         <q-card-actions align="right">
@@ -88,7 +88,11 @@
     </q-card>
   </q-dialog>
 
-  <InfoModal :open="state.feedback.open" :message="state.feedback.message"></InfoModal>
+  <InfoModal
+    @closeInfoModal="state.feedback.open = false"
+    :open="state.feedback.open"
+    :message="state.feedback.message"
+  ></InfoModal>
   <!-- :type="warning" -->
 </template>
 
@@ -115,7 +119,7 @@ const state = reactive({
     { name: 'plantvariety', label: 'Sorte', field: 'plantvariety' },
     { name: 'nutrition', label: 'Nährstoffbedarf', field: 'nutrition' },
     { name: 'rowDistance', label: 'Reihenabstand', field: 'rowDistance' },
-    { name: 'cultureDurationIntern', label: 'Kulturdauer INTERN', field: 'cultureDurationIntern' } //todo: später durch cultureDuration ersetzen
+    { name: 'cultureDuration', label: 'Kulturdauer (in Tagen)', field: 'cultureDuration' } //todo: später durch cultureDuration ersetzen
     // { name: 'goodNeighbors', label: 'gute Nachbarn', field: 'goodNeighbors' },
     // { name: 'badNeighbors', label: 'schlechte Nachbarn', field: 'badNeighbors' }
   ],
@@ -179,14 +183,12 @@ async function addVarietyToBed() {
       state.feedback.variety = state.feedback.message =
         'Der Satz "' +
         newSets[i].name +
-        '" (' +
-        newSets[i].varietyId +
-        ') den du einpflanzen möchtest hat leider keinen Platz im Beet bis zur Ernte. '
+        '", den du einpflanzen möchtest, hat leider keinen Platz im Beet bis zur Ernte. '
 
       state.feedback.open = true
       setTimeout(() => {
         state.feedback.open = false
-      }, 3000)
+      }, 6000)
       break
     }
 
@@ -240,5 +242,12 @@ onUpdated(async () => {
   align-self: center;
   margin-right: 1rem;
   margin-left: 3rem;
+}
+
+@media screen and (max-width: 500px) {
+  .add-set-toolbar {
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>

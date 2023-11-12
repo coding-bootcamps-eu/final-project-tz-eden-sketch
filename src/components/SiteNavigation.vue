@@ -8,6 +8,7 @@
       mobile-arrows
       class="site-navigation shadow-1"
       indicator-color="primary"
+      active-color="primary"
     >
       <q-route-tab name="home" label="Übersicht" icon="bi-house" :to="{ name: 'home' }" />
       <q-route-tab
@@ -40,5 +41,6 @@ const tab = ref('')
 nav {
   background-color: var(--clr-secondary-lighter);
   color: var(--clr-primary-darker);
+  z-index: 3;
 }
 </style>

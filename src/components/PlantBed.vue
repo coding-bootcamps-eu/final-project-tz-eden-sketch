@@ -94,26 +94,28 @@
             :src="loadImage(plantsStore.getVariety(set.plantvarietiesId).imagename)"
           />
         </div>
+        <div class="icon-wrapper">
+          <button class="todo-btn btn">
+            <q-icon class="todo-icon" name="svguse:/icons.svg#gloves"></q-icon>
+          </button>
+          <button class="harvest-btn btn">
+            <q-icon
+              class="harvest-icon"
+              name="bi-basket"
+              size="3ch"
+              @click="plantBedsStore.harvestSet(set.id, props.bedNumber)"
+            ></q-icon>
+          </button>
+          <button class="delete-btn btn">
+            <q-icon
+              class="delete-icon"
+              name="delete"
+              size="3ch"
+              @click="plantBedsStore.deleteSet(set.id, props.bedNumber)"
+            ></q-icon>
+          </button>
+        </div>
 
-        <button class="todo-btn btn">
-          <q-icon class="todo-icon" name="svguse:/icons.svg#gloves"></q-icon>
-        </button>
-        <button class="harvest-btn btn">
-          <q-icon
-            class="harvest-icon"
-            name="bi-basket"
-            size="3ch"
-            @click="plantBedsStore.harvestSet(set.id, props.bedNumber)"
-          ></q-icon>
-        </button>
-        <button class="delete-btn btn">
-          <q-icon
-            class="delete-icon"
-            name="delete"
-            size="3ch"
-            @click="plantBedsStore.deleteSet(set.id, props.bedNumber)"
-          ></q-icon>
-        </button>
         <!-- <span
           >start: {{ set.startColum }},<br />
           Ende: {{ set.startColum + set.neededColums }},<br />
@@ -206,6 +208,14 @@ function setActiveSet(set) {
   gap: 0.25rem;
   position: relative;
 }
+@media screen and (max-width: 600px) {
+  .bed {
+    width: 70%;
+    max-width: 100%;
+    max-height: 75vh;
+    aspect-ratio: 1/1.85;
+  }
+}
 .set {
   --neededColums: 0;
   --startColum: 0;
@@ -233,22 +243,26 @@ function setActiveSet(set) {
   padding-block: 1rem;
   /*padding-inline: 0.5rem;*/
   display: grid;
-  grid-template-rows: 3fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   justify-content: center;
   align-content: center;
   gap: 4rem;
   height: 100%;
 }
 .image-wrapper {
-  margin-top: 0.5rem;
-  width: 100%;
-  /* border-radius: 50%; */
+  margin-top: 1rem;
+  width: 95%;
   display: flex;
   justify-content: center;
   margin-bottom: auto;
   height: 30%;
 }
-
+.icon-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 2.5rem;
+}
 .tooltip-img-wrapper {
   height: 8rem;
 }
@@ -257,8 +271,10 @@ function setActiveSet(set) {
   padding: 1.5rem;
   width: max-content;
   height: max-content;
+  max-width: 250px;
+  max-height: 500px;
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   offset-anchor: center;

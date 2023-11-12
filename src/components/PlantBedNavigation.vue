@@ -7,6 +7,8 @@
       class="nav-month bg-primary shadow-2"
       dense
       indicator-color="accent"
+      active-bg-color="light-green-4"
+      active-color="teal-10"
     >
       <q-tab v-for="month in monthArray" :name="month.toLowerCase()" :label="month" :key="month" />
     </q-tabs>
@@ -17,6 +19,8 @@
       class="nav-period bg-secondary shadow-2"
       dense
       indicator-color="accent"
+      active-bg-color="light-green-4"
+      active-color="teal-10"
     >
       <q-tab v-for="part in timePeriods" :name="part.toLowerCase()" :label="part" :key="part" />
     </q-tabs>
@@ -55,7 +59,7 @@ const timePeriods = ref(['Anfang', 'Mitte', 'Ende'])
 <style scoped>
 .navigation-wrapper {
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   top: 0;
   left: 0;
   right: 0;
