@@ -214,7 +214,9 @@ function login() {
 }
 
 .bed-animation {
-  max-width: 40ch;
+  min-width: 20rem;
+  max-width: 30rem;
+  display: block;
   margin-inline: auto;
 }
 
@@ -225,21 +227,29 @@ function login() {
   margin-top: 4rem;
 }
 
-.info-grafic-beeteinteilung .info-grafic-mischkultur .info-grafic-fruchtfolge {
-  max-width: 40ch;
+.info-grafic-beeteinteilung,
+.info-grafic-mischkultur,
+.info-grafic-fruchtfolge {
+  max-width: 20rem;
+  margin-inline: auto;
+}
+
+.image {
+  width: 100%;
 }
 
 .footer {
   background-color: var(--clr-primary);
-  background: linear-gradient(to top, var(--clr-primary) 15%, transparent 100%);
+  /* background: linear-gradient(to top, var(--clr-primary) 15%, transparent 100%); */
 
-  height: 7rem;
+  height: 5rem;
 
   display: flex;
   justify-content: center;
   align-items: end;
 
   padding-bottom: 2rem;
+  margin-top: 3rem;
 }
 
 footer > a:visited,
@@ -255,7 +265,8 @@ footer > a:hover {
   /* iPhone SE */
 }
 
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 768px) {
+  /* @media screen and (min-width: 992px) { */
   /* Tablet */
 
   .content-wrapper {
@@ -288,7 +299,6 @@ footer > a:hover {
   .text-intro {
     grid-column: span 2;
     padding-block: 3em;
-    /* padding-inline: 0; */
   }
 
   #btn-register:hover {
@@ -316,57 +326,7 @@ footer > a:hover {
   }
 }
 
-@media screen and (min-width: 993px) {
-  /* Desktop */
-  /* .content-wrapper {
-    max-width: 1000px;
-
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1rem;
-  }
-  .title {
-    grid-column: span 3;
-  }
-  .subtitle {
-    grid-column: span 4;
-    grid-row: span 2;
-  }
-  .watercan-stroke {
-    translate: -80px 30px;
-
-    grid-row-start: 1;
-    grid-column-start: 5;
-    grid-row-end: 3;
-    grid-column-end: 6;
-  }
-  .text-intro {
-    grid-column: span 2;
-    padding-block: 3em;
-  }
-
-  #btn-register:hover {
-    scale: 1.5;
-    animation: tilt-shaking 0.25s infinite;
-  }
-  .image-house {
-    max-width: 100%;
-    grid-column: span 3;
-  }
-
-  .bed-animation {
-    max-width: 100%;
-  }
-  .article {
-    grid-column: span 5;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .article-text-wrapper {
-    grid-column: span 3;
-  } */
-}
+/* @media screen and (min-width: 993px) { */
+/* Desktop */
+/* } */
 </style>
