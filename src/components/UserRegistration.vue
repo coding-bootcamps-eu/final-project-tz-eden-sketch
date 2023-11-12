@@ -10,7 +10,17 @@
         <p>Gib hier deinen gewünschten Nutzernamen an und starte durch mit der Beetplanung:</p>
       </section>
 
-      <q-input class="input__username" outlined v-model.trim="username" label="Nutzername">
+      <q-input
+        class="input__username"
+        outlined
+        v-model.trim="username"
+        label="Nutzername"
+        @keyup.enter="userRegistration"
+        :rules="[
+          (val) => val.length <= 20 || 'Deine Nutzername ist leider zu lang',
+          (val) => val.length > 2 || 'Deine Nutzername ist leider zu kurz'
+        ]"
+      >
         <template v-slot:append>
           <q-icon name="las la-user" color="accent" />
         </template>
@@ -29,7 +39,7 @@
           </q-card-section>
 
           <q-card-section class="q-pt-none">
-            Dein Username muss mindestens 2 Zeichen lang sein.
+            Dein Nutzername muss zwischen 3 und 20 Zeichen lang sein.
           </q-card-section>
 
           <q-card-actions align="right">
@@ -78,6 +88,7 @@ function checkIfAlreadyLoggedIn() {
 
 <style scoped>
 header {
+  margin-top: 15vh;
   text-align: center;
 }
 

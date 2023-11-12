@@ -56,7 +56,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   function validateUserName(name) {
-    if (name.length >= 2) {
+    if (name.length > 2 && name.length <= 20) {
       return true
     }
     return false
