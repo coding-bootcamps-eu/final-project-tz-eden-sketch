@@ -1,7 +1,6 @@
 <template>
-  <div class="scaling-svg-container watercan-stroke" id="watercan-stroke">
+  <div class="watercan-stroke">
     <svg
-      class="scaling-svg"
       style="
         fill-rule: evenodd;
         clip-rule: evenodd;
@@ -156,32 +155,12 @@
 <style scoped>
 .watercan-stroke {
   width: 100%;
-  /* translate: -80px 30px;
-
-  grid-row-start: 1;
-  grid-column-start: 5;
-  grid-row-end: 3;
-  grid-column-end: 6; */
 }
 
 .path {
   /* animation: dash 7s alternate infinite; */
   animation: dash 7s alternate forwards;
   animation-iteration-count: 5;
-}
-
-.scaling-svg-container {
-  /* position: relative;
-  height: 0;
-  padding: 0;
-  padding-bottom: 100%; */
-}
-.scaling-svg {
-  /* position: absolute;
-  height: 100%;
-  width: 100%;
-  left: 0;
-  top: 0; */
 }
 
 @keyframes dash {
