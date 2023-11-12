@@ -43,16 +43,16 @@ onBeforeMount(async () => {
       <q-btn icon="las la-user" color="transparent" text-color="white" flat>
         <q-menu transition-show="scale" transition-hide="scale">
           <q-list style="min-width: 20ch">
-            <q-item>
-              <q-item-section>Hallo {{ userStore.state.currentUser.name }}</q-item-section>
+            <q-item class="user-greeting">
+              <q-item-section>Hallo {{ userStore.state.currentUser.name }}!</q-item-section>
             </q-item>
             <q-separator />
 
-            <q-item clickable @click="state.changeUserName = true">
+            <q-item class="user-action" clickable @click="state.changeUserName = true">
               <q-item-section>Nutzernamen ändern</q-item-section>
             </q-item>
 
-            <q-item clickable @click="state.confirmUserDelete = true">
+            <q-item class="user-action" clickable @click="state.confirmUserDelete = true">
               <q-item-section>Nutzer löschen</q-item-section>
             </q-item>
           </q-list>
@@ -178,6 +178,15 @@ main {
   color: white;
 }
 
+.user-greeting {
+  background-color: var(--clr-secondary-lighter);
+}
+.user-greeting * {
+  font-size: 1.1em;
+}
+.user-action:hover {
+  background-color: var(--clr-primary-lighter);
+}
 @media screen and (min-width: 600px) {
   .card-wrapper {
     display: grid;
