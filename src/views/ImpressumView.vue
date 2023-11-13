@@ -1,5 +1,15 @@
 <script setup>
 import SiteNavigation from '@/components/SiteNavigation.vue'
+import { computed } from 'vue'
+
+const isUser = computed(() => {
+  if (
+    localStorage.getItem('edenSketchUserId') === null ||
+    localStorage.getItem('edenSketchUserId') === undefined
+  ) {
+    return false
+  } else return true
+})
 </script>
 
 <template>
@@ -42,7 +52,7 @@ import SiteNavigation from '@/components/SiteNavigation.vue'
       </ul>
     </section>
   </main>
-  <nav class="view__nav">
+  <nav v-if="isUser" class="view__nav">
     <SiteNavigation></SiteNavigation>
   </nav>
 </template>
