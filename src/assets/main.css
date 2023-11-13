@@ -249,8 +249,9 @@
 
 a {
   color: black;
-  text-underline-offset: 2px;
+  text-underline-offset: 3px;
 }
+
 .headline-main {
   font-family: 'Vollkorn';
   font-size: 3rem;

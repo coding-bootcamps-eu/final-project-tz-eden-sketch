@@ -240,10 +240,13 @@ function login() {
 
 .footer {
   background-color: var(--clr-primary);
-  /* background: linear-gradient(to top, var(--clr-primary) 15%, transparent 100%); */
 
-  height: 5rem;
+  /* background: linear-gradient(to top, var(--clr-primary) 15%, transparent 90%); */
+  background: radial-gradient(ellipse at 50% 110%, var(--clr-primary) 20%, transparent 70%);
 
+
+
+  height: 10rem;
   display: flex;
   justify-content: center;
   align-items: end;
@@ -254,6 +257,7 @@ function login() {
 
 footer > a:visited,
 a:link {
+  font-weight: 500;
   color: white;
 }
 
