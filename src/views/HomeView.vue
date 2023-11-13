@@ -174,6 +174,27 @@ main {
   gap: 2rem;
   grid-template-columns: 1fr;
 }
+.card-wrapper > * {
+  min-width: 70vw;
+}
+@media screen and (min-width: 600px) {
+  .card-wrapper {
+    grid-template-columns: 1fr 1fr;
+  }
+  .card-wrapper > * {
+    min-width: 40vw;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .card-wrapper {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+  .card-wrapper > * {
+    min-width: 20vw;
+  }
+}
+
 .username {
   color: white;
 }
@@ -186,19 +207,6 @@ main {
 }
 .user-action:hover {
   background-color: var(--clr-primary-lighter);
-}
-@media screen and (min-width: 600px) {
-  .card-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-}
-
-@media screen and (min-width: 1000px) {
-  .card-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-  }
 }
 
 footer {
