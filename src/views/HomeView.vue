@@ -118,7 +118,7 @@ onBeforeMount(async () => {
     </q-bar>
     <div class="overview">
       <header>
-        <h1 class="headline-main headline">Eden Sketch</h1>
+        <h1 class="headline-main headline">EdenSketch</h1>
       </header>
 
       <main class="card-wrapper">
@@ -164,8 +164,9 @@ main {
   padding: 0;
 }
 .headline {
-  color: var(--clr-primary);
   font-size: 5rem;
+  border-bottom: 5px solid var(--clr-primary);
+  margin-bottom: 5rem;
 }
 
 @media screen and (max-width: 380px) {
