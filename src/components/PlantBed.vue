@@ -41,7 +41,6 @@
             </RouterLink>
           </div>
 
-          <!-- <p>{{ plantsStore.getVariety(set.plantvarietiesId).name }}</p> -->
           <p>
             Art:
 
@@ -60,6 +59,7 @@
               {{ plantsStore.getVariety(set.plantvarietiesId).species }}
             </RouterLink>
           </p>
+
           <p>
             Gepflanzt:
             <span class="plant-time info-text">
@@ -69,6 +69,7 @@
               {{ plantBedsStore.translateTimeBack(set.startTime).month }}</span
             >
           </p>
+
           <p>
             Ernte:
             <span class="plant-time info-text">
@@ -98,48 +99,97 @@
           <button class="todo-btn btn">
             <q-icon class="todo-icon" name="svguse:/icons.svg#gloves"></q-icon>
           </button>
+
           <button class="harvest-btn btn">
             <q-icon
               class="harvest-icon"
               name="bi-basket"
               size="3ch"
-              @click="plantBedsStore.harvestSet(set.id, props.bedNumber)"
+              @click="confirmHarvestSet = true"
             ></q-icon>
           </button>
+
+          <q-dialog v-model="confirmHarvestSet" persistent>
+            <q-card>
+              <q-card-section class="row items-center">
+                <q-avatar
+                  icon="svguse:/icons.svg#soil-and-shovel"
+                  color="warning"
+                  text-color="white"
+                />
+                <span class="q-ml-sm"
+                  >Willst du den Satz "{{ plantsStore.getVariety(set.plantvarietiesId).name }}"
+                  ernten?<br />In diesem Fall wird die Zeit im Beet für den Satz verkürzt. In der
+                  Zeit davor bleibt der Satz im Beet.</span
+                >
+              </q-card-section>
+
+              <q-card-actions align="right">
+                <q-btn flat label="Zurück" color="primary" v-close-popup />
+                <q-btn
+                  flat
+                  label="Ernten"
+                  color="warning"
+                  v-close-popup
+                  @click="harvestSet(set.id, props.bedNumber)"
+                />
+              </q-card-actions>
+            </q-card>
+          </q-dialog>
+
           <button class="delete-btn btn">
             <q-icon
               class="delete-icon"
               name="delete"
               size="3ch"
-              @click="plantBedsStore.deleteSet(set.id, props.bedNumber)"
+              @click="confirmDeleteSet = true"
             ></q-icon>
           </button>
-        </div>
 
-        <!-- <span
-          >start: {{ set.startColum }},<br />
-          Ende: {{ set.startColum + set.neededColums }},<br />
-          Spalten: {{ set.neededColums }}
-        </span> -->
+          <q-dialog v-model="confirmDeleteSet" persistent>
+            <q-card>
+              <q-card-section class="row items-center">
+                <q-avatar
+                  icon="svguse:/icons.svg#soil-and-shovel"
+                  color="warning"
+                  text-color="white"
+                />
+                <span class="q-ml-sm"
+                  >Willst du den Satz "{{ plantsStore.getVariety(set.plantvarietiesId).name }}"
+                  wirklich löschen?<br />Der Satz wird in diesem Fall komplett von Anfang bis Ende
+                  aus dem Beet entfernt.</span
+                >
+              </q-card-section>
+
+              <q-card-actions align="right">
+                <q-btn flat label="Zurück" color="primary" v-close-popup />
+                <q-btn
+                  flat
+                  label="Löschen"
+                  color="warning"
+                  v-close-popup
+                  @click="deleteSet(set.id, props.bedNumber)"
+                />
+              </q-card-actions>
+            </q-card>
+          </q-dialog>
+        </div>
       </div>
-      <!-- <p>{{ set.plantvarietiesId }}</p> -->
-      <!-- <p>
-        {{ plantsStore.getVariety(set.plantvarietiesId)[0].name }}
-      </p> -->
-      <!-- <p>{{ set }}</p> -->
     </div>
   </div>
 </template>
 
 <script setup>
-// import {}
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { usePlantsStore } from '@/stores/usePlantsStore'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 import { RouterLink } from 'vue-router'
 
 const plantBedsStore = usePlantBedsStore()
 const plantsStore = usePlantsStore()
+
+const confirmDeleteSet = ref(false)
+const confirmHarvestSet = ref(false)
 
 const state = reactive({
   activeSetId: ''
@@ -154,24 +204,15 @@ function loadImage(imageName) {
 }
 
 function setActiveSet(set) {
-  // plantBedsStore.state.activeSets= [{bednumber: 1, setId:{id vom set}}, ...]
-
-  // const currentBed = plantBedsStore.state.activeSets.find(
-  //   (bedItem) => bedItem['bedNumber'] === props.bedNumber
-  // )
   let currentBed = null
   for (let i = 0; i < plantBedsStore.state.activeSets.length; i++) {
-    console.log('active-set bedNumber ' + plantBedsStore.state.activeSets[i].bedNumber)
-    console.log('props.bedNumber ' + props.bedNumber)
     if (plantBedsStore.state.activeSets[i].bedNumber === props.bedNumber) {
       currentBed = plantBedsStore.state.activeSets[i]
       // return
     }
   }
-  console.log('currentBed: ', currentBed)
 
   if (currentBed !== null) {
-    console.log('A')
     //es gibt schon ein active Set für dieses Beet
     //setzte neues actives Set für dieses Beet
     currentBed.setId = set.id
@@ -179,19 +220,21 @@ function setActiveSet(set) {
   } else {
     //es gibt noch kein activeSet für dieses Beet
     //neu anlegen
-    console.log('B')
     const bed = { bedNumber: props.bedNumber, setId: set.id }
     plantBedsStore.state.activeSets.push(bed)
     state.activeSetId = set.id
   }
-
-  console.log('state.activeSetId: ', state.activeSetId)
-  console.log('plantBedsStore.state.activeSets: ', plantBedsStore.state.activeSets)
 }
 
-// onUpdated(async () => {
+function deleteSet(setId, bedNumber) {
+  plantBedsStore.deleteSet(setId, bedNumber)
+  confirmDeleteSet.value = false
+}
 
-// })
+function harvestSet(setId, bedNumber) {
+  plantBedsStore.harvestSet(setId, bedNumber)
+  confirmHarvestSet.value = false
+}
 </script>
 
 <style scoped>
@@ -235,13 +278,11 @@ function setActiveSet(set) {
   }
 }
 .active {
-  /* border: 2px solid var(--clr-secondary); */
   box-shadow: 0 0 6px 5px var(--clr-dark-darker);
   background-color: var(--clr-info-lighter);
 }
 .set-content-wrapper {
   padding-block: 1rem;
-  /*padding-inline: 0.5rem;*/
   display: grid;
   grid-template-rows: 1fr 1fr;
   justify-content: center;
