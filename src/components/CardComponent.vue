@@ -22,7 +22,7 @@ const imageUrl = computed(() => {
   <div class="card">
     <div class="content-wrapper">
       <div class="image-wrapper">
-        <img class="card-image" :src="imageUrl" />
+        <img :alt="cardTitle" class="card-image" :src="imageUrl" />
       </div>
 
       <div class="card-infos">
@@ -30,7 +30,7 @@ const imageUrl = computed(() => {
         <p class="card-description">{{ cardDescription }}</p>
       </div>
     </div>
-    <router-link :to="cardLink ?? '/'" class="card-link"></router-link>
+    <router-link :aria-label="cardTitle" :to="cardLink ?? '/'" class="card-link"></router-link>
     <!--?? gibt wert nach Fragezeichen zurück wenn Wert davor nullish-->
   </div>
 </template>
