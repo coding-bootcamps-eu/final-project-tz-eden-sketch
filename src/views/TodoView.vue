@@ -1,5 +1,5 @@
 <template>
-  <UnderConstruction title="Meine Aufgaben" image="/gloves.svg"></UnderConstruction>
+  <UnderConstruction title="Meine Aufgaben" image="/gloves.webp"></UnderConstruction>
 </template>
 
 <style scoped></style>

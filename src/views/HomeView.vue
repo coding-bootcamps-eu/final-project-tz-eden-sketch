@@ -125,15 +125,15 @@ onBeforeMount(async () => {
         <CardComponent
           card-title="Pflanzen"
           card-link="/plantspecies/list"
-          card-image="root-vegetable_1000px.svg"
+          card-image="root-vegetable.webp"
         />
         <CardComponent
           card-title="Beetplanung"
           card-link="/plantbed-selection"
-          card-image="raised-bed-vegetables.svg"
+          card-image="raised-bed-vegetables.webp"
         />
-        <CardComponent card-title="Aufgaben" card-link="/todos" card-image="gloves.svg" />
-        <CardComponent card-title="Wissen" card-link="/blog" card-image="book.svg" />
+        <CardComponent card-title="Aufgaben" card-link="/todos" card-image="gloves.webp" />
+        <CardComponent card-title="Wissen" card-link="/blog" card-image="book.webp" />
       </main>
     </div>
 

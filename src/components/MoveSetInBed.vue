@@ -15,6 +15,7 @@
         label="Set verschieben"
         right-label
         :disable="!isSetActive"
+        @click="openInfoChooseSet"
       >
       </q-toggle>
 
@@ -53,7 +54,6 @@ import InfoModal from '@/components/InfoModal.vue'
 import { usePlantBedsStore } from '@/stores/usePlantBedsStore'
 
 const plantBedsStore = usePlantBedsStore()
-console.log(plantBedsStore)
 
 const state = reactive({
   activeSet: {},
@@ -76,6 +76,14 @@ const isSetActive = computed(() => {
     undefined
   )
 })
+
+function openInfoChooseSet() {
+  if (!isSetActive.value) {
+    state.feedback.message =
+      'Bitte pflanze einen Satz in das Beet und wähle anschließend einen Satz aus, den du verschieben möchtest. Dazu auf den Satz klicken/tippen.'
+    feedbackOpen.value = true
+  }
+}
 
 function moveSet(direction) {
   //finde actives set
