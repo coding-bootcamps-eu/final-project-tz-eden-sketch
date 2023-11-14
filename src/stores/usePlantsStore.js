@@ -26,8 +26,6 @@ export const usePlantsStore = defineStore('plants', () => {
     return state.plantSpecies.filter((speciesItem) => speciesItem['id'] === id)
   }
   function getVariety(id) {
-    // console.log('getvareity:', id)
-    // console.log(state.plantVarieties)
     return state.plantVarieties.find((varietyItem) => varietyItem['id'] === id)
   }
 

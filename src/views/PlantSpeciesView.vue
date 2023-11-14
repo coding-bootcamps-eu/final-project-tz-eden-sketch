@@ -10,7 +10,8 @@ const route = useRoute()
 const plantsStore = usePlantsStore()
 
 const imageUrl = computed(() => {
-  return new URL(`/src/assets/images/${state.species.imagename}`, import.meta.url).href
+  let imagename = state.species.imagename ? state.species.imagename : 'default_vegetable.webp'
+  return new URL(`/src/assets/images/${imagename}`, import.meta.url).href
 })
 
 const state = reactive({

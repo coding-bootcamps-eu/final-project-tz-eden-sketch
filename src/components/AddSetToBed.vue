@@ -138,7 +138,6 @@ async function mapTableContent() {
   for (let i = 0; i < plantBedsStore.state.currentBedplan.userVarieties.length; i++) {
     const currentUserVarietyId = plantBedsStore.state.currentBedplan.userVarieties[i]
     const currentUserVariety = plantsStore.getVariety(currentUserVarietyId)
-    // console.log(currentUserVariety)
 
     // const URL = `${import.meta.env.VITE_EDENSKETCH_API_URL}/plantvarieties/${currentUserVarietyId}?_embed=plantspeciesId` //todo: besser aus userStore holen??
     // const resp = await fetch(URL)
@@ -179,7 +178,6 @@ async function addVarietyToBed() {
     )
 
     if (startColum.length === 0) {
-      console.log('kein platz mehr im Beet')
       state.feedback.variety = state.feedback.message =
         'Der Satz "' +
         newSets[i].name +

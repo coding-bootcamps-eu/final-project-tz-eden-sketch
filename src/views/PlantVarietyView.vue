@@ -13,7 +13,8 @@ const variety = computed(() => {
 })
 
 const imageUrl = computed(() => {
-  return new URL(`/src/assets/images/${variety.value.imagename}`, import.meta.url).href
+  let imagename = variety.value.imagename ? variety.value.imagename : 'default_vegetable.webp'
+  return new URL(`/src/assets/images/${imagename}`, import.meta.url).href
 })
 </script>
 

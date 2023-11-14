@@ -67,8 +67,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
         calculatedTime.month,
         calculatedTime.period
       )[2]
-      console.log('currentBedArray: ', currentBedArray)
-      console.log('needed columns: ', currentPlantSet.neededColums)
+
       for (let k = 0; k < currentBedArray.length; k++) {
         let currentStartColumn = k
         let count = 0
@@ -293,16 +292,6 @@ export const usePlantBedsStore = defineStore('beds', () => {
     cultureDurationIntern,
     rowDistance
   ) {
-    // console.log(
-    //   'checkIfAddSetPossible ',
-    //   bedNumber,
-    //   month,
-    //   period,
-    //   varietyId,
-    //   startColum0,
-    //   cultureDurationIntern,
-    //   rowDistance
-    // )
     const start = translateTime(month, period)
     const end = start + cultureDurationIntern
 
@@ -336,8 +325,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
         addSetIsPossible = true
       } else {
         addSetIsPossible = false
-        // console.log('variery: ', variety)
-        // console.log('isSpace: ', isSpace)
+
         const time = translateTimeBack(i)
 
         //todo: message gibt falsche zeit zurück und leider keine Spalten und andere Daten
@@ -353,7 +341,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
           ' schon eine andere Sorte (' +
           isSpace.otherVariety +
           ') steht.'
-        // console.log('checkIfAddSetPossible', addSetIsPossible, message)
+
         return { value: addSetIsPossible, type: 'error', message: message }
       }
     }
@@ -363,7 +351,6 @@ export const usePlantBedsStore = defineStore('beds', () => {
 
   function isSpaceInBedForSet(bedArray, startColum0, neededColums) {
     let isSpace = false
-    // console.log('isSpaceInBedForSet :' + bedArray, startColum0, neededColums)
 
     for (let i = startColum0; i < startColum0 + neededColums; i++) {
       //todo: prüfen: +1 richtig??
@@ -371,8 +358,6 @@ export const usePlantBedsStore = defineStore('beds', () => {
         isSpace = true
       } else {
         isSpace = false
-        // console.log('isSpaceInBedForSet', bedArray, startColum0, neededColums)
-        // console.log('isSpaceInBedForSet', isSpace, i, bedArray[i])
         return { value: isSpace, colum: i, otherVariety: bedArray[i] }
       }
     }
@@ -418,9 +403,6 @@ export const usePlantBedsStore = defineStore('beds', () => {
     rowDistance
     // setId=null !!!!!! muss in die folgenden Funktionen mitgeschleppt werden
   ) {
-    // console.log('Bed-Nr ' + bedNumber)
-    // console.log('variety-id ' + varietyId)
-    // console.log('row-distance ' + rowDistance)
     const startColums = []
 
     for (let i = 0; i < 24; i++) {
@@ -438,16 +420,7 @@ export const usePlantBedsStore = defineStore('beds', () => {
         startColums.push(i)
       }
     }
-    // console.log(
-    //   'calculateStartColumsInBed',
-    //   bedNumber,
-    //   month,
-    //   period,
-    //   varietyId,
-    //   cultureDurationIntern,
-    //   rowDistance
-    // )
-    // console.log(startColums)
+
     return startColums
   }
 

@@ -132,9 +132,8 @@ function moveSet(direction) {
     (direction === 'left' && state.activeSet.startColum <= 0) ||
     (direction === 'right' && state.activeSet.startColum >= 24 - state.activeSet.neededColums)
   ) {
-    console.log('rechts angekommen: ', state.activeSet.startColum)
     state.feedback.message =
-      'Es gibt leider keine Möglichkeiten diesen Satz zu verschieben, da andere Sätze zum aktuellen Zeitpunkt oder später dies blockieren.'
+      'Es gibt leider keine Möglichkeiten diesen Satz zu verschieben, da andere Sätze zum aktuellen Zeitpunkt oder später dies blockieren oder der Satz schon am Rand des Beetes steht.'
 
     feedbackOpen.value = true
     return
