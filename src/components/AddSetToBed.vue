@@ -1,5 +1,12 @@
 <template>
-  <q-btn class="btn-add" color="primary" icon="add" @click="state.openAddPlant = true" dense />
+  <q-btn
+    aria-label="Füge Sorten hinzu"
+    class="btn-add"
+    color="primary"
+    icon="add"
+    @click="state.openAddPlant = true"
+    dense
+  />
 
   <q-dialog maximized class="popup-plant add-plants__card" v-model="state.openAddPlant">
     <!-- 'full-width' für desktop, 'maximized' für mobile-->
@@ -10,12 +17,20 @@
         <q-card-actions align="right">
           <q-btn
             flat
+            aria-label="Sorte einpflanzen"
             label="Sorte einpflanzen"
             color="primary bg-secondary"
             v-close-popup
             @click="addVarietyToBed(props.bedNumber)"
           />
-          <q-btn flat icon="close" color="white" class="bg-secondary" v-close-popup />
+          <q-btn
+            flat
+            aria-label="Zurück zum Beetplan"
+            icon="close"
+            color="white"
+            class="bg-secondary"
+            v-close-popup
+          />
         </q-card-actions>
       </q-toolbar>
 
@@ -76,9 +91,10 @@
 
       <!-- <q-card-section>{{ state.userVarieties }} </q-card-section> -->
       <q-card-actions align="right">
-        <q-btn flat label="Zurück" color="warning" v-close-popup />
+        <q-btn flat label="Zurück" aria-label="Zurück zum Beetplan" color="warning" v-close-popup />
         <q-btn
           flat
+          aria-label="Sorte Einpflanzen"
           label="Sorte einpflanzen"
           color="primary"
           v-close-popup
