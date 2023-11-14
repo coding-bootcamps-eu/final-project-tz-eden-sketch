@@ -60,44 +60,60 @@ onBeforeMount(async () => {
     </header>
     <SeparatorElement />
 
-    <h2>Pflanzenfamilie</h2>
-    <p>{{ state.species.plantfamily }}</p>
-    <SeparatorElement />
+    <section v-if="state.species.plantfamily">
+      <h2>Pflanzenfamilie</h2>
+      <p>{{ state.species.plantfamily }}</p>
+      <SeparatorElement />
+    </section>
 
-    <h2>Beschreibung</h2>
-    <p>{{ state.species.description }}</p>
-    <SeparatorElement />
-    <div class="mischkultur-container"></div>
-    <h2>Mischkultur</h2>
-    <h3>
-      <q-icon name="bi-suit-heart-fill"></q-icon>
-      Gute Nachbarn
-    </h3>
-    <ol class="list">
-      <li v-for="neighbor in state.species.goodNeighbors" :key="neighbor">{{ neighbor }}</li>
-    </ol>
+    <section v-if="state.species.description">
+      <h2>Beschreibung</h2>
+      <p>{{ state.species.description }}</p>
+      <SeparatorElement />
+    </section>
 
-    <h3>
-      <q-icon name="bi-lightning-fill" color="warning"></q-icon>
-      Schlechte Nachbarn
-    </h3>
-    <ol class="list">
-      <li v-for="neighbor in state.species.badNeighbors" :key="neighbor">{{ neighbor }}</li>
-    </ol>
-    <SeparatorElement />
+    <section
+      v-if="state.species.goodNeighbors === '' || state.species.badNeighbors === ''"
+      class="mischkultur-container"
+    >
+      <h2>Mischkultur</h2>
+      <article v-if="state.species.goodNeighbors === ''">
+        <h3>
+          <q-icon name="bi-suit-heart-fill"></q-icon>
+          Gute Nachbarn
+        </h3>
+        <ol class="list">
+          <li v-for="neighbor in state.species.goodNeighbors" :key="neighbor">{{ neighbor }}</li>
+        </ol>
+      </article>
 
-    <h2>Sorten</h2>
-    <ol class="list">
-      <RouterLink
-        v-for="variety in state.varieties"
-        :key="variety.id"
-        :to="{ name: 'plantvarietyview', params: { plantvariety: variety.id } }"
-      >
-        <li class="list-varieties">
-          {{ variety.name }}
-        </li>
-      </RouterLink>
-    </ol>
+      <article v-if="state.species.badNeighbors === ''">
+        <h3>
+          <q-icon name="bi-lightning-fill" color="warning"></q-icon>
+          Schlechte Nachbarn
+        </h3>
+        <ol class="list">
+          <li v-for="neighbor in state.species.badNeighbors" :key="neighbor">{{ neighbor }}</li>
+        </ol>
+      </article>
+
+      <SeparatorElement />
+    </section>
+
+    <section v-if="state.varieties.length > 0">
+      <h2>Sorten</h2>
+      <ol class="list">
+        <RouterLink
+          v-for="variety in state.varieties"
+          :key="variety.id"
+          :to="{ name: 'plantvarietyview', params: { plantvariety: variety.id } }"
+        >
+          <li class="list-varieties">
+            <q-chip class="variety-item">{{ variety.name }}</q-chip>
+          </li>
+        </RouterLink>
+      </ol>
+    </section>
   </main>
 
   <nav class="view__nav">
@@ -120,7 +136,7 @@ h2 {
 }
 
 h3 {
-  font-size: medium;
+  font-size: 1rem;
   color: var(--clr-primary);
   margin: 0;
 }
@@ -137,15 +153,18 @@ h3 {
 
 .image-container {
   width: 100%;
+  text-align: center;
 }
 .image {
   width: 100%;
   max-height: 20rem;
+  max-width: 20rem;
   object-fit: contain;
 }
 
 .headline-label {
   text-transform: uppercase;
+  letter-spacing: 0.2rem;
   color: var(--clr-secondary);
   margin-bottom: 0;
 }
@@ -160,19 +179,31 @@ h3 {
   font-size: 1.5rem;
 }
 
-.separator {
-  /* als eigene Komponente definieren? */
-  height: 1px;
-  background-color: var(--clr-secondary);
-}
-
 .breadcrum {
   padding-block: 1rem;
 }
 .list {
-  list-style: disc;
+  list-style: none;
+  display: flex;
+  justify-content: start;
+  flex-wrap: wrap;
+  padding-left: 0;
+  padding-bottom: 0;
 }
-.list:last-child {
+
+.variety-item {
+  background-color: var(--clr-primary-lighter);
+  box-shadow: 0 0 3px 0 grey;
+}
+
+section:last-child {
   padding-bottom: 7rem;
+}
+
+@media screen and (max-width: 768px) {
+  /* medium breakpoint */
+  .header {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
