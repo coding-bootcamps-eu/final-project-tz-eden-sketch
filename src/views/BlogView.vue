@@ -1,5 +1,5 @@
 <template>
-  <UnderConstruction title="Garten-Wissen" image="/book.svg"></UnderConstruction>
+  <UnderConstruction title="Garten-Wissen" image="/book.webp"></UnderConstruction>
 </template>
 
 <style scoped></style>

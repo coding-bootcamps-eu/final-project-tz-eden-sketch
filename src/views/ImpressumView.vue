@@ -55,7 +55,7 @@ main {
   padding-inline: 2rem;
 
   height: 85vh; /* gibt es eine bessere Lösung? */
-  background-image: url('/flowers-with-gardening-tools_1000px.svg');
+  background-image: url('/flowers-with-gardening-tools.webp');
   background-position: left bottom;
   background-size: 35%;
   background-repeat: no-repeat;

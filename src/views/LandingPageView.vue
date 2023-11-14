@@ -29,7 +29,7 @@
       </article>
 
       <div class="image-house">
-        <img class="image" src="../assets/images/house-with-garden.svg" alt="house with garden" />
+        <img class="image" src="../assets/images/house-with-garden.webp" alt="house with garden" />
       </div>
 
       <BedAnimation class="bed-animation" />
@@ -94,8 +94,6 @@
       <router-link :to="{ name: 'impressum' }">Impressum</router-link>
     </footer>
   </div>
-
-  <!-- <button @click="calc()">test</button> -->
 </template>
 
 <script setup>
@@ -131,7 +129,6 @@ function login() {
   padding-inline: 3rem;
 
   position: relative;
-  /* max-width: 1000px; */
   margin-inline: auto;
 
   /* display: grid;
@@ -240,11 +237,7 @@ function login() {
 
 .footer {
   background-color: var(--clr-primary);
-
-  /* background: linear-gradient(to top, var(--clr-primary) 15%, transparent 90%); */
   background: radial-gradient(ellipse at 50% 110%, var(--clr-primary) 20%, transparent 70%);
-
-
 
   height: 10rem;
   display: flex;
