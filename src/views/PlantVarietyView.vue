@@ -59,19 +59,19 @@ const imageUrl = computed(() => {
           </header>
           <SeparatorElement />
 
-          <article>
+          <section>
             <h2>Art</h2>
             <p>{{ variety.species }}</p>
-          </article>
+          </section>
           <SeparatorElement />
 
-          <article>
+          <section>
             <h2>Pflanzenfamilie</h2>
             <p>{{ variety.plantfamily }}</p>
-          </article>
+          </section>
           <SeparatorElement />
 
-          <article>
+          <section>
             <h2>Saisonübersicht</h2>
             <ul>
               <li v-if="variety.sowingForPlantingStart">
@@ -92,16 +92,16 @@ const imageUrl = computed(() => {
                 Zeit in Beet / Kulturdauer: {{ variety.cultureDuration }} Tage
               </li>
             </ul>
-          </article>
+          </section>
           <SeparatorElement />
 
-          <article v-if="variety.description">
+          <section v-if="variety.description">
             <h2>Beschreibung</h2>
             <p>{{ variety.description }}</p>
-          </article>
+          </section>
           <SeparatorElement v-if="variety.description" />
 
-          <article class="plantcare">
+          <section class="plantcare">
             <h2>Pflege</h2>
             <ul class="plantcare-details">
               <li class="info-wrapper" v-if="variety.plantingDistance">
@@ -141,13 +141,13 @@ const imageUrl = computed(() => {
                 <p class="info-value">{{ variety.water }}</p>
               </li>
             </ul>
-          </article>
+          </section>
           <SeparatorElement v-if="variety.cultivationTips" />
 
-          <article class="cultivation-tips" v-if="variety.cultivationTips">
+          <section class="cultivation-tips" v-if="variety.cultivationTips">
             <h2>Anbautipps</h2>
             <p>{{ variety.cultivationTips }}</p>
-          </article>
+          </section>
           <!-- <SeparatorElement v-if="variety.cultivationTips" /> -->
 
           <!-- <article>
@@ -189,7 +189,7 @@ h3 {
 
 .header {
   display: grid;
-  grid-template-columns: 9rem 1fr;
+  grid-template-columns: 9rem auto;
   justify-content: start;
   align-items: center;
   gap: 3rem;
@@ -198,10 +198,12 @@ h3 {
 }
 .image-container {
   width: 100%;
+  text-align: center;
 }
 .image {
   width: 100%;
   max-height: 20rem;
+  max-width: 20rem;
   object-fit: contain;
 }
 
@@ -233,13 +235,10 @@ h3 {
   padding-left: 0;
 }
 
-@media screen and (max-width: 600px) {
-}
-
-article {
+section {
   margin-block: auto;
 }
-article:last-child {
+section:last-child {
   padding-bottom: 7rem;
 }
 
@@ -263,5 +262,12 @@ article:last-child {
 .info-value {
   margin-left: auto;
   margin-bottom: 0;
+}
+
+@media screen and (max-width: 768px) {
+  /* medium breakpoint */
+  .header {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

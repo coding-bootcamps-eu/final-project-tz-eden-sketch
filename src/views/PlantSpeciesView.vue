@@ -136,7 +136,7 @@ h2 {
 }
 
 h3 {
-  font-size: medium;
+  font-size: 1rem;
   color: var(--clr-primary);
   margin: 0;
 }
@@ -164,6 +164,7 @@ h3 {
 
 .headline-label {
   text-transform: uppercase;
+  letter-spacing: 0.2rem;
   color: var(--clr-secondary);
   margin-bottom: 0;
 }
@@ -194,9 +195,7 @@ h3 {
   background-color: var(--clr-primary-lighter);
   box-shadow: 0 0 3px 0 grey;
 }
-.list:last-child {
-  /* padding-bottom: 7rem; */
-}
+
 section:last-child {
   padding-bottom: 7rem;
 }
