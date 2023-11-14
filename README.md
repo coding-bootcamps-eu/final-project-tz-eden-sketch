@@ -1,5 +1,16 @@
 # eden-sketch
 
+An prototype for an [Webapplication](https://edensketch.netlify.app/) to plan your vegetable beds.
+
+## Contributers
+
+[Wiebken](https://github.com/wiebken-n)
+[Nicole](https://github.com/Colourpieces)
+
+---
+
+## Instructions:
+
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
