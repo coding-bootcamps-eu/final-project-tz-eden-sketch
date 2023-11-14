@@ -1,5 +1,15 @@
 <script setup>
 import SiteNavigation from '@/components/SiteNavigation.vue'
+import { computed } from 'vue'
+
+const isUser = computed(() => {
+  if (
+    localStorage.getItem('edenSketchUserId') === null ||
+    localStorage.getItem('edenSketchUserId') === undefined
+  ) {
+    return false
+  } else return true
+})
 </script>
 
 <template>
@@ -42,9 +52,10 @@ import SiteNavigation from '@/components/SiteNavigation.vue'
       </ul>
     </section>
   </main>
-  <nav class="view__nav">
+  <nav v-if="isUser" class="view__nav">
     <SiteNavigation></SiteNavigation>
   </nav>
+  <footer v-else class="footer"></footer>
 </template>
 
 <style scoped>
@@ -109,5 +120,11 @@ section + section {
   justify-content: start;
   align-items: center;
   gap: 1rem;
+}
+
+.footer {
+  background-color: var(--clr-primary);
+  background: radial-gradient(ellipse at 50% 110%, var(--clr-primary) 20%, transparent 70%);
+  height: 15vh;
 }
 </style>
