@@ -1,7 +1,5 @@
 <script setup>
-// import SeparatorElement from '@/components/SeparatorElement.vue'
 import CardComponent from '@/components/CardComponent.vue'
-// import SiteNavigation from '@/components/SiteNavigation.vue'
 import { onBeforeMount, reactive } from 'vue'
 import { useUserStore } from '@/stores/useUserStore'
 import { useRouter } from 'vue-router'
@@ -40,7 +38,13 @@ onBeforeMount(async () => {
   <div class="homeview-content-wrapper">
     <q-bar class="bg-primary text-white">
       <q-space></q-space>
-      <q-btn icon="las la-user" color="transparent" text-color="white" flat>
+      <q-btn
+        icon="las la-user"
+        color="transparent"
+        text-color="white"
+        flat
+        aria-label="Nutzer-Menü"
+      >
         <q-menu transition-show="scale" transition-hide="scale">
           <q-list style="min-width: 20ch">
             <q-item class="user-greeting">
@@ -137,7 +141,6 @@ onBeforeMount(async () => {
       </main>
     </div>
 
-    <!-- <SeparatorElement /> -->
     <footer class="shadow-2">
       <a class="impressum" href="/impressum">Impressum</a>
     </footer>
