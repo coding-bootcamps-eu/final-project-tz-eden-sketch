@@ -45,7 +45,7 @@ const imageUrl = computed(() => {
 
           <q-breadcrumbs-el :label="variety.name" />
         </q-breadcrumbs>
-        <!-- <SeparatorElement /> -->
+        <SeparatorElement />
 
         <main>
           <header class="header">

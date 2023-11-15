@@ -1,6 +1,8 @@
 <script setup>
 import SiteNavigation from '@/components/SiteNavigation.vue'
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 const isUser = computed(() => {
   if (
@@ -14,6 +16,15 @@ const isUser = computed(() => {
 
 <template>
   <main>
+    <q-btn
+      v-if="!isUser"
+      aria-label="Zurück zur Landingpage"
+      @click="router.push({ name: 'landingpage' })"
+      class="btn-back bg-primary text-white"
+      id="btn-back"
+    >
+      <q-icon aria-label="left facing arrow" name="svguse:/icons.svg#arrow-left"></q-icon>
+    </q-btn>
     <h1 class="headline-main headline">Impressum</h1>
     <section class="contributers-section">
       <h2 class="headline-sub">Projekt</h2>
@@ -70,6 +81,13 @@ main {
   background-position: left bottom;
   background-size: 35%;
   background-repeat: no-repeat;
+}
+.btn-back {
+  position: absolute;
+  left: 5rem;
+  top: 3rem;
+  padding: 0.6rem;
+  border-radius: 90px;
 }
 
 @media screen and (max-width: 380px) {
