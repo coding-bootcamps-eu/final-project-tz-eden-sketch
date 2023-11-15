@@ -29,28 +29,37 @@ const plantsStore = usePlantsStore()
 <style scoped>
 main {
   padding-inline: 2rem;
-  margin: 0 auto;
+  margin-inline: auto;
+  text-align: center;
+  max-width: 1440px;
 }
 .headline {
   color: var(--clr-primary);
+  text-align: left;
 }
 
 .card-wrapper {
   display: grid;
   gap: 1.5rem;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(2, 1fr);
   justify-items: center;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 576px) {
   .card-wrapper {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 768px) {
   .card-wrapper {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .card-wrapper {
+    grid-template-columns: repeat(5, 1fr);
   }
 }
 </style>

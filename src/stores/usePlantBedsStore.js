@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid'
 
 export const usePlantBedsStore = defineStore('beds', () => {
   const state = reactive({
-    currentMonth: 'januar',
+    currentMonth: 'april',
     currentPeriod: 'anfang',
 
     currentBedplan: { beds: [] }, //leeres Object
