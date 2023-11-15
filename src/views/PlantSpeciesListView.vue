@@ -41,7 +41,7 @@ main {
 .card-wrapper {
   display: grid;
   gap: 1.5rem;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(2, 1fr);
   justify-items: center;
 }
 
