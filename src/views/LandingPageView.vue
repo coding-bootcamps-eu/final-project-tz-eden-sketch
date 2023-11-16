@@ -227,6 +227,7 @@ function login() {
 .info-grafic-beeteinteilung,
 .info-grafic-mischkultur,
 .info-grafic-fruchtfolge {
+  min-width: 15rem;
   max-width: 20rem;
   margin-inline: auto;
 }
