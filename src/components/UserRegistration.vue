@@ -23,7 +23,9 @@
               (val) => val.length <= 20 || 'Deine Nutzername ist leider zu lang',
               (val) => val.length > 2 || 'Deine Nutzername ist leider zu kurz'
             ]"
+            data-cy="input-username"
           >
+            <!--todo: um submit zu nutzen in form umwandeln-->
             <template v-slot:append>
               <q-icon name="las la-user" color="accent" />
             </template>

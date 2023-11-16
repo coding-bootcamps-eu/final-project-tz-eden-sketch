@@ -44,10 +44,11 @@ onBeforeMount(async () => {
         text-color="white"
         flat
         aria-label="Nutzer-Menü"
+        data-cy="user-menu"
       >
         <q-menu transition-show="scale" transition-hide="scale">
           <q-list style="min-width: 20ch">
-            <q-item class="user-greeting">
+            <q-item class="user-greeting" data-cy="user-greeting">
               <q-item-section>Hallo {{ userStore.state.currentUser.name }}!</q-item-section>
             </q-item>
             <q-separator />
@@ -56,7 +57,12 @@ onBeforeMount(async () => {
               <q-item-section>Nutzernamen ändern</q-item-section>
             </q-item>
 
-            <q-item class="user-action" clickable @click="state.confirmUserDelete = true">
+            <q-item
+              class="user-action"
+              clickable
+              @click="state.confirmUserDelete = true"
+              data-cy="user-delete"
+            >
               <q-item-section>Nutzer löschen</q-item-section>
             </q-item>
           </q-list>
@@ -74,7 +80,14 @@ onBeforeMount(async () => {
           </q-card-section>
 
           <q-card-actions align="right">
-            <q-btn flat label="Löschen" color="warning" v-close-popup @click="deleteUser()" />
+            <q-btn
+              flat
+              label="Löschen"
+              color="warning"
+              v-close-popup
+              @click="deleteUser()"
+              data-cy="user-delete-confirm"
+            />
             <q-btn flat label="Zurück" color="primary" v-close-popup />
           </q-card-actions>
         </q-card>

@@ -6,9 +6,10 @@
         @click="login"
         class="btn-login bg-primary text-white"
         id="btn-login"
+        data-cy="login"
       ></q-btn>
 
-      <h1 class="headline-main title">EdenSketch</h1>
+      <h1 class="headline-main title" data-cy="title">EdenSketch</h1>
       <h2 class="headline-sub subtitle">Dein Werkzeug um deinen Gemüsegarten zu planen</h2>
 
       <WatercanStroke class="watercan-stroke" />
@@ -25,6 +26,7 @@
           @click="login"
           class="btn-login bg-primary text-white"
           id="btn-register"
+          data-cy="registration"
         ></q-btn>
       </article>
 
