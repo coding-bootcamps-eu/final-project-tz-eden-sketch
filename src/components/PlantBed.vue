@@ -105,7 +105,7 @@
               class="harvest-icon"
               name="bi-basket"
               size="3ch"
-              @click="confirmHarvestSet = true"
+              @click="openHarvestDialog(set)"
             ></q-icon>
           </button>
 
@@ -118,7 +118,7 @@
                   text-color="white"
                 />
                 <span class="q-ml-sm"
-                  >Willst du den Satz "{{ plantsStore.getVariety(set.plantvarietiesId).name }}"
+                  >Willst du den Satz "{{ plantsStore.getVariety(state.activeSetVarietyId).name }}"
                   ernten?<br />In diesem Fall wird die Zeit im Beet für den Satz verkürzt. In der
                   Zeit davor bleibt der Satz im Beet.</span
                 >
@@ -131,7 +131,7 @@
                   label="Ernten"
                   color="warning"
                   v-close-popup
-                  @click="harvestSet(set.id, props.bedNumber)"
+                  @click="harvestSet(state.activeSetId, props.bedNumber)"
                 />
               </q-card-actions>
             </q-card>
@@ -142,7 +142,7 @@
               class="delete-icon"
               name="delete"
               size="3ch"
-              @click="confirmDeleteSet = true"
+              @click="openDeleteDialog(set)"
             ></q-icon>
           </button>
 
@@ -155,7 +155,7 @@
                   text-color="white"
                 />
                 <span class="q-ml-sm"
-                  >Willst du den Satz "{{ plantsStore.getVariety(set.plantvarietiesId).name }}"
+                  >Willst du den Satz "{{ plantsStore.getVariety(state.activeSetVarietyId).name }}"
                   wirklich löschen?<br />Der Satz wird in diesem Fall komplett von Anfang bis Ende
                   aus dem Beet entfernt.</span
                 >
@@ -168,7 +168,7 @@
                   label="Löschen"
                   color="warning"
                   v-close-popup
-                  @click="deleteSet(set.id, props.bedNumber)"
+                  @click="deleteSet(state.activeSetId, props.bedNumber)"
                 />
               </q-card-actions>
             </q-card>
@@ -192,7 +192,9 @@ const confirmDeleteSet = ref(false)
 const confirmHarvestSet = ref(false)
 
 const state = reactive({
-  activeSetId: ''
+  activeSetId: '',
+  activeSetVarietyId: '',
+  bedId: ''
 })
 
 const props = defineProps({
@@ -208,7 +210,7 @@ function setActiveSet(set) {
   for (let i = 0; i < plantBedsStore.state.activeSets.length; i++) {
     if (plantBedsStore.state.activeSets[i].bedNumber === props.bedNumber) {
       currentBed = plantBedsStore.state.activeSets[i]
-      // return
+      state.bedId = props.bedNumber
     }
   }
 
@@ -217,13 +219,23 @@ function setActiveSet(set) {
     //setzte neues actives Set für dieses Beet
     currentBed.setId = set.id
     state.activeSetId = set.id
+    state.activeSetVarietyId = set.plantvarietiesId
   } else {
     //es gibt noch kein activeSet für dieses Beet
     //neu anlegen
     const bed = { bedNumber: props.bedNumber, setId: set.id }
     plantBedsStore.state.activeSets.push(bed)
     state.activeSetId = set.id
+    state.activeSetVarietyId = set.plantvarietiesId
   }
+}
+function openDeleteDialog(set) {
+  setActiveSet(set)
+  confirmDeleteSet.value = true
+}
+function openHarvestDialog(set) {
+  setActiveSet(set)
+  confirmHarvestSet.value = true
 }
 
 function deleteSet(setId, bedNumber) {

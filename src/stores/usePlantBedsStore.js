@@ -90,10 +90,8 @@ export const usePlantBedsStore = defineStore('beds', () => {
       }
       return startColumns
     }
-
-    // for every period from now + culture duration
-    //
   }
+
   function translateTime(month, period) {
     let translation = 0
     const timeDictionary = {
