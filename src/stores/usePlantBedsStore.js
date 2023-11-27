@@ -58,42 +58,56 @@ export const usePlantBedsStore = defineStore('beds', () => {
 
   function newStartColumns(bedNumber, currentMonth, currentPeriod, currentPlantSet) {
     const startColumns = []
-    const currentTime = translateTime(currentMonth, currentPeriod)
+    let currentTime = translateTime(currentMonth, currentPeriod)
 
     for (let i = currentTime; i < currentTime + currentPlantSet.cultureDuration; i++) {
-      const calculatedTime = translateTimeBack(currentTime)
+      const calculatedTime = translateTimeBack(i)
       const currentBedArray = calculateBedState(
         bedNumber,
         calculatedTime.month,
         calculatedTime.period
       )[2]
-
+      let currentStartColumns = []
       for (let k = 0; k < currentBedArray.length; k++) {
         let currentStartColumn = k
         let count = 0
+
         for (let j = k; j < currentBedArray.length; j++) {
           if (currentBedArray[j] !== 'frei' && currentBedArray[j] !== currentPlantSet.id) {
             count = 0
-
             break
           } else if (currentBedArray[j] === 'frei' || currentBedArray[j] === currentPlantSet.id) {
             count++
             if (count < currentPlantSet.neededColums) {
               continue
             } else if (count === currentPlantSet.neededColums) {
-              startColumns.push(currentStartColumn)
+              currentStartColumns.push(currentStartColumn)
               count = 0
               break
             }
           }
         }
       }
-      return startColumns
+      startColumns.push(currentStartColumns)
     }
+    const possibleStartColumns = []
+    for (let i = 0; i < startColumns[0].length; i++) {
+      let counter = 0
+      for (let j = 1; j < startColumns.length; j++) {
+        for (let k = 0; k < startColumns[j].length; k++) {
+          if (startColumns[0][i] === startColumns[j][k]) {
+            counter++
 
-    // for every period from now + culture duration
-    //
+            if (counter + 1 === currentPlantSet.cultureDuration) {
+              possibleStartColumns.push(startColumns[0][i])
+            }
+          }
+        }
+      }
+    }
+    return possibleStartColumns
   }
+
   function translateTime(month, period) {
     let translation = 0
     const timeDictionary = {
