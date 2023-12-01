@@ -159,7 +159,19 @@ async function mapTableContent() {
     // const resp = await fetch(URL)
     // const currentUserVariety = await resp.json()
 
+    //Alternative um nicht ständig row. ... zu wiederholen --> packt alle datenfelder in tabelle
+    // const row = {
+    //   ...currentUserVariety,
+    //   varietyId:currentUserVariety.id
+    // }
+
+    //Alternative 2
+    // const { name, plantfamily, plantspecies, ...rest} = currentUserVariety
+    //const row = { name, plantfamily, plantspecies }
+    //Stichwort: destructuriung (oder auch deconstruction ugs.)
+
     const row = {}
+
     row.name = currentUserVariety.name
     row.plantfamily = currentUserVariety.plantfamily
     row.plantspecies = currentUserVariety.species

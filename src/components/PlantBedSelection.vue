@@ -299,7 +299,7 @@ async function addNewBedplan() {
 
 async function loadPlantbeds() {
   const userId = localStorage.getItem('edenSketchUserId')
-  const URL = `${import.meta.env.VITE_EDENSKETCH_API_URL}/users/${userId}?_embed=bedplans` //todo: besser aus userStore holen??
+  const URL = `${import.meta.env.VITE_EDENSKETCH_API_URL}/users/${userId}?_embed=bedplans`
   const resp = await fetch(URL)
   const data = await resp.json()
   return data.bedplans
@@ -321,6 +321,7 @@ function mapTableContent() {
   for (let i = 0; i < plantsStore.state.plantVarieties.length; i++) {
     const currentVariety = plantsStore.state.plantVarieties[i]
     const row = {}
+    //destructuring hier auch möglich
     row.name = currentVariety.name
     row.plantfamily = currentVariety.plantfamily
     row.plantspecies = currentVariety.species
@@ -347,13 +348,27 @@ onUpdated(() => {
 
 function addVarietyToUserList() {
   state.userVarieties = []
-  for (let i = 0; i < plantsStore.state.plantVarieties.length; i++) {
-    for (let j = 0; j < state.selected.length; j++) {
-      if (plantsStore.state.plantVarieties[i].id === state.selected[j].varietyId) {
-        state.userVarieties.push(plantsStore.state.plantVarieties[i].id)
+  /*
+  // for (let i = 0; i < plantsStore.state.plantVarieties.length; i++) {
+  for (let plantVariety of plantsStore.state.plantVarieties) {
+    const currentVarietyId = plantVariety.id
+    // for (let j = 0; j < state.selected.length; j++) {
+    for (let selectVariety of state.selected) {
+      if (currentVarietyId === selectVariety.varietyId) {
+        state.userVarieties.push(currentVarietyId)
       }
     }
-  }
+  }*/
+
+  //Alternative. ggf. mehr Durchläufe. Aber besser lesbar
+  //Array was nur die Ids der ausgewählten varieties enthält
+  // const selectVarietiesIds = state.selected.map((selectVariety) => selectVariety.id)
+  // state.userVarieties = plantsStore.state.plantVarieties.filter((plantVariety) =>
+  //   selectVarietiesIds.includes(plantVariety.id)
+  // )
+
+  state.userVarieties = state.selected.map((selectVariety) => selectVariety.varietyId)
+
   addNewBedplan()
   resetForm()
 }

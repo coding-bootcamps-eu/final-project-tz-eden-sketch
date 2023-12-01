@@ -1,5 +1,3 @@
-import './assets/main.css'
-
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { Quasar } from 'quasar'
@@ -12,6 +10,7 @@ import '@quasar/extras/line-awesome/line-awesome.css'
 
 // Import Quasar css
 import 'quasar/src/css/index.sass'
+import './assets/main.css' /* eigene Styles UNTER die von den Frameworks setzten!! */
 
 import App from './App.vue'
 import router from './router'

@@ -230,21 +230,24 @@
 *,
 *::before,
 *::after {
+  /* hier nur boder Box setzten */
   box-sizing: border-box;
-  margin: 0;
-  font-weight: normal;
+  /*margin: 0; nicht hier. kann z.B. in Flexbox Probleme machen. Überschreibt standard Styling. gehört in den Body*/
 }
 *::selection {
   background-color: var(--clr-primary);
   color: var(--clr-info);
 }
 
-* {
-  font-family: 'Ubuntu';
+html {
+  font-size: 13px;
 }
 
-:root {
-  font-size: 13px;
+body {
+  /* alles was mit font zu tun hat + color hier und nicht im root. Ausnahe font-size.*/
+  font-family: 'Ubuntu';
+  font-weight: normal;
+  margin: 0;
 }
 
 a {
@@ -269,12 +272,13 @@ a {
 }
 
 @media screen and (min-width: 600px) {
-  :root {
+  html {
     font-size: 15px;
   }
 }
 @media screen and (min-width: 1000px) {
-  :root {
+  html {
+    /* ist eigentlich das gleiche wie root aber ist besser wenn rem auf html liegt */
     font-size: 17px;
   }
 }

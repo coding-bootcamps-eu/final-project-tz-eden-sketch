@@ -47,14 +47,14 @@ export const usePlantsStore = defineStore('plants', () => {
     }
 
     const newSpecies = {
-      name: name,
-      botanicname: botanicname,
-      imagename: imagename,
-      plantfamily: plantfamily,
-      nutrition: nutrition,
+      name, //statt name: name,
+      botanicname,
+      imagename,
+      plantfamily,
+      nutrition,
       goodNeighbors: goodNeighbors.split(', '),
       badNeighbors: badNeighbors.split(', '),
-      description: description
+      description
     }
 
     fetch(`${import.meta.env.VITE_EDENSKETCH_API_URL}/plantspecies/`, {
@@ -136,23 +136,15 @@ export const usePlantsStore = defineStore('plants', () => {
   function varietiesBySpecies(speciesId) {
     //Problem vom router. ID wird manchmal als Array ['id'] und manchmal als string 'id' übergeben
     //Übergabe id aus params von URL
-    if (typeof speciesId !== 'string') {
+    if (Array.isArray(speciesId)) {
       speciesId = speciesId[0]
     }
 
-    const varieties = state.plantVarieties.filter((varietyItem) => {
-      if (varietyItem['plantspeciesId'] === speciesId) {
-        return true
-      }
-      return false
-    })
-    return varieties
+    return state.plantVarieties.filter((varietyItem) => varietyItem['plantspeciesId'] === speciesId)
   }
 
   function getSpeciesIdFromName(name) {
-    return state.plantSpecies.filter(
-      (plantSpeciesItem) => plantSpeciesItem['name'] === name
-    )?.[0]?.['id']
+    return state.plantSpecies.find((plantSpeciesItem) => plantSpeciesItem?.name === name)?.id
     //optional chaining
   }
 
